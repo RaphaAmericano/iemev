@@ -1,0 +1,8 @@
+target 
+tomcat 
+.classpath 
+target/ 
+.settings/ 
+src/main/webapp/node_modules/ 
+src/main/webapp/*.html 
+*.db
