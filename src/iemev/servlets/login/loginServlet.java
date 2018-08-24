@@ -1,6 +1,10 @@
 package iemev.servlets.login;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,6 +12,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+//
+//import org.hibernate.Session;
+//import org.hibernate.SessionFactory;
+
+import iemev.utils.bd.ConnectionFactory;
 
 /**
  * Servlet implementation class loginServlet
@@ -29,6 +38,22 @@ public class loginServlet extends HttpServlet {
 		
 		String cpf = request.getParameter("cpf");
 		//String senha = request.getParameter("senha");
+		
+		try {
+			Connection con = ConnectionFactory.getConnection();
+			Statement stm = con.createStatement();
+			System.out.print(stm);
+			System.out.print("Stament");
+			ResultSet rs = stm.executeQuery("SELECT * FROM T_PESSOA");
+			while(rs.next()) {
+				String nome = rs.getString("nome");
+				System.out.println(nome+ "\n");
+			}
+			
+		}catch (SQLException se){
+			System.out.println(se);
+		}
+		
 		
 		request.setAttribute("cpfUsuario", cpf);
 		RequestDispatcher view = request.getRequestDispatcher("main.jsp");

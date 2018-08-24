@@ -2,13 +2,36 @@ package iemev.models;
 
 import java.util.Date;
 
+//import javax.persistence.Column;
+//import javax.persistence.Entity;
+//import javax.persistence.Id;
+//
+//import javax.persistence.Table;
+
+//@Entity
+//@Table(name="T_PESSOA")
 public class Pessoa {
+	
+//	@Id
+//	@Column(name="cpf")
 	private int cpf;
+	
+//	@Column(name="rg")
 	private int rg;
+	
+//	@Column(name="nome")
 	private String nome;
+	
+//	@Column(name="endereco")
 	private String endereco;
+	
+//	@Column(name="telefoneResidencial")
 	private String telefoneResidencial;
+	
+//	@Column(name="celular")
 	private String celular;
+	
+//	@Column(name="dataDeNascimento")
 	private Date dataDeNascimento;
 	
 	public int getCpf() {
