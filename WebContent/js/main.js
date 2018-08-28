@@ -4,12 +4,12 @@
         
         $('[data-toggle="tooltip"]').tooltip();
         
-        $("#formBuscarUsuarios").on('change', function(e){
-        	console.log(e);
+        $("#formBuscarUsuarios input[type=search]").on('keyup', function(e){
+        	var valorBusca = this.value;
         	$.ajax({
         		method: 'POST',
         		url: 'FichaAtendimentoServlet.do',
-        		data: { parametro: 1 },
+        		data: { busca: valorBusca },
         		success: function(resultado){
         			console.log(resultado);
         		}

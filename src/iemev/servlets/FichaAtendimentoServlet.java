@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import iemev.controllers.FichaAtendimentoController;
+
 /**
  * Servlet implementation class FichaAtendimentoServlet
  */
@@ -36,11 +38,12 @@ public class FichaAtendimentoServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String teste = request.getParameter("parametro");
-		System.out.println(teste);
-		
+		String palavra = request.getParameter("busca");
+
+		System.out.println(palavra);
+		String result = FichaAtendimentoController.buscarString(palavra);
 		response.setContentType("text/plain");
-		response.getWriter().write(teste);
+		response.getWriter().write(result);
 	}
 
 }
