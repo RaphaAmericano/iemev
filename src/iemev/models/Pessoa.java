@@ -12,29 +12,35 @@ import java.util.Date;
 //@Table(name="T_PESSOA")
 public class Pessoa {
 	
-//	@Id
-//	@Column(name="cpf")
-	private int cpf;
+	public Pessoa() {
+		super();
+	}
 	
-//	@Column(name="rg")
-	private int rg;
+	public Pessoa(long cpf, long rg, String nome, String endereco, String telR, String cel, Date data ) {
+		this.cpf = cpf;
+		this.rg = rg;
+		this.nome = nome;
+		this.endereco = endereco;
+		this.telefoneResidencial = telR;
+		this.celular = cel;
+		this.dataDeNascimento = data;
+	}
+
+	private long cpf;
 	
-//	@Column(name="nome")
+	private long rg;
+	
 	private String nome;
 	
-//	@Column(name="endereco")
 	private String endereco;
 	
-//	@Column(name="telefoneResidencial")
 	private String telefoneResidencial;
 	
-//	@Column(name="celular")
 	private String celular;
 	
-//	@Column(name="dataDeNascimento")
 	private Date dataDeNascimento;
 	
-	public int getCpf() {
+	public long getCpf() {
 		return cpf;
 	}
 	public void setCpf(int cpf) {
@@ -46,7 +52,7 @@ public class Pessoa {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public int getRg() {
+	public long getRg() {
 		return rg;
 	}
 	public void setRg(int rg) {

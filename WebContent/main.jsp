@@ -44,7 +44,7 @@
                   <img class="card-img-top" src="img/veterinaria_iemev.jpg" alt="Card image cap">
                   <div class="card-body">
                       <h5 class="card-title">Ficha de Atendimento</h5>
-                      <a href="ficha_atendimento.html" class="btn btn-primary btn-block">Cadastro de Ficha de Atendimento</a>
+                      <a href="ficha_atendimento.jsp" class="btn btn-primary btn-block">Cadastro de Ficha de Atendimento</a>
                   </div>
               </div>
               <div class="card">

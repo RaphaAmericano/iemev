@@ -45,15 +45,12 @@ public class loginServlet extends HttpServlet {
 			System.out.print(stm);
 			System.out.print("Stament");
 			ResultSet rs = stm.executeQuery("SELECT * FROM T_PESSOA");
-			while(rs.next()) {
-				String nome = rs.getString("nome");
-				System.out.println(nome+ "\n");
-			}
-			
-		}catch (SQLException se){
-			System.out.println(se);
+			con.close();
 		}
-		
+		catch (SQLException se){
+			System.out.println(se);
+			se.printStackTrace();
+		}
 		
 		request.setAttribute("cpfUsuario", cpf);
 		RequestDispatcher view = request.getRequestDispatcher("main.jsp");
