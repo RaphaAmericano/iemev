@@ -19,14 +19,11 @@
     <div class="container">
         <div class="row justify-content-md-center">
             <div class="col col-xs col-md-auto col-md-12 mt-2">
-                <form action="ficha_atendimento.html">
+                <form action="ficha_atendimento.html" id="cliente_ficha">
                     <div class="form-group">
                         <label for="animal">Clientes</label>
-                        <select name="cliente[id]" id="" class="form-control" multiple="multiple">
-                            <option value="0">Jorge Matos</option>
-                            <option value="1">Jorge Silva</option>
-                            <option value="2">Jorge Loureiro</option>
-                            <option value="3">Jorge Mascarenhas</option>
+                        <select name="cliente[id]" class="form-control" multiple="multiple">
+                            <!-- <option value="0">Jorge Matos</option> -->
                         </select>
                         <button class="btn btn-success mt-2" value="selecionar" name="cliente[acao]" type="submit">OK</button>
                     </div>
