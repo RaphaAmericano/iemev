@@ -9,6 +9,10 @@
         	var valorBusca = this.value;
         	if(valorBusca == "" && $campoClientes.is(":visible")){
         		$campoClientes.hide();
+        		var $inputs = $("#ficha_atendimento input");
+        		for(var i = 0; i < $inputs.length; i++ ){
+        			$inputs[i].value = null;
+        		}
         	}
         	if( valorBusca.length > 2 ) {
         		$.ajax({
@@ -42,8 +46,6 @@
 	$btnClienteSelect.on('click', function(e){
 		e.preventDefault();
 		var valor = $("#cliente_ficha select").val()[0];
-		console.log(valor);
-		
 		$.ajax({
 			method: "POST",
 			url: "FichaAtendimentoServlet.do",
@@ -65,7 +67,9 @@
 		
 	});
 	$btnAnimalSelect.on('change', function(e){
+		e.preventDefault();
 		var animal = this.value; 
+		console.log(animal);
 		$.ajax({
 			method: 'POST',
 			url: 'FichaAtendimentoServlet.do',
@@ -74,11 +78,37 @@
 				idAnimal: animal
 			},
 			success: function(retorno){
-				console.log(retorno);
+				var dadosAnimal = JSON.parse(retorno);
+				console.log(dadosAnimal[0]);
+				console.log(dadosAnimal[1]);
+				var dataNascimento = dadosAnimal[0].data.split(' ');
+				dataNascimento = "'"+dataNascimento[1]+" "+dataNascimento[2]+" "+dataNascimento[5]+"'";
+				dataNascimento = new Date(dataNascimento);
+				console.log(dataNascimento)
+				var $inputs = $("#ficha_atendimento input");
+				
+				//$inputs[3].value = dataNascimento.getFullYear()+"-"+(dataNascimento.getMouth()+1)+"-"+dataNascimento.getDate();
+				
+				
+				$inputs[4].value = dadosAnimal[0].especie;
+				$inputs[5].value = dadosAnimal[0].raca;
+				if(dadosAnimal[0].sexo === "M"){
+					$inputs[6].checked = true;	
+				} else {
+					$inputs[7].checked = true;
+				}
+				$inputs[8].value = dadosAnimal[0].porte;
+				$inputs[9].value = dadosAnimal[0].pelagem;
+				$inputs[10].value = dadosAnimal[0].temperamento;
+				$inputs[11].value = dadosAnimal[1].nome;
+				$inputs[12].value = dadosAnimal[1].cpf;
+				$inputs[13].value = dadosAnimal[1].telefone;
+				$inputs[14].value = dadosAnimal[1].celular;
+				$inputs[15].value = dadosAnimal[1].email;
 			}
 		});
 	})
-}( jQuery ));
+}( jQuery ) );
 
 ( function ($){
 	var $botaoAbrirFicha = $("#ficha_atendimento button.btn-success");

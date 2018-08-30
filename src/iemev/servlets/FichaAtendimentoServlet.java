@@ -2,6 +2,7 @@ package iemev.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -52,10 +53,16 @@ public class FichaAtendimentoServlet extends HttpServlet {
 			response.getWriter().write(resultAnimal);	
 			break;
 		case 2:
-			int idanimal = Integer.parseInt(request.getParameter("animal"));
-			
+			int idanimal = Integer.parseInt(request.getParameter("idAnimal"));
 			JsonObject animal = AnimalController.buscarAnimalId(idanimal);
-			
+			JsonObject dono = AnimalController.buscarDonoId(idanimal);
+			List<JsonObject> animalDono = new ArrayList<JsonObject>();
+			animalDono.add(animal);
+			animalDono.add(dono);
+			String retorno = new Gson().toJson(animalDono);
+			System.out.println(retorno);
+			response.setContentType("text/plain");
+			response.getWriter().write(retorno);	
 			break;
 		default:
 			break;

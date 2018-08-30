@@ -26,4 +26,14 @@ public class AnimalController {
 		}
 		return retorno;
 	}
+	public static JsonObject buscarDonoId(int idanimal) {
+		AnimalDAO dao = new AnimalDAO();
+		JsonObject retorno = new JsonObject();
+		try {
+			retorno = dao.buscarPorDono(idanimal);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return retorno;
+	}
 }

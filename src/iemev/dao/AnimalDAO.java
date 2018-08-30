@@ -87,4 +87,27 @@ public class AnimalDAO extends CommonsDAO {
 		}
 		return animal;
 	}
+	
+	public JsonObject buscarPorDono( int id ) {
+		Connection con = ConnectionFactory.getConnection();
+		JsonObject dono = new JsonObject();
+		try {
+			String sqlDono = "SELECT * FROM ((T_PESSOA P INNER JOIN T_CLIENTE C ON P.cpf = c.cpfUsuario) INNER JOIN T_ANIMAL A ON P.cpf = A.cpfCliente) WHERE A.idAnimal = "+id+";";
+			Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery(sqlDono);
+			try {
+				dono.addProperty("nome", rs.getString("nome"));
+				dono.addProperty("cpf", rs.getString("cpf"));
+				dono.addProperty("cpf", rs.getString("cpf"));
+				dono.addProperty("telefone", rs.getString("telefoneResidencial"));
+				dono.addProperty("celular", rs.getString("celular"));
+				dono.addProperty("email", rs.getString("emailCliente"));
+			} catch (JsonIOException je) {
+				je.printStackTrace();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dono;
+	}
 }
