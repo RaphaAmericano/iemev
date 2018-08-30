@@ -12,8 +12,26 @@ public class Animal {
 	private String raca;
 	private String pelagem;
 	private String temperamento;
-	private int cpfCliente;
+	private long cpfCliente;
 	private int idAtendimentoDeCadastramento;
+	
+	public Animal() {
+		super();
+	}
+	
+	public Animal(String nome, Character sexo, Date data, String especie, String porte, String raca, String pelagem, String temperamento, long cpf, int idatendente ) {
+		
+		this.nomeAnimal = nome;
+		this.sexo = sexo;
+		this.dataDeNascimentoAnimal = data;
+		this.especie = especie;
+		this.porte = porte;
+		this.raca = raca;
+		this.pelagem = pelagem;
+		this.temperamento = temperamento;
+		this.cpfCliente = cpf;
+		this.idAtendimentoDeCadastramento = idatendente;
+	}
 	
 	public int getIdAnimal() {
 		return idAnimal;
@@ -69,10 +87,10 @@ public class Animal {
 	public void setTemperamento(String temperamento) {
 		this.temperamento = temperamento;
 	}
-	public int getCpfCliente() {
+	public long getCpfCliente() {
 		return cpfCliente;
 	}
-	public void setCpfCliente(int cpfCliente) {
+	public void setCpfCliente(long cpfCliente) {
 		this.cpfCliente = cpfCliente;
 	}
 	public int getIdAtendimentoDeCadastramento() {

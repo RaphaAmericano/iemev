@@ -83,17 +83,12 @@
         <div class="row">
             <div class="col col-xs mt-4">
                 <h1>Ficha de Atendimento</h1>
-                <form action="">
+                <form action="" method="POST" id="ficha_atendimento">
                     
                 <div class="form-row mt-2">
                         <div class="col-md-6 mb-3">
                             <label for="nome">Nome do Animal</label>
-                            
-                            <select name="name" id="" class="form-control">
-                                <option value="1">Bob</option>
-                                <option value="2">Bill</option>
-                                <option value="3">Tobby</option>
-                                <option value="4">Dolly</option>
+                            <select name="select_nome" class="form-control">
                             </select>
                             <div class="valid-feedback">Inválido</div>
                         </div>
@@ -103,8 +98,8 @@
                     <div class="form-row mt-2">
                         <div class="col-3 col-xs-12 col-md-auto">
                             <button class="btn btn-success">Abrir Ficha</button>
-                            <button class="btn btn-warning">Alterar Ficha</button>
-                            <button class="btn btn-danger">Excluir Ficha</button>
+                            <button class="btn btn-warning" disabled>Alterar Ficha</button>
+                            <button class="btn btn-danger" disabled>Excluir Ficha</button>
                         </div>
                     </div>
 
@@ -210,7 +205,13 @@
                             <input class="form-control" type="text" name="nome_atendente" placeholder="Lineu Silva" readonly>
                         </div>
                     </div>
-
+					<div class="form-row mt-2">
+                        <div class="col-12">
+                            <!-- <input type="submit" class="btn btn-primary" data-toggle="modal" value="ok" data-target="#modalConfirmacao"> -->
+                            <input type="submit" class="btn btn-primary" value="ok">
+                            <input type="hidden" name="tipo_submit" value="0">
+                        </div>
+                    </div>
                     <div class="form-row mt-4">
                         <div class="col-md-12">
                             <h2>Serviços</h2>

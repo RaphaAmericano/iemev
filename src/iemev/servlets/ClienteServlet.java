@@ -68,23 +68,18 @@ public class ClienteServlet extends HttpServlet {
 				} 
 				catch (Exception e) {	
 					e.printStackTrace();
-				}
-				System.out.println(data);
+				}	
 				String endereco = request.getParameter("endereco").trim();
 				String telefone = request.getParameter("telefone").trim();
 				String celular = request.getParameter("celular").trim();
 				String email = request.getParameter("email").trim();
 				int idAtend = Integer.parseInt(request.getParameter("idatendente"));
-				System.out.println(cpf+ " "+rg+" "+nome+" "+endereco+" "+telefone+" "+celular+" "+email+" "+idAtend);
 				Cliente cliente = new Cliente(cpf, rg, nome, endereco, telefone, celular, data, email, idAtend);
 				String result = ClienteController.cadastrarCliente(cliente);
-				System.out.println(result);
 				break;
 			}
-			
 		}
 		
-		request.setAttribute("tipo", formulario);
 		RequestDispatcher view = request.getRequestDispatcher("cliente.jsp");
 		view.forward(request, response);
 		

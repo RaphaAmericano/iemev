@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
+import iemev.controllers.AnimalController;
 import iemev.controllers.FichaAtendimentoController;
 
 /**
@@ -21,35 +23,45 @@ import iemev.controllers.FichaAtendimentoController;
 public class FichaAtendimentoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public FichaAtendimentoServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String palavra = request.getParameter("busca");
-
-		System.out.println(palavra);
-		ArrayList<String> resultArray = FichaAtendimentoController.buscarString(palavra);
+		int opcao = Integer.parseInt(request.getParameter("opcao"));
 		
-		String result = new Gson().toJson(resultArray);
-		response.setContentType("text/plain");
-//		response.setContentType("application/json");
-		response.getWriter().write(result);
+		switch (opcao) {
+		case 0:
+			String palavra = request.getParameter("busca");
+			ArrayList<String> resultArray = FichaAtendimentoController.buscarString(palavra);
+			String result = new Gson().toJson(resultArray);
+			response.setContentType("text/plain");
+			response.getWriter().write(result);	
+			break;
+		case 1:
+			long idusuario = Long.parseLong(request.getParameter("idcliente"));
+			
+			ArrayList<String> animais = FichaAtendimentoController.buscarAnimais(idusuario);
+//			if(animais.size() == 0 ) { }
+			String resultAnimal = new Gson().toJson(animais);
+			response.setContentType("text/plain");
+			response.getWriter().write(resultAnimal);	
+			break;
+		case 2:
+			int idanimal = Integer.parseInt(request.getParameter("animal"));
+			
+			JsonObject animal = AnimalController.buscarAnimalId(idanimal);
+			
+			break;
+		default:
+			break;
+		}
+//		RequestDispatcher view = request.getRequestDispatcher("ficha_atendimento.jsp");
+//		view.forward(request, response);
 	}
 
 }

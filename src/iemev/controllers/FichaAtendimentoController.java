@@ -15,4 +15,16 @@ public class FichaAtendimentoController {
 		}
 		return retorno;
 	}
+	public static ArrayList buscarAnimais(long idcliente) {
+		
+		FichaAtendimentoDAO dao = new FichaAtendimentoDAO();
+		ArrayList retorno = new ArrayList<>();
+		try {
+			retorno = dao.buscarAnimal(idcliente);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return retorno;
+	}
+	
 }

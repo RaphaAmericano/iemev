@@ -11,10 +11,8 @@ public class ClienteController {
 			dao.inserir(cliente);	
 		} catch(Exception e) {
 			e.printStackTrace();
-			System.out.println("Erro");
 			return "Erro";
 		}
-		
 		return "Sucesso";
 	}
 }

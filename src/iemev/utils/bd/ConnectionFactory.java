@@ -11,13 +11,10 @@ public class ConnectionFactory {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			String db = "C:/Users/Raphael/eclipse-workspace/iemev/iemev.db";
-			
 			Connection con = DriverManager.getConnection("jdbc:sqlite:"+ db );
-			System.out.println(con);
 			return con;		
 		}
 		catch(Exception e ) {
-			System.out.println(e);
 			e.printStackTrace();			
 		}
 		return null;

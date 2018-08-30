@@ -15,7 +15,7 @@
                         <img class="card-img-top" src="img/anestesiologia.jpg" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">Animal</h5>
-                            <a href="animal.html" class="btn btn-primary btn-block">Cadastro de Animal</a>
+                            <a href="animal.jsp" class="btn btn-primary btn-block">Cadastro de Animal</a>
                         </div>
                     </div>
                     <div class="card">
