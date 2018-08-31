@@ -105,6 +105,7 @@ public class AnimalDAO extends CommonsDAO {
 			} catch (JsonIOException je) {
 				je.printStackTrace();
 			}
+			con.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

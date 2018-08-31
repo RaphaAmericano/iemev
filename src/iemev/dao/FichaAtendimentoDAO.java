@@ -1,6 +1,7 @@
 package iemev.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 
+import iemev.models.FichaDeAtendimento;
 import iemev.utils.bd.ConnectionFactory;
 
 public class FichaAtendimentoDAO {
@@ -71,5 +73,26 @@ public class FichaAtendimentoDAO {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public boolean inserir(FichaDeAtendimento ficha) {
+		System.out.println(ficha+ " DAO");
+		Connection con = ConnectionFactory.getConnection();
+		boolean retorno = false;
+		String sqlFicha = "INSERT INTO T_FICHADEATENDIMENTO ( idAnimal, idAtendenteAbriuFicha, statusFicha) VALUES (?,?,?);";
+		try {
+			 
+			PreparedStatement stm = con.prepareStatement(sqlFicha);
+			stm.setInt(1, ficha.getIdAnimal());
+			stm.setInt(2, ficha.getIdAtendenteAbriuFicha());
+			stm.setString(3, ficha.getStatusFicha());
+			int teste = stm.executeUpdate();
+			System.out.println(teste);
+			retorno = true;
+			con.close();
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+		return retorno;
 	}
 }

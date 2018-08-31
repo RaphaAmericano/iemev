@@ -42,7 +42,7 @@
 
 ( function($){
 	var $btnClienteSelect = $("#cliente_ficha button.btn-success");
-	var $btnAnimalSelect = $("#ficha_atendimento select[name=select_nome]");
+	var $btnAnimalSelect = $("#ficha_atendimento select[name=select_nome_animal]");
 	$btnClienteSelect.on('click', function(e){
 		e.preventDefault();
 		var valor = $("#cliente_ficha select").val()[0];
@@ -66,10 +66,11 @@
 		});
 		
 	});
-	$btnAnimalSelect.on('change', function(e){
+	
+	$btnAnimalSelect.on('click', function(e){
 		e.preventDefault();
 		var animal = this.value; 
-		console.log(animal);
+		
 		$.ajax({
 			method: 'POST',
 			url: 'FichaAtendimentoServlet.do',
@@ -107,7 +108,9 @@
 				$inputs[15].value = dadosAnimal[1].email;
 			}
 		});
-	})
+	});
+	
+	
 }( jQuery ) );
 
 ( function ($){

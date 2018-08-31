@@ -83,12 +83,12 @@
         <div class="row">
             <div class="col col-xs mt-4">
                 <h1>Ficha de Atendimento</h1>
-                <form action="" method="POST" id="ficha_atendimento">
+                <form action="FichaAtendimentoServlet.do" method="POST" id="ficha_atendimento">
                     
                 <div class="form-row mt-2">
                         <div class="col-md-6 mb-3">
-                            <label for="nome">Nome do Animal</label>
-                            <select name="select_nome" class="form-control">
+                            <label for="select_nome_animal">Nome do Animal</label>
+                            <select name="select_nome_animal" class="form-control">
                             </select>
                             <div class="valid-feedback">Inválido</div>
                         </div>
@@ -202,16 +202,33 @@
                     <div class="form-row mt-2">
                         <div class="col-md-2">
                             <label for="idatendente">Nome do Atendente</label>
-                            <input class="form-control" type="text" name="nome_atendente" placeholder="Lineu Silva" readonly>
+                            <input class="form-control" type="text" name="idatendente" placeholder="Lineu Silva" value="1" readonly>
                         </div>
                     </div>
 					<div class="form-row mt-2">
                         <div class="col-12">
                             <!-- <input type="submit" class="btn btn-primary" data-toggle="modal" value="ok" data-target="#modalConfirmacao"> -->
-                            <input type="submit" class="btn btn-primary" value="ok">
-                            <input type="hidden" name="tipo_submit" value="0">
+                            <button type="submit" class="btn btn-primary">OK</button>
+                            <input type="hidden" name="opcao" value="3">
                         </div>
                     </div>
+                    
+                    <% if(request.getAttribute("status_insert") != null ){ %>
+                    <div class="form-row mt-2">
+                        <div class="col-12">
+                        	<% if(request.getAttribute("status_insert") == "Ficha cadastrada com sucesso" ){ %>
+                        	<div class="alert alert-success" role="alert">
+							  <%=request.getAttribute("status_insert") %>
+							</div> 
+							<% } else {  %>
+	                       <div class="alert alert-danger" role="alert">
+							  <%=request.getAttribute("status_insert") %>
+							</div>
+						 	 <% } %>
+                    	</div>
+                    </div>
+                    <% } %>
+                    
                     <div class="form-row mt-4">
                         <div class="col-md-12">
                             <h2>Serviços</h2>
