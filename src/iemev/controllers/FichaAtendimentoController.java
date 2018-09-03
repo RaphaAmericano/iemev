@@ -28,19 +28,27 @@ public class FichaAtendimentoController {
 		return retorno;
 	}
 	
-	public static String novaFicha(FichaDeAtendimento ficha ) {
+	public static int novaFicha(FichaDeAtendimento ficha ) {
 		FichaAtendimentoDAO dao = new FichaAtendimentoDAO();
-		boolean status = false;
-		System.out.println("Ficha");
+		int fichaId = 0;
 		try {
-			status = dao.inserir(ficha);
+			//retorno o id da ultima ficha gerada pelo banco
+			fichaId = dao.inserir(ficha);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		String retorno = "Não foi possível cadastrar nova ficha";
-		if(status == true) {
-			retorno = "Ficha cadastrada com sucesso";
-		}
-		return retorno;
+		return fichaId;
 	}
+	
+	public static FichaDeAtendimento buscarPorId(int id ) {
+		FichaAtendimentoDAO dao = new FichaAtendimentoDAO();
+		try {
+			FichaDeAtendimento ficha = dao.selecionarPorId(id);
+			return ficha;
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 }

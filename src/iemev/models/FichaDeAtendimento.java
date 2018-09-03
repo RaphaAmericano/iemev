@@ -15,6 +15,16 @@ public class FichaDeAtendimento {
 			super();
 		}
 		
+		public FichaDeAtendimento(int idFicha, Date dataAbertura, Date dataFechamento, int idAnimal, int idAteAbr, int idAteFec, String status ) {
+			this.numeroFicha = idFicha;
+			this.dataAbertura = dataAbertura;
+			this.dataFechamento = dataFechamento;
+			this.idAnimal = idAnimal;
+			this.idAtendenteAbriuFicha = idAteAbr;
+			this.idAtendenteFechouFicha = idAteFec;
+			this.statusFicha = status;
+		}
+		
 		public FichaDeAtendimento(Date dataAbertura, Date dataFechamento, int idAnimal, int idAteAbr, int idAteFec, String status ) {
 			this.dataAbertura = dataAbertura;
 			this.dataFechamento = dataFechamento;
@@ -24,11 +34,11 @@ public class FichaDeAtendimento {
 			this.statusFicha = status;
 		}
 		//Constructor para abertura de ficha
-		public FichaDeAtendimento(Date dataAbertura, int idAnimal, int idAteAbr,  String status ) {
+		public FichaDeAtendimento(Date dataAbertura, int idAnimal, int idAteAbr ) {
 			this.dataAbertura = dataAbertura;
 			this.idAnimal = idAnimal;
 			this.idAtendenteAbriuFicha = idAteAbr;
-			this.statusFicha = status;
+			this.statusFicha = "Aberta";
 		}
 		
 		public int getNumeroFicha() {

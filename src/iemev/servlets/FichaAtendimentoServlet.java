@@ -72,14 +72,28 @@ public class FichaAtendimentoServlet extends HttpServlet {
 			response.getWriter().write(retorno);	
 			break;
 		case 3:
-			System.out.println(opcao);
 			Date data = new Date();
 			int idAtendAbri = Integer.parseInt(request.getParameter("idatendente"));
 			int idAnimal = Integer.parseInt(request.getParameter("select_nome_animal"));
-			String status = "Aberta";
+			String mensagem = "Não foi possível cadastrar nova ficha";
 			
-			FichaDeAtendimento ficha = new FichaDeAtendimento(data, idAnimal, idAtendAbri, status);
-			String mensagem = FichaAtendimentoController.novaFicha(ficha);
+			FichaDeAtendimento ficha = new FichaDeAtendimento(data, idAnimal, idAtendAbri);
+			int idNovaFicha = FichaAtendimentoController.novaFicha(ficha);
+			if(idNovaFicha > 0 ) {
+				mensagem = "Ficha cadastrada com sucesso";
+			}
+			
+			FichaDeAtendimento fichaRequest = FichaAtendimentoController.buscarPorId(idNovaFicha);
+			
+			
+			request.setAttribute("numero_ficha", fichaRequest.getNumeroFicha());
+			request.setAttribute("data_abertura", fichaRequest.getDataAbertura());
+			request.setAttribute("data_fechamento", fichaRequest.getDataFechamento());
+			request.setAttribute("id_animal", fichaRequest.getIdAnimal());
+			request.setAttribute("id_atendente_abriu", fichaRequest.getIdAtendenteAbriuFicha());
+			request.setAttribute("id_atendente_fechou", fichaRequest.getIdAtendenteFechouFicha());
+			request.setAttribute("status", fichaRequest.getStatusFicha());
+//			.....completar os setAttributes como os acima			
 			request.setAttribute("status_insert", mensagem);
 			RequestDispatcher view = request.getRequestDispatcher("ficha_atendimento.jsp");
 			view.forward(request, response);

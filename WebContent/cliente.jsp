@@ -11,6 +11,7 @@
                         <input class="form-control" type="search">
                     </div>
                     <button class="btn btn-primary" type="submit">Localizar</button>
+                    <input type="hidden" name="opcao" value="0">
                 </form>
             </div>
         </div>
@@ -20,8 +21,7 @@
     <div class="container">
         <div class="row justify-content-md-center">
             <div class="col col-xs col-md-auto col-md-12 mt-4">
-                <form action="clienteServlet.do" method="POST">
-                	<input type="hidden" name="tipoFormulario" value="1">
+                <div>
                     <div class="form-group"><label for="animal">Clientes</label>
                         <select name="animal[id]" id="" class="form-control" multiple="multiple">
                             <option value="0">Jorge Silva</option>
@@ -31,7 +31,7 @@
                         </select>
                         <button class="btn btn-success mt-2" value="selecionar" name="animal[acao]" type="submit">Detalhar Cliente</button>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>

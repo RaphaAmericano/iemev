@@ -1,4 +1,9 @@
 <%@include file="_header.jsp" %>
+<%
+String senha = (String)request.getAttribute("senha");
+String cpf = (String)request.getAttribute("cpf");
+%>
+
 <div class="container">
         <div class="row">
             <div class="col-3 col-xs-12 mx-auto m-5">
@@ -19,10 +24,11 @@
                             <span class="input-group-text">
                                 <i class="fas fa-key"></i>
                             </span>
-                            <input class="form-control" type="password" name="senha" placeholder="Senha">
+                            <input class="form-control" type="password" name="senha" placeholder="Senha" >
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Entrar</button>
+                    <input type="hidden" name="login" value="0">   
                 </form>
             </div>
         </div>

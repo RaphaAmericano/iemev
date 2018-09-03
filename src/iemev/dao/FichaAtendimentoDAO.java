@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
@@ -14,6 +15,33 @@ import iemev.models.FichaDeAtendimento;
 import iemev.utils.bd.ConnectionFactory;
 
 public class FichaAtendimentoDAO {
+	
+	public FichaDeAtendimento selecionarPorId(int id) {
+		Connection con = ConnectionFactory.getConnection();
+		try {
+			String sqlSelect = "SELECT * FROM T_FICHADEATENDIMENTO WHERE numeroFicha =  ? ;";
+			PreparedStatement stm = con.prepareStatement(sqlSelect);
+			stm.setInt(1, id);
+			ResultSet rs = stm.executeQuery();
+			
+			
+			int idFicha = Integer.parseInt(rs.getString("numeroFicha"));
+			Date dataAbertura = new Date(rs.getString("dataAbertura"));
+			Date dataFechamento = new Date(rs.getString("dataFechamento"));
+			int idAnimal = Integer.parseInt(rs.getString("idAnimal"));
+			int idAtendAbriu = Integer.parseInt(rs.getString("idAtendenteAbriuFicha"));
+			int idAtendFechou = Integer.parseInt(rs.getString("idAtendenteFechouFicha"));
+			String status = rs.getString("statusFicha");
+			FichaDeAtendimento ficha = new FichaDeAtendimento(idFicha, dataAbertura, dataFechamento, idAnimal, idAtendAbriu, idAtendFechou, status);
+			
+			stm.close();
+			con.close();
+			return ficha;
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+		return null;
+	}
 	
 	public ArrayList<JsonObject> buscar(String palavra) {
 		Connection con = ConnectionFactory.getConnection();
@@ -75,20 +103,28 @@ public class FichaAtendimentoDAO {
 		return null;
 	}
 	
-	public boolean inserir(FichaDeAtendimento ficha) {
+	public int inserir(FichaDeAtendimento ficha) {
 		System.out.println(ficha+ " DAO");
 		Connection con = ConnectionFactory.getConnection();
-		boolean retorno = false;
+		int retorno = 0;
+		ResultSet rs = null;
 		String sqlFicha = "INSERT INTO T_FICHADEATENDIMENTO ( idAnimal, idAtendenteAbriuFicha, statusFicha) VALUES (?,?,?);";
 		try {
 			 
-			PreparedStatement stm = con.prepareStatement(sqlFicha);
+			PreparedStatement stm = con.prepareStatement(sqlFicha, Statement.RETURN_GENERATED_KEYS);
 			stm.setInt(1, ficha.getIdAnimal());
 			stm.setInt(2, ficha.getIdAtendenteAbriuFicha());
 			stm.setString(3, ficha.getStatusFicha());
-			int teste = stm.executeUpdate();
-			System.out.println(teste);
-			retorno = true;
+			int linha = stm.executeUpdate();
+			
+			if(linha == 1 ) {
+				rs = stm.getGeneratedKeys();
+				if(rs.next()) {
+					retorno = rs.getInt(1);	
+				}
+			}
+			
+			stm.close();
 			con.close();
 		} catch (SQLException se) {
 			se.printStackTrace();

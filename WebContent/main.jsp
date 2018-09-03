@@ -22,14 +22,14 @@
                         <img class="card-img-top" src="img/cardiologia_iemev.jpg" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">Consulta</h5>
-                            <a href="consulta.html" class="btn btn-primary btn-block">Cadastro Consulta</a>
+                            <a href="consulta.jsp" class="btn btn-primary btn-block">Cadastro Consulta</a>
                         </div>
                     </div>
                     <div class="card">
                         <img class="card-img-top" src="img/cliente_geriatria.jpg" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">Exame</h5>
-                            <a href="exame.html" name="incluir" class="btn btn-primary btn-block">Cadastro de Exames</a>
+                            <a href="exame.jsp" name="incluir" class="btn btn-primary btn-block">Cadastro de Exames</a>
                         </div>
                     </div>
                 </div>
@@ -52,14 +52,14 @@
                   <div class="card-body">
                       <h5 class="card-title">Lista de Atendimento</h5>
                       <form action="lista_atendimento.html" class="form-group">
-                      <a href="lista_atendimento.html" class="btn btn-primary btn-block">Gerenciar Listas</a>
+                      <a href="lista_atendimento.jsp" class="btn btn-primary btn-block">Gerenciar Listas</a>
                   </div>
               </div>
               <div class="card">
                   <img class="card-img-top" src="img/veterinaria_iemev.jpg" alt="Card image cap">
                   <div class="card-body">
                       <h5 class="card-title">Finalizar Atendimento</h5>
-                      <a href="finalizar_atendimento.html" class="btn btn-primary btn-block">Finalizar Atendimento</a>
+                      <a href="finalizar_atendimento.jsp" class="btn btn-primary btn-block">Finalizar Atendimento</a>
                   </div>
               </div>
           </div>

@@ -43,7 +43,7 @@ public class Pessoa {
 	public long getCpf() {
 		return cpf;
 	}
-	public void setCpf(int cpf) {
+	public void setCpf(long cpf) {
 		this.cpf = cpf;	
 	}
 	public String getNome() {
