@@ -20,18 +20,18 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 
-import iemev.controllers.AnimalController;
-import iemev.controllers.FichaAtendimentoController;
+import iemev.manager.AnimalManager;
+import iemev.manager.FichaAtendimentoManager;
 import iemev.models.FichaDeAtendimento;
 
 /**
  * Servlet implementation class FichaAtendimentoServlet
  */
 @WebServlet("/FichaAtendimentoServlet.do")
-public class FichaAtendimentoServlet extends HttpServlet {
+public class FichaAtendimentoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public FichaAtendimentoServlet() {
+    public FichaAtendimentoController() {
         super();
     }
 
@@ -45,7 +45,7 @@ public class FichaAtendimentoServlet extends HttpServlet {
 		switch (opcao) {
 		case 0:
 			String palavra = request.getParameter("busca");
-			ArrayList<String> resultArray = FichaAtendimentoController.buscarString(palavra);
+			ArrayList<String> resultArray = FichaAtendimentoManager.buscarString(palavra);
 			String result = new Gson().toJson(resultArray);
 			response.setContentType("text/plain");
 			response.getWriter().write(result);	
@@ -53,7 +53,7 @@ public class FichaAtendimentoServlet extends HttpServlet {
 		case 1:
 			long idusuario = Long.parseLong(request.getParameter("idcliente"));
 			
-			ArrayList<String> animais = FichaAtendimentoController.buscarAnimais(idusuario);
+			ArrayList<String> animais = FichaAtendimentoManager.buscarAnimais(idusuario);
 //			if(animais.size() == 0 ) { }
 			String resultAnimal = new Gson().toJson(animais);
 			response.setContentType("text/plain");
@@ -62,8 +62,8 @@ public class FichaAtendimentoServlet extends HttpServlet {
 		case 2:
 			System.out.println(opcao);
 			int idanimal = Integer.parseInt(request.getParameter("idAnimal"));
-			JsonObject animal = AnimalController.buscarAnimalId(idanimal);
-			JsonObject dono = AnimalController.buscarDonoId(idanimal);
+			JsonObject animal = AnimalManager.buscarAnimalId(idanimal);
+			JsonObject dono = AnimalManager.buscarDonoId(idanimal);
 			List<JsonObject> animalDono = new ArrayList<JsonObject>();
 			animalDono.add(animal);
 			animalDono.add(dono);
@@ -78,12 +78,12 @@ public class FichaAtendimentoServlet extends HttpServlet {
 			String mensagem = "Não foi possível cadastrar nova ficha";
 			
 			FichaDeAtendimento ficha = new FichaDeAtendimento(data, idAnimal, idAtendAbri);
-			int idNovaFicha = FichaAtendimentoController.novaFicha(ficha);
+			int idNovaFicha = FichaAtendimentoManager.novaFicha(ficha);
 			if(idNovaFicha > 0 ) {
 				mensagem = "Ficha cadastrada com sucesso";
 			}
 			
-			FichaDeAtendimento fichaRequest = FichaAtendimentoController.buscarPorId(idNovaFicha);
+			FichaDeAtendimento fichaRequest = FichaAtendimentoManager.buscarPorId(idNovaFicha);
 			
 			
 			request.setAttribute("numero_ficha", fichaRequest.getNumeroFicha());

@@ -1,11 +1,11 @@
-package iemev.controllers;
+package iemev.manager;
 
 import com.google.gson.JsonObject;
 
 import iemev.dao.AnimalDAO;
 import iemev.models.Animal;
 
-public class AnimalController {
+public class AnimalManager {
 	public static String cadastrarAnimal( Animal animal ) {
 		AnimalDAO dao = new AnimalDAO();
 		try {

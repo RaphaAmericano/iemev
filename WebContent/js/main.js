@@ -247,5 +247,9 @@
 		$formulariConsulta.find('input')[3].readOnly = false;
 	});
 	
+	$botoesIncluir.on("click", function(e){
+		console.log("incluir");
+	});
+	
 	
 }( jQuery ));

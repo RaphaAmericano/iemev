@@ -13,18 +13,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 
-import iemev.controllers.ClienteController;
+import iemev.manager.ClienteManager;
 import iemev.models.Cliente;
 
 /**
  * Servlet implementation class ClienteServlet
  */
 @WebServlet("/clienteServlet.do")
-public class ClienteServlet extends HttpServlet {
+public class ClienteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
    
-    public ClienteServlet() {
+    public ClienteController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -75,7 +75,7 @@ public class ClienteServlet extends HttpServlet {
 				String email = request.getParameter("email").trim();
 				int idAtend = Integer.parseInt(request.getParameter("idatendente"));
 				Cliente cliente = new Cliente(cpf, rg, nome, endereco, telefone, celular, data, email, idAtend);
-				String result = ClienteController.cadastrarCliente(cliente);
+				String result = ClienteManager.cadastrarCliente(cliente);
 				break;
 			}
 		}

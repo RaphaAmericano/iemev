@@ -1,10 +1,10 @@
-package iemev.controllers;
+package iemev.manager;
 
 import iemev.dao.ClienteDAO;
 import iemev.models.Cliente;
 
 
-public class ClienteController {
+public class ClienteManager {
 	public static String cadastrarCliente( Cliente cliente ) {
 		ClienteDAO dao = new ClienteDAO();
 		try {

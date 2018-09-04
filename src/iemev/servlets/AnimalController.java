@@ -11,17 +11,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import iemev.controllers.AnimalController;
+import iemev.manager.AnimalManager;
 import iemev.models.Animal;
 
 /**
  * Servlet implementation class AnimalServlet
  */
 @WebServlet("/animalServlet.do")
-public class AnimalServlet extends HttpServlet {
+public class AnimalController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public AnimalServlet() {
+    public AnimalController() {
         super();
     }
 
@@ -50,7 +50,7 @@ public class AnimalServlet extends HttpServlet {
 		long cpf = Long.parseLong(request.getParameter("cpfcliente").trim());
 		int idatendente = Integer.parseInt(request.getParameter("idatendente").trim());
 		Animal animal = new Animal(nome, sexo, data, especie, raca, porte, pelagem, temperamento, cpf, idatendente );
-		String result = AnimalController.cadastrarAnimal(animal);
+		String result = AnimalManager.cadastrarAnimal(animal);
 		
 		RequestDispatcher view = request.getRequestDispatcher("animal.jsp");
 		view.forward(request, response);

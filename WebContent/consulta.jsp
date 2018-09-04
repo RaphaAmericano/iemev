@@ -8,7 +8,7 @@
                     <label for="">Buscar por data</label>
                     <input class="form-control" name="data" type="date">
                 </div>
-                <button class="btn btn-primary" >Localizar</button>
+                <button class="btn btn-primary" >Localizar por data</button>
             </div>
         </div>
     </div>
@@ -22,9 +22,7 @@
                         <label for="">Buscar por nome</label>
                         <input class="form-control" type="search">
                     </div>
-                    <button class="btn btn-primary" type="submit">Localizar</button>
-                    <a href="cliente.jsp" class="btn btn-success">Adicionar Cliente</a>
-                    <a href="animal.jsp" class="btn btn-success">Adicionar Animal</a>
+                    <button class="btn btn-primary" type="submit">Localizar por nome</button>
                 </div>
             </div>
         </div>
@@ -37,7 +35,7 @@
                 	<label for="animal">Agendamentos</label>
                     <select name="animal" class="form-control" multiple="multiple">
                     </select>
-                    <button class="btn btn-success mt-2" value="selecionar" name="agendamento" type="submit">Detalhar</button>
+                    <button class="btn btn-success mt-2" value="selecionar" name="agendamento" type="submit">Detalhar agendamento</button>
                 </div>
             </div>
         </div>
@@ -48,16 +46,20 @@
             <div class="col col-xs">
                 <form action="consultaServlet.do" method="POST" id="formularioConsulta">
                     <div class="form-row">
-                        <div class="col-3 col-xs-12 mt-2">
-                            <button type="button" class="btn btn-success" disabled>Incluir</button>
-                            <button type="button" class="btn btn-warning" disabled>Alterar</button>
-                            <button type="button" class="btn btn-danger" disabled>Excluir</button>
+                        <div class="col-8 col-xs-12 mt-2">
+                            <button type="button" class="btn btn-success">Incluir novo agendamento</button>
+                            <button type="button" class="btn btn-warning" disabled>Alterar agendamento</button>
+                            <button type="button" class="btn btn-danger" disabled>Excluir agendamento</button>
                         </div>
                     </div>
                     <div class="form-row mt-2">
                         <div class="col-md-6 mb-3">
                             <label for="cpfcliente">CPF do Cliente</label>
                             <input class="form-control" type="number" name="cpfcliente" readonly>
+                            <div class="mt-2">
+                                <button type="button" class="btn btn-success">OK</button>
+                                <a href="cliente.jsp" class="btn btn-primary">Adicionar Cliente</a>
+                            </div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="nome_animal">Nome do Animal</label>
@@ -67,6 +69,9 @@
                                 <option value="2">Bart</option> -->
                             </select>
                             <div class="valid-feedback"></div>
+                            <div class="mt-2">
+                                <a href="animal.jsp" class="btn btn-primary">Adicionar Animal</a>
+                            </div>
                         </div>
                     </div>
                     <div class="form-row mt-2">

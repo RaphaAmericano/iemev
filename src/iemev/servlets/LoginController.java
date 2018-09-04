@@ -11,15 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import iemev.controllers.EmpregadoController;
-import iemev.controllers.LoginController;
+import iemev.manager.EmpregadoManager;
+import iemev.manager.LoginManager;
 import iemev.models.Empregado;
 
 @WebServlet("/loginServlet.do")
-public class LoginServlet extends HttpServlet {
+public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public LoginServlet() {
+    public LoginController() {
         super();
     }
 

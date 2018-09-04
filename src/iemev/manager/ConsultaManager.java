@@ -1,4 +1,4 @@
-package iemev.controllers;
+package iemev.manager;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 
 import iemev.dao.ConsultaDAO;
 
-public class ConsultaController {
+public class ConsultaManager {
 	public static List<JsonObject> buscarData(String data) {
 		ConsultaDAO dao = new ConsultaDAO();
 		List<JsonObject> retorno = dao.buscarPorData(data);

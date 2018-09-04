@@ -1,11 +1,11 @@
-package iemev.controllers;
+package iemev.manager;
 
 import java.util.ArrayList;
 
 import iemev.dao.FichaAtendimentoDAO;
 import iemev.models.FichaDeAtendimento;
 
-public class FichaAtendimentoController {
+public class FichaAtendimentoManager {
 	public static ArrayList buscarString(String palavra) {
 		FichaAtendimentoDAO dao = new FichaAtendimentoDAO();
 		ArrayList retorno = new ArrayList<>();
