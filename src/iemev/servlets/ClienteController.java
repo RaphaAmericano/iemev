@@ -37,9 +37,6 @@ public class ClienteController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int tipoFormulario = Integer.parseInt(request.getParameter("tipoFormulario"));
 		String formulario = "";
-		
-		
-		
 		switch(tipoFormulario) {
 			//Busca por data
 			case 0: {
@@ -57,9 +54,7 @@ public class ClienteController extends HttpServlet {
 			case 2: {
 				String nome = request.getParameter("nome").trim();
 				long cpf = Long.parseLong(request.getParameter("cpf").trim());
-				long rg = Long.parseLong(request.getParameter("rg").trim());
-				
-				
+				long rg = Long.parseLong(request.getParameter("rg").trim());	
 				SimpleDateFormat dataformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				String dataString = request.getParameter("data") + " 00:00:00";
 				Date data = new Date();

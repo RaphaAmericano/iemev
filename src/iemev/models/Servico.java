@@ -7,6 +7,18 @@ public class Servico {
 	private double preco;
 	private int idAdministradorDeCadastramento;
 	
+	public Servico() {
+		super();
+	}
+	
+	public Servico(int id, String cat, String nome, double preco, int idAdm) {
+		this.idServico = id;
+		this.categoria = cat;
+		this.nomeServico = nome;
+		this.preco = preco;
+		this.idAdministradorDeCadastramento = idAdm;
+	}
+	
 	public int getIdServico() {
 		return idServico;
 	}

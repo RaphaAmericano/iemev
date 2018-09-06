@@ -26,7 +26,6 @@ public class EmpregadoDAO {
 			se.printStackTrace();
 		}
 		finally {
-			con.close();
 			return empregado;
 		}
 	}

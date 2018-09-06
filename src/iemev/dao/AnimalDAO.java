@@ -1,9 +1,11 @@
 package iemev.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.JsonIOException;
@@ -110,5 +112,40 @@ public class AnimalDAO extends CommonsDAO {
 			e.printStackTrace();
 		}
 		return dono;
+	}
+	public List<Animal> buscarAnimaisDono(long cpf){
+		System.out.println(cpf);
+		System.out.println("ANIMAL DAO");
+		Connection con = ConnectionFactory.getConnection();
+		String sql = "SELECT * FROM T_ANIMAL WHERE cpfCliente = ?;";
+		List<Animal> retorno = new ArrayList<Animal>();
+		try {
+			PreparedStatement stm = con.prepareStatement(sql);
+			stm.setLong(1, cpf);
+			ResultSet rs = stm.executeQuery();
+			
+			while(rs.next()) {
+				Animal animal = new Animal();
+				animal.setIdAnimal(rs.getInt("idAnimal"));
+				animal.setNomeAnimal(rs.getString("nomeAnimal"));
+				animal.setSexo(rs.getString("sexo").charAt(0));
+				animal.setDataDeNascimentoAnimal(rs.getDate("dataDeNascimentoAnimal"));
+				animal.setEspecie(rs.getString("especie"));
+				animal.setPorte(rs.getString("porte"));
+				animal.setRaca(rs.getString("raca"));
+				animal.setPelagem(rs.getString("pelagem"));
+				animal.setTemperamento(rs.getString("temperamento"));
+				animal.setCpfCliente(rs.getLong("cpfCliente"));
+				animal.setIdAtendimentoDeCadastramento(rs.getInt("idAtendenteDeCadastramento"));
+				System.out.println(animal.getNomeAnimal());
+				retorno.add(animal);
+			}
+			stm.close();
+			con.close();
+			return retorno;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

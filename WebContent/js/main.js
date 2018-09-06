@@ -143,15 +143,13 @@
 	var $inputSubmit = $("#buscaData button");
 	var $inputNome = $("#buscaNome input")[0];
 	var $inputSubmitNome = $("#buscaNome button");
-
-	var $formulariConsulta = $("#formularioConsulta");
+	var $formularioConsulta = $("#formularioConsulta");
 	var $selectAgendamento = $("#selectAgendamento");
 	var $inputDetalhar = $selectAgendamento.find("button");
-	var $botoesIncluir = $("#formularioConsulta button")[0];	
-	var $botoesAlterar = $("#formularioConsulta button")[1];	
-	var $botoesExcluir = $("#formularioConsulta button")[2];
-	
-	console.log($("#formularioConsulta button")[0]);
+	var $botoesIncluir = $("#incluirAge");
+	var $botoesAlterar = $formularioConsulta.find("button")[1];	
+	var $botoesExcluir = $formularioConsulta.find("button")[2];
+	var $botoesIncluirCliente = $formularioConsulta.find("button")[3];
 	
 	$inputSubmit.on('click', function(e){
 		
@@ -196,7 +194,6 @@
 						var dia = agendamentos[i].data.split(' ')[0];
 						var hora = agendamentos[i].data.split(' ')[1];
 						var $option = "<option value="+agendamentos[i].id_animal+">"+dia+" | "+hora+" | "+agendamentos[i].nome_animal+" | "+agendamentos[i].nome_cliente+"</option>";
-						console.log($option);
 						$selectAgendamento.find('select').append($option);	
 					}
 					
@@ -207,6 +204,11 @@
 	
 	$inputDetalhar.on('click', function(e){
 		var data = $selectAgendamento.find("option:selected").val()
+		$formularioConsulta.find('input')[0].readOnly = true;
+		$formularioConsulta.find('input')[2].readOnly = true;
+		$formularioConsulta.find('input')[3].readOnly = true;
+		$formularioConsulta.find('select[name=nome_animal]').attr("readonly", true );
+		$formularioConsulta.find('select[name=consulta]').attr("readonly", true);
 		data = parseInt(data);
 		if(data != 0 ){
 			$.ajax({
@@ -217,18 +219,19 @@
 					dados: data
 				},
 				success:function(retorno){
-					$formulariConsulta[0].reset();
+					$formularioConsulta[0].reset();
 					var agendamento = JSON.parse(retorno);
+					console.log(agendamento);
 					var dia = agendamento.data.split(' ')[0];
 					var hora = agendamento.data.split(' ')[1];
-					$formulariConsulta.find('input')[0].value  = agendamento.cpf_cliente;
-					$formulariConsulta.find('input')[1].value  = agendamento.nome_cliente;
-					$formulariConsulta.find('input')[2].value  = dia;
-					$formulariConsulta.find('input')[3].value  = hora;
-					$formulariConsulta.find('input')[4].value  = agendamento.id;
+					$formularioConsulta.find('input')[0].value  = agendamento.cpf_cliente;
+					$formularioConsulta.find('input')[1].value  = agendamento.nome_cliente;
+					$formularioConsulta.find('input')[2].value  = dia;
+					$formularioConsulta.find('input')[3].value  = hora;
+					$formularioConsulta.find('input')[4].value  = agendamento.id;
 					var $option = '<option value="'+agendamento.id_animal+'">'+agendamento.nome_animal+"</option>";
-					console.log($option);
-					$formulariConsulta.find('select').append($option);
+					$formularioConsulta.find('select[name=nome_animal]').append($option);
+					$formularioConsulta.find('select[name=consulta]').val(agendamento.id_servico);
 						
 					$botoesAlterar.disabled = false;	
 					$botoesExcluir.disabled = false;
@@ -238,18 +241,35 @@
 		}
 	});
 	
-	$("#formularioConsulta button")[0].on("click",function(e){
-		console.log("clicou");
-		e.preventDefault();
-		$formulariConsulta.find('select')[0].readOnly = false;
-		$formulariConsulta.find('select')[1].readOnly = false;
-		$formulariConsulta.find('input')[2].readOnly = false;
-		$formulariConsulta.find('input')[3].readOnly = false;
-	});
+	$botoesIncluir[0].addEventListener("click", function(){
+		$formularioConsulta[0].reset();
+		$formularioConsulta.find('select[name=nome_animal]').html("");
+		$botoesAlterar.disabled = true;	
+		$botoesExcluir.disabled = true;
+		$formularioConsulta.find('input')[5].value  = 3;
+		$formularioConsulta.find('input')[0].readOnly = false;
+		$formularioConsulta.find('input')[2].readOnly = false;
+		$formularioConsulta.find('input')[3].readOnly = false;
+		//$formularioConsulta.find('input')[6].remove = false;
+		$formularioConsulta.find('select[name=nome_animal]').removeAttr("readonly");
+		$formularioConsulta.find('select[name=consulta]').removeAttr("readonly");	
+	})
 	
-	$botoesIncluir.on("click", function(e){
-		console.log("incluir");
+	$botoesIncluirCliente.addEventListener('click', function(){
+		var data = $formularioConsulta.find('input[name=cpfcliente]').val();
+		if(data != undefined && data != ""){
+			$.ajax({
+				method: 'POST',
+				url:"consultaServlet.do",
+				data:{
+					opcao: 3,
+					dados: data
+				},
+				success:function(retorno){
+					console.log(retorno)
+				}
+			});
+		}
 	});
-	
 	
 }( jQuery ));

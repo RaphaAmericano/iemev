@@ -1,4 +1,11 @@
+<%@page import="iemev.models.Servico"%>
+<%@page import="iemev.manager.ServicoManager"%>
+<%@page import="java.util.List"%>
 <%@include file="_header.jsp" %>
+<%
+List<Servico> servicos = ServicoManager.buscarTodosServicos();
+%>
+
 <!-- Por data -->
     <div class="container">
         <div class="row justify-content-md center">
@@ -47,9 +54,9 @@
                 <form action="consultaServlet.do" method="POST" id="formularioConsulta">
                     <div class="form-row">
                         <div class="col-8 col-xs-12 mt-2">
-                            <button type="button" class="btn btn-success">Incluir novo agendamento</button>
-                            <button type="button" class="btn btn-warning" disabled>Alterar agendamento</button>
-                            <button type="button" class="btn btn-danger" disabled>Excluir agendamento</button>
+                            <button type="button" class="btn btn-success" id="incluirAge">Incluir novo agendamento</button>
+                            <button type="button" class="btn btn-warning" id="alterarAge" disabled>Alterar agendamento</button>
+                            <button type="button" class="btn btn-danger" id="excluirAge" disabled>Excluir agendamento</button>
                         </div>
                     </div>
                     <div class="form-row mt-2">
@@ -63,7 +70,7 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="nome_animal">Nome do Animal</label>
-                            <select type="text" name="nome_animal" class="form-control" readonly>
+                            <select type="text" name="nome_animal" class="form-control" readonly="readonly">
                               <!--  <option value="0">Bill</option>
                                 <option value="1">Bob</option>
                                 <option value="2">Bart</option> -->
@@ -95,16 +102,22 @@
                         </div>
                         <div class="col-md-2 md-3">
                             <label for="consulta">Tipo de Consulta</label>
-                            <select class="form-control" name="consulta" readonly>
-                            <!--      <option>Geriatria</option>
-                                <option>Pre Natal</option> -->
-                            </select>
+                            <select class="form-control" name="consulta" readonly="readonly">
+                           	<% if( servicos != null || servicos.isEmpty() ){
+                           		for( Servico servico : servicos) { %>
+                           		<option value="<%= servico.getIdServico() %>"><%=servico.getCategoria()+" "+servico.getNomeServico()%></option>	
+                           		<% }
+                           		
+                           	} %>
+                           	</select>
                         </div>
                     </div>
                     <!-- Em seguida, os campos são os especiais de cada tipo de usuario do sistema -->
                     <div class="form-row mt-2">
                         <div class="col-md-12 mx-auto">
-                        	<input type="hidden">
+	                        <input type="hidden" name="atendente">
+                        	<input type="hidden" name="opcao" value="3">
+                        	
                            <input type="submit" value="Agendar" class="btn btn-primary" disabled >
                         </div>
                     </div>

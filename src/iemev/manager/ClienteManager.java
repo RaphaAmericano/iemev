@@ -15,4 +15,14 @@ public class ClienteManager {
 		}
 		return "Sucesso";
 	}
+	public static Cliente buscarId(long id) {
+		ClienteDAO dao = new ClienteDAO();
+		try {
+			Cliente cliente = dao.buscarId(id);
+			return cliente;
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

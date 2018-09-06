@@ -1,5 +1,7 @@
 package iemev.manager;
 
+import java.util.List;
+
 import com.google.gson.JsonObject;
 
 import iemev.dao.AnimalDAO;
@@ -35,5 +37,15 @@ public class AnimalManager {
 			e.printStackTrace();
 		}
 		return retorno;
+	}
+	public static List<Animal> buscarAnimaisCliente(long cpf ){
+		AnimalDAO dao = new AnimalDAO();
+		try {
+			List<Animal> retorno = dao.buscarAnimaisDono(cpf);
+			return retorno;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

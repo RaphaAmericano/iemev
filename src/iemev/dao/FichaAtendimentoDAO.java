@@ -104,7 +104,6 @@ public class FichaAtendimentoDAO {
 	}
 	
 	public int inserir(FichaDeAtendimento ficha) {
-		System.out.println(ficha+ " DAO");
 		Connection con = ConnectionFactory.getConnection();
 		int retorno = 0;
 		ResultSet rs = null;

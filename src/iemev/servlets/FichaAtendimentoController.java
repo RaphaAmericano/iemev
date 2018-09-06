@@ -52,15 +52,12 @@ public class FichaAtendimentoController extends HttpServlet {
 			break;
 		case 1:
 			long idusuario = Long.parseLong(request.getParameter("idcliente"));
-			
 			ArrayList<String> animais = FichaAtendimentoManager.buscarAnimais(idusuario);
-//			if(animais.size() == 0 ) { }
 			String resultAnimal = new Gson().toJson(animais);
 			response.setContentType("text/plain");
 			response.getWriter().write(resultAnimal);	
 			break;
 		case 2:
-			System.out.println(opcao);
 			int idanimal = Integer.parseInt(request.getParameter("idAnimal"));
 			JsonObject animal = AnimalManager.buscarAnimalId(idanimal);
 			JsonObject dono = AnimalManager.buscarDonoId(idanimal);

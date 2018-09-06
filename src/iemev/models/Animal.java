@@ -18,6 +18,21 @@ public class Animal {
 	public Animal() {
 		super();
 	}
+	public Animal(int idAnimal, String nome, Character sexo, Date data, String especie, String porte, String raca, String pelagem, String temperamento, long cpf, int idatendente ) {
+		
+		this.idAnimal = idAnimal;
+		this.nomeAnimal = nome;
+		this.sexo = sexo;
+		this.dataDeNascimentoAnimal = data;
+		this.especie = especie;
+		this.porte = porte;
+		this.raca = raca;
+		this.pelagem = pelagem;
+		this.temperamento = temperamento;
+		this.cpfCliente = cpf;
+		this.idAtendimentoDeCadastramento = idatendente;
+	}
+	
 	
 	public Animal(String nome, Character sexo, Date data, String especie, String porte, String raca, String pelagem, String temperamento, long cpf, int idatendente ) {
 		

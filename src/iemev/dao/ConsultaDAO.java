@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 
+import iemev.models.Agendamento;
 import iemev.utils.bd.ConnectionFactory;
 
 public class ConsultaDAO {
@@ -116,7 +117,25 @@ public class ConsultaDAO {
 	
 	
 	
-//	public static inserir(Agendamento agendamento ) {
-//		String sql = "INSERT INTO T_AGENDAMENTO( dataAgendamento, idServicoAgendado, idAnimal, idAtendenteDeAgendamento) VALUES(?,?,?,?);";
-//	}
+	public static boolean inserir(Agendamento agendamento ) {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = "INSERT INTO T_AGENDAMENTO( dataAgendamento, idServicoAgendado, idAnimal, idAtendenteDeAgendamento) VALUES(?,?,?,?);";
+		try {
+			PreparedStatement stm = con.prepareStatement(sql);
+			//stm.setDate(1, agendamento.getDataAgendamento());
+			stm.setInt(2, agendamento.getIdServicoAgendado());
+			stm.setInt(3, agendamento.getIdAnimal());
+			stm.setInt(4, agendamento.getIdAtendenteDeAgendamento());
+			stm.executeUpdate();
+			stm.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	//update
+	//update T_agendamento set idServicoAgendado = 2 where idAgendamento = 1; 
 }

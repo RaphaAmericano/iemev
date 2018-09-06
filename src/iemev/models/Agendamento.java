@@ -9,6 +9,17 @@ public class Agendamento {
 	private int idAnimal;
 	private int idAtendenteDeAgendamento;
 	
+	public Agendamento() {
+		super();
+	}
+	
+	public Agendamento(Date data, int idSer, int idAnimal, int idAtend) {
+		this.dataAgendamento = data;
+		this.idServicoAgendado = idSer;
+		this.idAnimal = idAnimal;
+		this.idAtendenteDeAgendamento = idAtend;
+	}
+	
 	public int getIdAgendamento() {
 		return idAgendamento;
 	}
