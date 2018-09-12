@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import com.google.gson.JsonIOException;
@@ -122,7 +123,8 @@ public class ConsultaDAO {
 		String sql = "INSERT INTO T_AGENDAMENTO( dataAgendamento, idServicoAgendado, idAnimal, idAtendenteDeAgendamento) VALUES(?,?,?,?);";
 		try {
 			PreparedStatement stm = con.prepareStatement(sql);
-			//stm.setDate(1, agendamento.getDataAgendamento());
+			SimpleDateFormat dataformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			stm.setString(1, dataformat.format(agendamento.getDataAgendamento()));
 			stm.setInt(2, agendamento.getIdServicoAgendado());
 			stm.setInt(3, agendamento.getIdAnimal());
 			stm.setInt(4, agendamento.getIdAtendenteDeAgendamento());
@@ -135,7 +137,25 @@ public class ConsultaDAO {
 		}
 		return true;
 	}
-	
-	//update
-	//update T_agendamento set idServicoAgendado = 2 where idAgendamento = 1; 
+	public static boolean atualizar(Agendamento agendamento) {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = "UPDATE T_AGENDAMENTO SET dataAgendamento = ?, idServicoAgendado = ?, idAnimal = ?, idAtendenteDeAgendamento = ? WHERE idAgendamento = ?;";
+		System.out.println(agendamento);
+		try {
+			PreparedStatement stm = con.prepareStatement(sql);
+			SimpleDateFormat dataformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			stm.setString(1, dataformat.format(agendamento.getDataAgendamento()));
+			stm.setInt(2, agendamento.getIdServicoAgendado());
+			stm.setInt(3, agendamento.getIdAnimal());
+			stm.setInt(4, agendamento.getIdAtendenteDeAgendamento());
+			stm.setInt(5, agendamento.getIdAgendamento());
+			stm.executeQuery();
+			stm.close();
+			con.close();
+		} catch(SQLException e ) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	} 
 }

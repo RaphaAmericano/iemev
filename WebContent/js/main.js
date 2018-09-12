@@ -228,7 +228,10 @@
 					$formularioConsulta.find('input')[1].value  = agendamento.nome_cliente;
 					$formularioConsulta.find('input')[2].value  = dia;
 					$formularioConsulta.find('input')[3].value  = hora;
-					$formularioConsulta.find('input')[4].value  = agendamento.id;
+					//Retirar essa atualizacao do atendente - esse dado deve vir por jsp
+					$formularioConsulta.find('input')[4].value  = agendamento.id_atendente;
+					//
+					$formularioConsulta.find('input')[7].value  = agendamento.id;
 					var $option = '<option value="'+agendamento.id_animal+'">'+agendamento.nome_animal+"</option>";
 					$formularioConsulta.find('select[name=nome_animal]').append($option);
 					$formularioConsulta.find('select[name=consulta]').val(agendamento.id_servico);
@@ -244,16 +247,31 @@
 	$botoesIncluir[0].addEventListener("click", function(){
 		$formularioConsulta[0].reset();
 		$formularioConsulta.find('select[name=nome_animal]').html("");
+		$botoesIncluirCliente.removeAttr("disabled");
 		$botoesAlterar.disabled = true;	
 		$botoesExcluir.disabled = true;
 		$formularioConsulta.find('input')[5].value  = 3;
 		$formularioConsulta.find('input')[0].readOnly = false;
 		$formularioConsulta.find('input')[2].readOnly = false;
 		$formularioConsulta.find('input')[3].readOnly = false;
-		//$formularioConsulta.find('input')[6].remove = false;
+		$formularioConsulta.find('input')[6].readOnly = false;
 		$formularioConsulta.find('select[name=nome_animal]').removeAttr("readonly");
 		$formularioConsulta.find('select[name=consulta]').removeAttr("readonly");	
 	})
+	
+	$botoesAlterar.addEventListener("click", function(){
+		$formularioConsulta.find('input')[5].value  = 5;
+		$formularioConsulta.find('input')[0].readOnly = false;
+		$formularioConsulta.find('input')[2].readOnly = false;
+		$formularioConsulta.find('input')[3].readOnly = false;
+		$formularioConsulta.find('input')[6].disabled = false;
+		$formularioConsulta.find('input')[6].value = "Alterar";
+		$formularioConsulta.find('select[name=nome_animal]').removeAttr("readonly");
+		$formularioConsulta.find('select[name=consulta]').removeAttr("readonly");
+		
+		
+		
+	});
 	
 	$botoesIncluirCliente.addEventListener('click', function(){
 		var data = $formularioConsulta.find('input[name=cpfcliente]').val();
@@ -271,5 +289,7 @@
 			});
 		}
 	});
+	
+	
 	
 }( jQuery ));

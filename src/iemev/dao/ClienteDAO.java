@@ -35,6 +35,7 @@ public class ClienteDAO extends CommonsDAO{
 
 	public boolean inserir(Cliente cliente) {
 		Connection con = ConnectionFactory.getConnection();
+		SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		try {
 			String sqlPessoa = "INSERT INTO T_PESSOA (cpf, rg, nome, endereco, telefoneResidencial, celular, dataDeNascimento) VALUES ("
 					+ cliente.getCpf()+","
@@ -43,7 +44,7 @@ public class ClienteDAO extends CommonsDAO{
 					+ cliente.getEndereco()+"','"
 					+ cliente.getTelefoneResidencial()+"','"
 					+ cliente.getCelular()+"','"
-					+ cliente.getDataDeNascimento()+"')";
+					+ formater.format(cliente.getDataDeNascimento())+"')";
 			
 			String sqlCliente = "INSERT INTO T_CLIENTE (cpfUsuario,emailCliente, idAtendenteDeCadastramento) VALUES ("
 					+ cliente.getCpf()+",'"
@@ -93,7 +94,7 @@ public class ClienteDAO extends CommonsDAO{
 	}
 	public Cliente buscarId(long id) {
 		Connection con = ConnectionFactory.getConnection();
-		//Faze join com a tabela de pessoa
+		System.out.println(id);
 		String slqSelect = "SELECT * FROM T_CLIENTE C INNER JOIN T_PESSOA P ON C.cpfUsuario = P.cpf WHERE cpfUsuario = ? ;";
 		try {
 			

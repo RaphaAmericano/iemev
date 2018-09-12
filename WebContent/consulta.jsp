@@ -4,6 +4,7 @@
 <%@include file="_header.jsp" %>
 <%
 List<Servico> servicos = ServicoManager.buscarTodosServicos();
+String resposta_update = (String)request.getAttribute("resposta_update");
 %>
 
 <!-- Por data -->
@@ -59,6 +60,12 @@ List<Servico> servicos = ServicoManager.buscarTodosServicos();
                             <button type="button" class="btn btn-danger" id="excluirAge" disabled>Excluir agendamento</button>
                         </div>
                     </div>
+                    
+                    <% if(resposta_update != "") {  %>
+                    <div class="alert alert-warning" role="alert">
+					<%=resposta_update %>
+					</div>
+					<% }%>
                     <div class="form-row mt-2">
                         <div class="col-md-6 mb-3">
                             <label for="cpfcliente">CPF do Cliente</label>
@@ -115,10 +122,12 @@ List<Servico> servicos = ServicoManager.buscarTodosServicos();
                     <!-- Em seguida, os campos são os especiais de cada tipo de usuario do sistema -->
                     <div class="form-row mt-2">
                         <div class="col-md-12 mx-auto">
-	                        <input type="hidden" name="atendente">
+                        <!-- Adicionar por jsp para o usuario da sessao no valor od atendente -->
+	                        <input type="hidden" name="atendente" value="0">
                         	<input type="hidden" name="opcao" value="3">
                         	
-                           <input type="submit" value="Agendar" class="btn btn-primary" disabled >
+                           <input type="submit" value="Agendar" class="btn btn-primary" disabled>
+                           <input type="hidden" name="agendamento" value="0">
                         </div>
                     </div>
                 </form>

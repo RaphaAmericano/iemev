@@ -13,6 +13,14 @@ public class Agendamento {
 		super();
 	}
 	
+	public Agendamento(int idAgendamento, Date data, int idSer, int idAnimal, int idAtend) {
+		this.idAgendamento = idAgendamento;
+		this.dataAgendamento = data;
+		this.idServicoAgendado = idSer;
+		this.idAnimal = idAnimal;
+		this.idAtendenteDeAgendamento = idAtend;
+	}
+	
 	public Agendamento(Date data, int idSer, int idAnimal, int idAtend) {
 		this.dataAgendamento = data;
 		this.idServicoAgendado = idSer;

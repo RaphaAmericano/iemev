@@ -35,4 +35,14 @@ public class ConsultaManager {
 		return retorno;
 	}
 	
+	public static String atualizarConsulta(Agendamento agendamento) {
+		ConsultaDAO dao = new ConsultaDAO();
+		boolean atualizar = dao.atualizar(agendamento);
+		String retorno = "Não foi possivel atualizar a consulta";
+		if (atualizar = true) {
+			retorno = "Consulta atualizada com sucesso";
+		}
+		return retorno;
+	}
+	
 }

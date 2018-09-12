@@ -37,7 +37,8 @@ public class AnimalController extends HttpServlet {
 		String dataString = request.getParameter("dataNascimento") + " 00:00:00";
 		Date data = new Date();
 		try {
-			data = dataformat.parse(dataString); 					
+			data = dataformat.parse(dataString);
+			System.out.print(data);
 		} 
 		catch (Exception e) {	
 			e.printStackTrace();
