@@ -44,5 +44,13 @@ public class ConsultaManager {
 		}
 		return retorno;
 	}
-	
+	public static String deletarConsulta(int idAgendamento) {
+		ConsultaDAO dao = new ConsultaDAO();
+		boolean deletar = dao.deletar(idAgendamento);
+		String retorno = "Não foi possivel excluir a consulta";
+		if( deletar == true ) {
+			retorno = "Consulta excluída com sucesso";
+		}
+		return retorno;
+	}
 }

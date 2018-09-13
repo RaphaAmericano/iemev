@@ -132,10 +132,10 @@ public class AnimalDAO extends CommonsDAO {
 	}
 	public List<Animal> buscarAnimaisDono(long cpf){
 		System.out.println(cpf);
-		System.out.println("ANIMAL DAO");
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "SELECT * FROM T_ANIMAL WHERE cpfCliente = ?;";
 		List<Animal> retorno = new ArrayList<Animal>();
+		SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		try {
 			PreparedStatement stm = con.prepareStatement(sql);
 			stm.setLong(1, cpf);
@@ -145,17 +145,16 @@ public class AnimalDAO extends CommonsDAO {
 				Animal animal = new Animal();
 				animal.setIdAnimal(rs.getInt("idAnimal"));
 				animal.setNomeAnimal(rs.getString("nomeAnimal"));
-				animal.setSexo(rs.getString("sexo").charAt(0));
-				SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				animal.setSexo(rs.getString("sexo").charAt(0));		
 				Date data = new Date();
-				try {
-					String dataString = dataFormat.format( rs.getDate("dataDeNascimentoAnimal"));
-					System.out.println(dataString);
-					data = dataFormat.parse(dataString);
-				} catch(ParseException pe) {
-					pe.printStackTrace();
-				}
-				System.out.println(rs.getDate("dataDeNascimentoAnimal"));
+				System.out.println(rs.getString("dataDeNascimentoAnimal"));
+//				try {
+//					String dataString = dataFormat.format( rs.getString("dataDeNascimentoAnimal"));
+//					data = dataFormat.parse(dataString);
+//				} catch(ParseException pe) {
+//					pe.printStackTrace();
+//				}
+				
 				
 				System.out.println(data);
 				animal.setDataDeNascimentoAnimal(rs.getDate("dataDeNascimentoAnimal"));

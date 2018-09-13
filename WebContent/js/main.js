@@ -54,7 +54,7 @@
 				idcliente: valor
 			},
 			success: function(retorno){
-				console.log(retorno);
+				
 				var animais = JSON.parse(retorno);
 				$("#ficha_atendimento select").html("");
 				for( var i = 0; i < animais.length; i++ ){
@@ -80,12 +80,10 @@
 			},
 			success: function(retorno){
 				var dadosAnimal = JSON.parse(retorno);
-				console.log(dadosAnimal[0]);
-				console.log(dadosAnimal[1]);
 				var dataNascimento = dadosAnimal[0].data.split(' ');
 				dataNascimento = "'"+dataNascimento[1]+" "+dataNascimento[2]+" "+dataNascimento[5]+"'";
 				dataNascimento = new Date(dataNascimento);
-				console.log(dataNascimento)
+				
 				var $inputs = $("#ficha_atendimento input");
 				
 				//$inputs[3].value = dataNascimento.getFullYear()+"-"+(dataNascimento.getMouth()+1)+"-"+dataNascimento.getDate();
@@ -119,7 +117,6 @@
 	$botaoAbrirFicha.on('click', function(e){
 		e.preventDefault();
 		var $formInputs = $('#ficha_atendimento input');
-		console.log($formInputs);
 		for(i = 3; i < $formInputs.length -1; i++ ){
 			$formInputs[i].readOnly = false;
 			$formInputs[i].value = null;
@@ -129,7 +126,6 @@
 	$botaoEditarFicha.on('click', function(e){
 		e.preventDefault();
 		var $formInputs = $('#ficha_atendimento input');
-		console.log($formInputs);
 		for(i = 3; i < $formInputs.length -1; i++ ){
 			$formInputs[i].readOnly = false;
 		}
@@ -150,6 +146,7 @@
 	var $botoesAlterar = $formularioConsulta.find("button")[1];	
 	var $botoesExcluir = $formularioConsulta.find("button")[2];
 	var $botoesIncluirCliente = $formularioConsulta.find("button")[3];
+	var $modalConfirmacao = $("#modalConfirmacao");
 	
 	$inputSubmit.on('click', function(e){
 		
@@ -221,7 +218,6 @@
 				success:function(retorno){
 					$formularioConsulta[0].reset();
 					var agendamento = JSON.parse(retorno);
-					console.log(agendamento);
 					var dia = agendamento.data.split(' ')[0];
 					var hora = agendamento.data.split(' ')[1];
 					$formularioConsulta.find('input')[0].value  = agendamento.cpf_cliente;
@@ -245,18 +241,20 @@
 	});
 	
 	$botoesIncluir[0].addEventListener("click", function(){
+		
 		$formularioConsulta[0].reset();
 		$formularioConsulta.find('select[name=nome_animal]').html("");
-		$botoesIncluirCliente.removeAttr("disabled");
+		$botoesIncluirCliente.disabled = false;
 		$botoesAlterar.disabled = true;	
 		$botoesExcluir.disabled = true;
 		$formularioConsulta.find('input')[5].value  = 3;
 		$formularioConsulta.find('input')[0].readOnly = false;
 		$formularioConsulta.find('input')[2].readOnly = false;
 		$formularioConsulta.find('input')[3].readOnly = false;
-		$formularioConsulta.find('input')[6].readOnly = false;
+		$formularioConsulta.find('input')[6].disabled = false;
 		$formularioConsulta.find('select[name=nome_animal]').removeAttr("readonly");
 		$formularioConsulta.find('select[name=consulta]').removeAttr("readonly");	
+		
 	})
 	
 	$botoesAlterar.addEventListener("click", function(){
@@ -284,12 +282,14 @@
 					dados: data
 				},
 				success:function(retorno){
-					console.log(retorno)
+		
 				}
 			});
 		}
 	});
 	
-	
+	$modalConfirmacao.on("show.bs.modal", function(){
+		$formularioConsulta.find('input')[5].value  = 6;
+	});
 	
 }( jQuery ));

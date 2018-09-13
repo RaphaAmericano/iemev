@@ -94,7 +94,6 @@ public class ClienteDAO extends CommonsDAO{
 	}
 	public Cliente buscarId(long id) {
 		Connection con = ConnectionFactory.getConnection();
-		System.out.println(id);
 		String slqSelect = "SELECT * FROM T_CLIENTE C INNER JOIN T_PESSOA P ON C.cpfUsuario = P.cpf WHERE cpfUsuario = ? ;";
 		try {
 			

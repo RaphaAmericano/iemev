@@ -81,10 +81,9 @@ public class ConsultaController extends HttpServlet {
 			Cliente cliente = ClienteManager.buscarId(cpf);
 			System.out.println(cliente);
 			List<Animal> animais = AnimalManager.buscarAnimaisCliente(cliente.getCpf());
-			System.out.println(animais);
+			
 			break;
 		case 4:
-			System.out.println("Case4");
 			idanimal = Integer.parseInt( request.getParameter("nome_animal"));
 			dia = request.getParameter("data");
 			horario = request.getParameter("horario");
@@ -104,29 +103,27 @@ public class ConsultaController extends HttpServlet {
 			break;
 			//update
 		case 5:
-			System.out.println("Case5");
 			idAgendamento = Integer.parseInt(request.getParameter("agendamento"));
 			idanimal = Integer.parseInt( request.getParameter("nome_animal"));
 			dia = request.getParameter("data");
 			horario = request.getParameter("horario");
 			idatendente = Integer.parseInt(request.getParameter("atendente"));
 			idser = Integer.parseInt(request.getParameter("consulta"));
-			
-			System.out.println(request.getParameter("agendamento"));
-			System.out.println(request.getParameter("nome_animal"));
-			System.out.println(request.getParameter("data"));
-			System.out.println(request.getParameter("horario")+ ":00");
-			System.out.println(request.getParameter("atendente"));
-			System.out.println(request.getParameter("consulta"));
 			try {
 				data = dataformat.parse(dia+ " "+horario+":00" );
 			} catch (Exception e ) {
 				e.printStackTrace();
 			}
 			agendamento = new Agendamento(idAgendamento, data, idser, idanimal, idatendente );
-			System.out.println(agendamento);
 			result = ConsultaManager.atualizarConsulta(agendamento);
 			request.setAttribute("resposta_update", result);
+			view = request.getRequestDispatcher("consulta.jsp");
+			view.forward(request, response);
+			break;
+		case 6:
+			idAgendamento = Integer.parseInt(request.getParameter("agendamento"));
+			result = ConsultaManager.deletarConsulta(idAgendamento);
+			request.setAttribute("resposta_delete", result);
 			view = request.getRequestDispatcher("consulta.jsp");
 			view.forward(request, response);
 			break;

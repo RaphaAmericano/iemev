@@ -5,6 +5,7 @@
 <%
 List<Servico> servicos = ServicoManager.buscarTodosServicos();
 String resposta_update = (String)request.getAttribute("resposta_update");
+String resposta_delete = (String)request.getAttribute("resposta_delete");
 %>
 
 <!-- Por data -->
@@ -57,13 +58,18 @@ String resposta_update = (String)request.getAttribute("resposta_update");
                         <div class="col-8 col-xs-12 mt-2">
                             <button type="button" class="btn btn-success" id="incluirAge">Incluir novo agendamento</button>
                             <button type="button" class="btn btn-warning" id="alterarAge" disabled>Alterar agendamento</button>
-                            <button type="button" class="btn btn-danger" id="excluirAge" disabled>Excluir agendamento</button>
+                            <button type="button" class="btn btn-danger" id="excluirAge" disabled data-toggle="modal" data-target="#modalConfirmacao">Excluir agendamento</button>
                         </div>
                     </div>
                     
-                    <% if(resposta_update != "") {  %>
-                    <div class="alert alert-warning" role="alert">
+                    <% if(resposta_update != null ) {  %>
+                    <div class="alert alert-warning mt-2" role="alert">
 					<%=resposta_update %>
+					</div>
+					<% }%>
+					 <% if(resposta_delete != null ) {  %>
+                    <div class="alert alert-danger mt-2" role="alert">
+					<%=resposta_delete %>
 					</div>
 					<% }%>
                     <div class="form-row mt-2">
@@ -71,7 +77,7 @@ String resposta_update = (String)request.getAttribute("resposta_update");
                             <label for="cpfcliente">CPF do Cliente</label>
                             <input class="form-control" type="number" name="cpfcliente" readonly>
                             <div class="mt-2">
-                                <button type="button" class="btn btn-success">OK</button>
+                                <button type="button" class="btn btn-success" disabled>OK</button>
                                 <a href="cliente.jsp" class="btn btn-primary">Adicionar Cliente</a>
                             </div>
                         </div>
@@ -130,6 +136,27 @@ String resposta_update = (String)request.getAttribute("resposta_update");
                            <input type="hidden" name="agendamento" value="0">
                         </div>
                     </div>
+                    <!-- Modal de confirmação -->
+                    <div class="modal fade" id="modalConfirmacao" tabindex="-1" role="dialog" aria-labelledby="modalConfirmacaoLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+	                        <div class="modal-content">
+	                            <div class="modal-header">
+	                            <h5 class="modal-title" id="modalConfirmacaoLabel">Confirme a Exclusão do Agendamento</h5>
+	                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	                                <span aria-hidden="true">&times;</span>
+	                            </button>
+	                            </div>
+	                            <div class="modal-body">
+	                            Deseja excluir o atendimento
+	                            </div>
+	                            <div class="modal-footer">
+	                            <input type="submit" class="btn btn-danger" value="Sim">
+	                            <button type="button" class="btn btn-success">Não</button>
+	                            </div>
+	                        </div>
+                        </div>
+                    </div>
+                    <!-- /Modal de confirmação -->
                 </form>
             </div>
         </div>

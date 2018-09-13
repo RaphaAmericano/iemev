@@ -116,8 +116,6 @@ public class ConsultaDAO {
 		return null;
 	}
 	
-	
-	
 	public static boolean inserir(Agendamento agendamento ) {
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "INSERT INTO T_AGENDAMENTO( dataAgendamento, idServicoAgendado, idAnimal, idAtendenteDeAgendamento) VALUES(?,?,?,?);";
@@ -137,10 +135,9 @@ public class ConsultaDAO {
 		}
 		return true;
 	}
-	public static boolean atualizar(Agendamento agendamento) {
+	public boolean atualizar(Agendamento agendamento) {
 		Connection con = ConnectionFactory.getConnection();
-		String sql = "UPDATE T_AGENDAMENTO SET dataAgendamento = ?, idServicoAgendado = ?, idAnimal = ?, idAtendenteDeAgendamento = ? WHERE idAgendamento = ?;";
-		System.out.println(agendamento);
+		String sql = "UPDATE T_AGENDAMENTO SET dataAgendamento = ?, idServicoAgendado = ?, idAnimal = ?, idAtendenteDeAgendamento = ? WHERE idAgendamento = ?";
 		try {
 			PreparedStatement stm = con.prepareStatement(sql);
 			SimpleDateFormat dataformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -149,7 +146,7 @@ public class ConsultaDAO {
 			stm.setInt(3, agendamento.getIdAnimal());
 			stm.setInt(4, agendamento.getIdAtendenteDeAgendamento());
 			stm.setInt(5, agendamento.getIdAgendamento());
-			stm.executeQuery();
+			stm.executeUpdate();
 			stm.close();
 			con.close();
 		} catch(SQLException e ) {
@@ -158,4 +155,20 @@ public class ConsultaDAO {
 		}
 		return true;
 	} 
+	public boolean deletar(int idAgendamento) {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = "DELETE FROM T_AGENDAMENTO WHERE idAgendamento = ?";
+		try {
+			PreparedStatement stm = con.prepareStatement(sql);
+			stm.setInt(1, idAgendamento);
+			stm.executeUpdate();
+			stm.close();
+			con.close();
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
 }
