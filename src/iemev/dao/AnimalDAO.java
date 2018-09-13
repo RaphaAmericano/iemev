@@ -131,7 +131,6 @@ public class AnimalDAO extends CommonsDAO {
 		return dono;
 	}
 	public List<Animal> buscarAnimaisDono(long cpf){
-		System.out.println(cpf);
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "SELECT * FROM T_ANIMAL WHERE cpfCliente = ?;";
 		List<Animal> retorno = new ArrayList<Animal>();
@@ -147,17 +146,12 @@ public class AnimalDAO extends CommonsDAO {
 				animal.setNomeAnimal(rs.getString("nomeAnimal"));
 				animal.setSexo(rs.getString("sexo").charAt(0));		
 				Date data = new Date();
-				System.out.println(rs.getString("dataDeNascimentoAnimal"));
-//				try {
-//					String dataString = dataFormat.format( rs.getString("dataDeNascimentoAnimal"));
-//					data = dataFormat.parse(dataString);
-//				} catch(ParseException pe) {
-//					pe.printStackTrace();
-//				}
-				
-				
-				System.out.println(data);
-				animal.setDataDeNascimentoAnimal(rs.getDate("dataDeNascimentoAnimal"));
+				try {
+					data = dataFormat.parse(rs.getString("dataDeNascimentoAnimal"));
+				} catch(ParseException pe) {
+					pe.printStackTrace();
+				}
+				animal.setDataDeNascimentoAnimal(data);
 				animal.setEspecie(rs.getString("especie"));
 				animal.setPorte(rs.getString("porte"));
 				animal.setRaca(rs.getString("raca"));
@@ -167,7 +161,6 @@ public class AnimalDAO extends CommonsDAO {
 				animal.setIdAtendimentoDeCadastramento(rs.getInt("idAtendenteDeCadastramento"));				
 				retorno.add(animal);
 			}
-			System.out.println(retorno);
 			stm.close();
 			con.close();
 			return retorno;

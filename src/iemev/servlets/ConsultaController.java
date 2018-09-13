@@ -45,6 +45,8 @@ public class ConsultaController extends HttpServlet {
 		//
 		String result = null;
 		Agendamento agendamento = null;
+		Cliente cliente = null;
+		long cpf;
 		int idAgendamento;
 		int idanimal;
 		String dia = null;
@@ -77,11 +79,12 @@ public class ConsultaController extends HttpServlet {
 			break;
 			//busca cliente para nova consulta
 		case 3:
-			long cpf = Long.parseLong(dados);
-			Cliente cliente = ClienteManager.buscarId(cpf);
-			System.out.println(cliente);
+			cpf = Long.parseLong(dados);
+			cliente = ClienteManager.buscarId(cpf);
 			List<Animal> animais = AnimalManager.buscarAnimaisCliente(cliente.getCpf());
-			
+			retorno = new Gson().toJson(animais);
+			response.setContentType("text/plain");
+			response.getWriter().write(retorno);
 			break;
 		case 4:
 			idanimal = Integer.parseInt( request.getParameter("nome_animal"));
@@ -90,13 +93,13 @@ public class ConsultaController extends HttpServlet {
 			idatendente = Integer.parseInt(request.getParameter("atendente"));
 			idser = Integer.parseInt(request.getParameter("consulta"));
 			try {
-				data = dataformat.parse(dia+ " "+horario );
+				data = dataformat.parse(dia+ " "+horario+":00" );
 			} catch (Exception e ) {
 				e.printStackTrace();
 			}
 			agendamento = new Agendamento(data, idser, idanimal, idatendente );
 			result = ConsultaManager.incluirConsulta(agendamento);
-			
+			request.setAttribute("resposta_insert", result);
 			view = request.getRequestDispatcher("consulta.jsp");
 			view.forward(request, response);
 			
@@ -126,6 +129,12 @@ public class ConsultaController extends HttpServlet {
 			request.setAttribute("resposta_delete", result);
 			view = request.getRequestDispatcher("consulta.jsp");
 			view.forward(request, response);
+			break;
+		case 7:
+			cpf = Long.parseLong(dados);
+			cliente = ClienteManager.buscarId(cpf);
+			response.setContentType("text/plain");
+			response.getWriter().write(cliente.getNome());
 			break;
 		default:
 			break;

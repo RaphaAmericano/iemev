@@ -19,7 +19,6 @@ public class ClienteManager {
 		ClienteDAO dao = new ClienteDAO();
 		try {
 			Cliente cliente = dao.buscarId(id);
-			System.out.println(cliente);
 			return cliente;
 		}catch (Exception e) {
 			e.printStackTrace();

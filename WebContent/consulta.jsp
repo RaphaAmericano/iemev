@@ -6,6 +6,7 @@
 List<Servico> servicos = ServicoManager.buscarTodosServicos();
 String resposta_update = (String)request.getAttribute("resposta_update");
 String resposta_delete = (String)request.getAttribute("resposta_delete");
+String resposta_insert = (String)request.getAttribute("resposta_insert");
 %>
 
 <!-- Por data -->
@@ -61,7 +62,11 @@ String resposta_delete = (String)request.getAttribute("resposta_delete");
                             <button type="button" class="btn btn-danger" id="excluirAge" disabled data-toggle="modal" data-target="#modalConfirmacao">Excluir agendamento</button>
                         </div>
                     </div>
-                    
+                    <% if(resposta_insert != null ) {  %>
+                    <div class="alert alert-success mt-2" role="alert">
+					<%=resposta_insert %>
+					</div>
+					<% }%>
                     <% if(resposta_update != null ) {  %>
                     <div class="alert alert-warning mt-2" role="alert">
 					<%=resposta_update %>
@@ -75,7 +80,7 @@ String resposta_delete = (String)request.getAttribute("resposta_delete");
                     <div class="form-row mt-2">
                         <div class="col-md-6 mb-3">
                             <label for="cpfcliente">CPF do Cliente</label>
-                            <input class="form-control" type="number" name="cpfcliente" readonly>
+                            <input class="form-control" type="number" name="cpfcliente" maxlength="99999999999" readonly>
                             <div class="mt-2">
                                 <button type="button" class="btn btn-success" disabled>OK</button>
                                 <a href="cliente.jsp" class="btn btn-primary">Adicionar Cliente</a>
@@ -83,10 +88,7 @@ String resposta_delete = (String)request.getAttribute("resposta_delete");
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="nome_animal">Nome do Animal</label>
-                            <select type="text" name="nome_animal" class="form-control" readonly="readonly">
-                              <!--  <option value="0">Bill</option>
-                                <option value="1">Bob</option>
-                                <option value="2">Bart</option> -->
+                            <select name="nome_animal" class="form-control" readonly="readonly">
                             </select>
                             <div class="valid-feedback"></div>
                             <div class="mt-2">
