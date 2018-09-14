@@ -11,6 +11,7 @@ public class Empregado extends Pessoa{
 	private boolean indicadorNovaSenha;
 	private String tipoEmpregado;
 	private int idAdministradoDeCadastramento;
+	
 	public int getIdEmpregado() {
 		return idEmpregado;
 	}

@@ -13,7 +13,9 @@ import javax.servlet.http.HttpSession;
 
 import iemev.manager.EmpregadoManager;
 import iemev.manager.LoginManager;
+import iemev.manager.PessoaManager;
 import iemev.models.Empregado;
+import iemev.models.Pessoa;
 
 @WebServlet("/loginServlet.do")
 public class LoginController extends HttpServlet {
@@ -31,45 +33,34 @@ public class LoginController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String cpf = request.getParameter("cpf");
 		String senha = request.getParameter("senha");
+		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 		
-		response.setContentType("text/html");
+		int acao = Integer.parseInt(request.getParameter("login"));
+
+		Empregado empregado = EmpregadoManager.buscar(Long.parseLong(cpf));
+		String mensagem_erro;
+		long cpfLong = Long.parseLong(cpf);
 		
-//		int acao = Integer.parseInt(request.getParameter("login"));
-		
-//		switch (acao) {
-//		case 0:
-//			Empregado usuario = EmpregadoController.buscar(Long.parseLong(cpf));
-			
-			
-			
-//			if(cpf.equals("222")) {
-				HttpSession session = request.getSession(true);
-				session.setAttribute("cpf", cpf );
-				session.setAttribute("senha", senha );
-				
-				session.setMaxInactiveInterval(30);
-				response.sendRedirect("main.jsp");
-				
-//			}else {
-				RequestDispatcher view = request.getRequestDispatcher("index.jsp");
-				view.include(request, response);
-//			}
-			
-//			break;
-//		case 1: 
-//			
-//			break;
-//		default:
-//			break;
-//		}
-//		
-		
-		
-		
-//		request.setAttribute("cpf", cpf );
-//		request.setAttribute("senha", senha );
-		//RequestDispatcher view = request.getRequestDispatcher("index.jsp");
-		//view.forward(request, response);
+		if(cpfLong != empregado.getCpf() ) {
+			mensagem_erro = "CPF inválido";
+			request.setAttribute("mensagem_erro", mensagem_erro);
+			rd.forward(request, response);
+		}
+		if(!senha.equals(empregado.getSenha())) {
+			rd = request.getRequestDispatcher("index.jsp");
+			mensagem_erro = "Senha inválida";
+			request.setAttribute("mensagem_erro", mensagem_erro);
+			rd.forward(request, response);
+		}	
+
+		Pessoa pessoa = PessoaManager.buscarId(empregado.getCpf());
+		HttpSession session = request.getSession(true);
+		session.setAttribute("cpf", cpf );
+		session.setAttribute("senha", senha );
+		session.setAttribute("pessoa", pessoa);
+		session.setAttribute("empregado", empregado);
+		session.setMaxInactiveInterval(30);
+		response.sendRedirect("main.jsp");		
 	}
 
 }

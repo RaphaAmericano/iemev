@@ -2,6 +2,7 @@
 <%
 String senha = (String)request.getAttribute("senha");
 String cpf = (String)request.getAttribute("cpf");
+String mensagem_erro = (String)request.getAttribute("mensagem_erro");
 %>
 
 <div class="container">
@@ -28,7 +29,10 @@ String cpf = (String)request.getAttribute("cpf");
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Entrar</button>
-                    <input type="hidden" name="login" value="0">   
+                    <input type="hidden" name="login" value="0">
+                    <%if(mensagem_erro != null){ %>
+                    <span><%=mensagem_erro %></span>   
+                    <%} %>
                 </form>
             </div>
         </div>
