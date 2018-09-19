@@ -31,7 +31,8 @@ public class LoginController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String cpf = request.getParameter("cpf");
+		String cpf = request.getParameter("cpf").replace(".", "").replaceAll("-", "");
+		System.out.println(cpf);
 		String senha = request.getParameter("senha");
 		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 		

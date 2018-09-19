@@ -11,4 +11,16 @@ public class ServicoManager {
 		List<Servico> retorno = dao.buscarTodosServicos();
 		return retorno;
 	}
+	public static List<String> buscarTodasCategorias(){
+		ServicoDAO dao = new ServicoDAO();
+		List<String> retorno = dao.buscarTodasCategorias();
+		return retorno;
+	}
+	public static List<Servico> buscarPorCategoria(String categoria){
+		ServicoDAO dao = new ServicoDAO();
+		List<Servico> retorno = dao.buscarPorCategoria(categoria);
+		return retorno;
+	}
 }
+
+

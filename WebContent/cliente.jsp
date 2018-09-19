@@ -59,12 +59,12 @@
                     <div class="form-row mt-2">
                         <div class="col-md-4 mb-3">
                             <label for="cpf">CPF</label>
-                            <input type="number" name="cpf" class="form-control">
+                            <input type="number" name="cpf" class="form-control" placeholder="000.000.000-00">
                             <div class="valid-feedback">Inválido</div>
                         </div>
                         <div class="col-md-4 mb-3">
                             <label for="rg">RG</label>
-                            <input type="number" name="rg" class="form-control">
+                            <input type="number" name="rg" class="form-control" placeholder="00.000.000-0">
                             <div class="valid-feedback"></div>
                         </div>
                         <div class="col-md-4 mb-3">
@@ -87,7 +87,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="celular">Telefone Celular</label>
-                            <input class="form-control" type="number" name="celular">
+                            <input class="form-control" type="text" name="celular">
                         </div>
                     </div>
                     <!-- Em seguida, os campos são os especiais de cada tipo de usuario do sistema -->

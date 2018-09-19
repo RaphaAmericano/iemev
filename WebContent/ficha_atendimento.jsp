@@ -1,4 +1,14 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="iemev.models.Servico"%>
+<%@page import="iemev.manager.ServicoManager"%>
 <%@include file="_header.jsp" %>
+<%
+List<Servico> servicos = ServicoManager.buscarTodosServicos();
+List<String> categorias = ServicoManager.buscarTodasCategorias();
+%>
+
+
     <!-- Consulta -->
     <div class="container">
         <div class="row justify-content-md center">
@@ -6,8 +16,9 @@
                 <h1>Consultar Ficha</h1>
                 <form action="FichaAtendimentoServlet.do" id="formBuscarUsuarios">
                     <div class="form-group">
-                        <label for="">Buscar</label>
+                        <label for="">Buscar Cliente</label>
                         <input class="form-control" type="search" placeholder="Nome do Cliente">
+                        <input type="hidden" name="opcao" value="0">
                     </div>
                     <button class="btn btn-primary" type="submit">Localizar</button>
                 </form>
@@ -47,31 +58,7 @@
                         <th scope="col">Opções</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td><time datetime="2016-07-31">2016-07-31</time></td>
-                            <td>Otto</td>
-                            <td>
-                                <button class="btn btn-info" name="detalhar[0]">Detalhar Ficha</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td><time datetime="2016-07-31">2016-07-31</time></td>
-                            <td>Thornton</td>
-                            <td>
-                                <button class="btn btn-info" name="detalhar[0]">Detalhar Ficha</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td><time datetime="2016-07-31">2016-07-31</time></td>
-                            <td>the Bird</td>
-                            <td>
-                                <button class="btn btn-info" name="detalhar[0]">Detalhar Ficha</button>
-                            </td>
-                        </tr>
+                    <tbody id="tabelaFichas">
                     </tbody>
                 </table>
                 </form>
@@ -97,9 +84,10 @@
 
                     <div class="form-row mt-2">
                         <div class="col-3 col-xs-12 col-md-auto">
-                            <button class="btn btn-success">Abrir Ficha</button>
-                            <button class="btn btn-warning" disabled>Alterar Ficha</button>
-                            <button class="btn btn-danger" disabled>Excluir Ficha</button>
+                            <input type="submit" class="btn btn-success" value="Abrir Ficha">
+                            <button class="btn btn-warning">Alterar Ficha</button>
+                            <button class="btn btn-danger">Excluir Ficha</button>
+                            <input type="hidden" name="opcao" value="3">
                         </div>
                     </div>
 
@@ -205,13 +193,6 @@
                             <input class="form-control" type="text" name="idatendente" placeholder="Lineu Silva" value="1" readonly>
                         </div>
                     </div>
-					<div class="form-row mt-2">
-                        <div class="col-12">
-                            <!-- <input type="submit" class="btn btn-primary" data-toggle="modal" value="ok" data-target="#modalConfirmacao"> -->
-                            <button type="submit" class="btn btn-primary">OK</button>
-                            <input type="hidden" name="opcao" value="3">
-                        </div>
-                    </div>
                     
                     <% if(request.getAttribute("status_insert") != null ){ %>
                     <div class="form-row mt-2">
@@ -244,7 +225,7 @@
                                     <th scope="col">Excluir</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tabelaServicos">
                                     <tr>
                                     <th scope="row">1</th>
                                     <td>Vacina</td>
@@ -252,7 +233,7 @@
                                     <td>Ubirajara Castro</td>
                                     <td><time>20/02/2018</time></td>
                                     <td>R$100,00</td>
-                                    <td><button class="btn btn-danger" readonly>Excluir</button></td>
+                                    <td><button type="button" class="btn btn-danger" disabled>Excluir</button></td>
                                     </tr>
                                     <tr>
                                     <th scope="row">2</th>
@@ -261,7 +242,7 @@
                                     <td>Vandecir Gomes</td>
                                     <td><time>10/02/2018</time></td>
                                     <td>R$200,00</td>
-                                    <td><button class="btn btn-danger" readonly>Excluir</button></td>
+                                    <td><button type="button" class="btn btn-danger" disabled>Excluir</button></td>
                                     </tr>
                                     <tr>
                                     <th scope="row">3</th>
@@ -270,27 +251,28 @@
                                     <td>Maria Eduarda Coutinho</td>
                                     <td><time>04/04/2018</time></td>
                                     <td>R$500,00</td>
-                                    <td><button class="btn btn-danger" readonly>Excluir</button></td>
+                                    <td><button type="button" class="btn btn-danger" disabled>Excluir</button></td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Incluir</th>
                                         <td>
                                             <select name="categoria" id="" class="form-control" readonly>
-                                                <option value="0">Vacina</option>
-                                                <option value="1">Anestesia</option>
-                                                <option value="2">Apuncultura</option>
+                                               <%for(int i = 0; i < categorias.size(); i++){ 
+                                               %>
+													<option value="<%=categorias.get(i) %>"><%=categorias.get(i)%></option>
+												<%  }%>
                                             </select> 
                                         </td>
                                         <td>
                                             <select name="servico" id="" class="form-control" readonly>
-                                                <option value="0">Antirrábica</option>
-                                                <option value="1">Gripe</option>
-                                                <option value="2">Hepatite</option>
+                                                <%for(int i = 0; i < servicos.size(); i++){ %>
+													<option value="<%=servicos.get(i).getIdServico() %>"><%=servicos.get(i).getNomeServico() %></option>
+												<%  }%>
                                             </select> 
                                         </td>
                                         <td colspan="3"></td>
                                         <td>
-                                            <button class="btn btn-success" readonly>Incluir</button>
+                                            <button type="button" class="btn btn-success" disabled>Incluir</button>
                                         </td>
                                     </tr>
                                 </tbody>

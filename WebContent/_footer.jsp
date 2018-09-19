@@ -7,8 +7,11 @@
 </nav>
 <!-- Scripts -->
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="node_modules/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
 <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/main.js"></script>
+<script src="js/ficha.js"></script>
+<script src="js/masks.js"></script>
 <!-- /Scripts -->
 </body>
 </html>

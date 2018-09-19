@@ -51,4 +51,14 @@ public class FichaAtendimentoManager {
 		return null;
 	}
 	
+	public static ArrayList<FichaDeAtendimento> fichasUsuario(long id){
+		FichaAtendimentoDAO dao = new FichaAtendimentoDAO();
+		try {
+			ArrayList<FichaDeAtendimento> fichas = dao.fichasUsuario(id);
+			return fichas;
+		} catch(Exception e ) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

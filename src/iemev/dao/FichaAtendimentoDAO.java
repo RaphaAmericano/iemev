@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -18,16 +19,26 @@ public class FichaAtendimentoDAO {
 	
 	public FichaDeAtendimento selecionarPorId(int id) {
 		Connection con = ConnectionFactory.getConnection();
+		SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		try {
 			String sqlSelect = "SELECT * FROM T_FICHADEATENDIMENTO WHERE numeroFicha =  ? ;";
 			PreparedStatement stm = con.prepareStatement(sqlSelect);
 			stm.setInt(1, id);
 			ResultSet rs = stm.executeQuery();
 			
-			
 			int idFicha = Integer.parseInt(rs.getString("numeroFicha"));
-			Date dataAbertura = new Date(rs.getString("dataAbertura"));
-			Date dataFechamento = new Date(rs.getString("dataFechamento"));
+			Date dataAbertura = new Date();
+			Date dataFechamento = new Date();
+			try {
+				dataAbertura = dataFormat.parse(rs.getString("dataAbertura"));
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			try {
+				dataFechamento = dataFormat.parse(rs.getString("dataFechamento"));
+			}catch(Exception e){
+				e.printStackTrace();
+			}
 			int idAnimal = Integer.parseInt(rs.getString("idAnimal"));
 			int idAtendAbriu = Integer.parseInt(rs.getString("idAtendenteAbriuFicha"));
 			int idAtendFechou = Integer.parseInt(rs.getString("idAtendenteFechouFicha"));
@@ -108,6 +119,7 @@ public class FichaAtendimentoDAO {
 		int retorno = 0;
 		ResultSet rs = null;
 		String sqlFicha = "INSERT INTO T_FICHADEATENDIMENTO ( idAnimal, idAtendenteAbriuFicha, statusFicha) VALUES (?,?,?);";
+		System.out.println(ficha.getIdAnimal());
 		try {
 			 
 			PreparedStatement stm = con.prepareStatement(sqlFicha, Statement.RETURN_GENERATED_KEYS);
@@ -130,4 +142,34 @@ public class FichaAtendimentoDAO {
 		}
 		return retorno;
 	}
+	public ArrayList<FichaDeAtendimento> fichasUsuario(long id){
+		Connection con = ConnectionFactory.getConnection();
+		ResultSet rs = null;
+		String sql = "SELECT * FROM ((T_FICHADEATENDIMENTO F INNER JOIN T_ANIMAL A ON F.idAnimal = A.idAnimal) INNER JOIN T_CLIENTE C ON A.cpfCliente = C.cpfUsuario) WHERE C.cpfUsuario = ?";
+		ArrayList<FichaDeAtendimento> retorno = new ArrayList<FichaDeAtendimento>();
+		try {
+			PreparedStatement stm = con.prepareStatement(sql);
+			stm.setLong(1, id);
+			rs = stm.executeQuery();
+			while(rs.next()) {
+				Date data = new Date();
+				SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				try {
+					data = dateformat.parse(rs.getString("dataAbertura"));
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+				FichaDeAtendimento ficha = new FichaDeAtendimento();
+				ficha.setNumeroFicha(rs.getInt("numeroFicha"));
+				ficha.setIdAnimal(rs.getInt("idAnimal"));
+				ficha.setDataAbertura(data);
+				retorno.add(ficha);
+			}
+			
+		} catch(SQLException se) {
+			se.printStackTrace();
+		};
+		return retorno;
+	}
+	
 }

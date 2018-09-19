@@ -22,6 +22,7 @@ import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 
 import iemev.manager.AnimalManager;
 import iemev.manager.FichaAtendimentoManager;
+import iemev.models.Animal;
 import iemev.models.FichaDeAtendimento;
 
 /**
@@ -73,16 +74,14 @@ public class FichaAtendimentoController extends HttpServlet {
 			int idAtendAbri = Integer.parseInt(request.getParameter("idatendente"));
 			int idAnimal = Integer.parseInt(request.getParameter("select_nome_animal"));
 			String mensagem = "Não foi possível cadastrar nova ficha";
-			
+			System.out.println(idAnimal);
 			FichaDeAtendimento ficha = new FichaDeAtendimento(data, idAnimal, idAtendAbri);
+			
 			int idNovaFicha = FichaAtendimentoManager.novaFicha(ficha);
 			if(idNovaFicha > 0 ) {
 				mensagem = "Ficha cadastrada com sucesso";
 			}
-			
 			FichaDeAtendimento fichaRequest = FichaAtendimentoManager.buscarPorId(idNovaFicha);
-			
-			
 			request.setAttribute("numero_ficha", fichaRequest.getNumeroFicha());
 			request.setAttribute("data_abertura", fichaRequest.getDataAbertura());
 			request.setAttribute("data_fechamento", fichaRequest.getDataFechamento());
@@ -94,6 +93,13 @@ public class FichaAtendimentoController extends HttpServlet {
 			request.setAttribute("status_insert", mensagem);
 			RequestDispatcher view = request.getRequestDispatcher("ficha_atendimento.jsp");
 			view.forward(request, response);
+			break;
+		case 4:
+			long idcliente = Long.parseLong(request.getParameter("idcliente"));
+			ArrayList<FichaDeAtendimento> fichas = FichaAtendimentoManager.fichasUsuario(idcliente);
+			String retornojson = new Gson().toJson(fichas);
+			response.setContentType("text/plain");
+			response.getWriter().write(retornojson);
 			break;
 		default:
 			break;
