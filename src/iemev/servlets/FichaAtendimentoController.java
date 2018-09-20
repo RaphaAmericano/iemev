@@ -17,12 +17,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 
 import iemev.manager.AnimalManager;
+import iemev.manager.ClienteManager;
 import iemev.manager.FichaAtendimentoManager;
 import iemev.models.Animal;
+import iemev.models.Cliente;
 import iemev.models.FichaDeAtendimento;
 
 /**
@@ -101,11 +104,59 @@ public class FichaAtendimentoController extends HttpServlet {
 			response.setContentType("text/plain");
 			response.getWriter().write(retornojson);
 			break;
+		case 5:
+			int id_ficha = Integer.parseInt(request.getParameter("data"));
+			FichaDeAtendimento ficha_detalhe = FichaAtendimentoManager.buscarPorId(id_ficha);
+			Animal ficha_animal = AnimalManager.buscar(ficha_detalhe.getIdAnimal());
+			Cliente ficha_cliente = ClienteManager.buscarId(ficha_animal.getCpfCliente());
+			//
+			SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			JsonObject animalJson = new JsonObject();
+			try {
+				animalJson.addProperty("id", ficha_animal.getIdAnimal());
+				animalJson.addProperty("nome", ficha_animal.getNomeAnimal());
+				animalJson.addProperty("sexo", ficha_animal.getSexo());
+				animalJson.addProperty("data", dataFormat.format(ficha_animal.getDataDeNascimentoAnimal()));
+				animalJson.addProperty("especie", ficha_animal.getEspecie());
+				animalJson.addProperty("porte", ficha_animal.getPorte());
+				animalJson.addProperty("raca", ficha_animal.getRaca());
+				animalJson.addProperty("pelagem", ficha_animal.getPelagem());
+				animalJson.addProperty("temperamento", ficha_animal.getTemperamento());
+				animalJson.addProperty("cpf", ficha_animal.getCpfCliente());
+				animalJson.addProperty("idAtendente", ficha_animal.getIdAtendimentoDeCadastramento());	
+			} catch(JsonIOException je) {
+				je.printStackTrace();
+			}
+			JsonObject donoJson = new JsonObject();
+			try {
+				donoJson.addProperty("nome", ficha_cliente.getNome());
+				donoJson.addProperty("cpf", ficha_cliente.getCpf());
+				donoJson.addProperty("telefone", ficha_cliente.getTelefoneResidencial());
+				donoJson.addProperty("celular", ficha_cliente.getCelular());
+				donoJson.addProperty("email", ficha_cliente.getEmailCliente());
+			}catch(JsonIOException je) {
+				je.printStackTrace();
+			}
+			JsonObject fichaJson = new JsonObject();
+			try {
+				fichaJson.addProperty("status", ficha_detalhe.getStatusFicha());
+				fichaJson.addProperty("numero_sequencial", ficha_detalhe.getNumeroFicha());
+				fichaJson.addProperty("data_abertura", dataFormat.format(ficha_detalhe.getDataAbertura()));
+			} catch(JsonIOException je) {
+				je.printStackTrace();
+			}
+			List<JsonObject> retornoLista = new ArrayList<JsonObject>();
+			retornoLista.add(animalJson);
+			retornoLista.add(donoJson);
+			retornoLista.add(fichaJson);
+			String retornoJson = new Gson().toJson(retornoLista);
+			//
+			response.setContentType("text/plain");
+			response.getWriter().write(retornoJson);
+			break;
 		default:
 			break;
 		}
-//		RequestDispatcher view = request.getRequestDispatcher("ficha_atendimento.jsp");
-//		view.forward(request, response);
 	}
 
 }

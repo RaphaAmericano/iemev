@@ -78,6 +78,43 @@ public class AnimalDAO extends CommonsDAO {
 		}
 		return true;
 	}
+	
+	public Animal buscar(int id) {
+		Connection con = ConnectionFactory.getConnection();
+		Animal animal = new Animal();
+		try {
+			String sqlAnimal = "SELECT * FROM T_ANIMAL WHERE idAnimal ="+id+";";
+			Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery(sqlAnimal);
+			SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			try {
+				animal.setIdAnimal(rs.getInt("idAnimal"));
+				animal.setNomeAnimal(rs.getString("nomeAnimal"));
+				Date data = new Date();
+				try {
+					data = dataFormat.parse(rs.getString("dataDeNascimentoAnimal"));
+				} catch(ParseException pe) {
+					pe.printStackTrace();
+				}
+				animal.setSexo(rs.getString("sexo").charAt(0));
+				animal.setDataDeNascimentoAnimal(data);
+				animal.setEspecie(rs.getString("especie"));
+				animal.setPorte(rs.getString("porte"));
+				animal.setRaca(rs.getString("raca"));
+				animal.setPelagem(rs.getString("pelagem"));
+				animal.setTemperamento(rs.getString("temperamento"));
+				animal.setCpfCliente(rs.getLong("cpfCliente"));
+				animal.setIdAtendimentoDeCadastramento(rs.getInt("idAtendenteDeCadastramento"));
+			} catch (JsonIOException je) {
+				je.printStackTrace();
+			}
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return animal;
+	}
+	
 	public JsonObject buscarAnimalId(int id ) {
 		Connection con = ConnectionFactory.getConnection();
 		JsonObject animal = new JsonObject();
@@ -85,6 +122,7 @@ public class AnimalDAO extends CommonsDAO {
 			String sqlAnimal = "SELECT * FROM T_ANIMAL WHERE idAnimal ="+id+";";
 			Statement stm = con.createStatement();
 			ResultSet rs = stm.executeQuery(sqlAnimal);
+			
 			try {
 				animal.addProperty("id", rs.getString("idAnimal"));
 				animal.addProperty("nome", rs.getString("nomeAnimal"));

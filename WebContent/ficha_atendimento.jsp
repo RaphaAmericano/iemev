@@ -17,10 +17,9 @@ List<String> categorias = ServicoManager.buscarTodasCategorias();
                 <form action="FichaAtendimentoServlet.do" id="formBuscarUsuarios">
                     <div class="form-group">
                         <label for="">Buscar Cliente</label>
-                        <input class="form-control" type="search" placeholder="Nome do Cliente">
-                        <input type="hidden" name="opcao" value="0">
+                        <input class="form-control" type="search" placeholder="Nome do Cliente">                        
                     </div>
-                    <button class="btn btn-primary" type="submit">Localizar</button>
+                    <button class="btn btn-primary" type="submit" disabled>Localizar</button>
                 </form>
             </div>
         </div>
@@ -33,10 +32,10 @@ List<String> categorias = ServicoManager.buscarTodasCategorias();
                 <form action="ficha_atendimento.html" id="cliente_ficha">
                     <div class="form-group">
                         <label for="animal">Clientes</label>
-                        <select name="cliente[id]" class="form-control" multiple="multiple">
-                            <!-- <option value="0">Jorge Matos</option> -->
+                        <select name="cliente" class="form-control" multiple="multiple">
+                            
                         </select>
-                        <button class="btn btn-success mt-2" value="selecionar" name="cliente[acao]" type="submit">OK</button>
+                        <button class="btn btn-success mt-2" value="selecionar" name="cliente" type="submit">OK</button>
                     </div>
                 </form>
             </div>
@@ -81,17 +80,14 @@ List<String> categorias = ServicoManager.buscarTodasCategorias();
                         </div>
                         
                     </div>
-
                     <div class="form-row mt-2">
                         <div class="col-3 col-xs-12 col-md-auto">
                             <input type="submit" class="btn btn-success" value="Abrir Ficha">
-                            <button class="btn btn-warning">Alterar Ficha</button>
-                            <button class="btn btn-danger">Excluir Ficha</button>
+                            <button type="button" class="btn btn-warning">Alterar Ficha</button>
+                            <button type="button" class="btn btn-danger">Excluir Ficha</button>
                             <input type="hidden" name="opcao" value="3">
                         </div>
                     </div>
-
-
                     <div class="form-row mt-2">
                         <div class="col-md-4 md-3">
                             <label for="">Status</label>
@@ -233,7 +229,7 @@ List<String> categorias = ServicoManager.buscarTodasCategorias();
                                     <td>Ubirajara Castro</td>
                                     <td><time>20/02/2018</time></td>
                                     <td>R$100,00</td>
-                                    <td><button type="button" class="btn btn-danger" disabled>Excluir</button></td>
+                                    <td><button type="button" class="btn btn-danger">Excluir</button></td>
                                     </tr>
                                     <tr>
                                     <th scope="row">2</th>
@@ -242,7 +238,7 @@ List<String> categorias = ServicoManager.buscarTodasCategorias();
                                     <td>Vandecir Gomes</td>
                                     <td><time>10/02/2018</time></td>
                                     <td>R$200,00</td>
-                                    <td><button type="button" class="btn btn-danger" disabled>Excluir</button></td>
+                                    <td><button type="button" class="btn btn-danger">Excluir</button></td>
                                     </tr>
                                     <tr>
                                     <th scope="row">3</th>
@@ -251,35 +247,36 @@ List<String> categorias = ServicoManager.buscarTodasCategorias();
                                     <td>Maria Eduarda Coutinho</td>
                                     <td><time>04/04/2018</time></td>
                                     <td>R$500,00</td>
-                                    <td><button type="button" class="btn btn-danger" disabled>Excluir</button></td>
+                                    <td><button type="button" class="btn btn-danger">Excluir</button></td>
                                     </tr>
                                     <tr>
-                                        <th scope="row">Incluir</th>
-                                        <td>
-                                            <select name="categoria" id="" class="form-control" readonly>
-                                               <%for(int i = 0; i < categorias.size(); i++){ 
-                                               %>
-													<option value="<%=categorias.get(i) %>"><%=categorias.get(i)%></option>
-												<%  }%>
-                                            </select> 
-                                        </td>
-                                        <td>
-                                            <select name="servico" id="" class="form-control" readonly>
-                                                <%for(int i = 0; i < servicos.size(); i++){ %>
-													<option value="<%=servicos.get(i).getIdServico() %>"><%=servicos.get(i).getNomeServico() %></option>
-												<%  }%>
-                                            </select> 
-                                        </td>
-                                        <td colspan="3"></td>
-                                        <td>
-                                            <button type="button" class="btn btn-success" disabled>Incluir</button>
-                                        </td>
-                                    </tr>
+                                   	<th scope="row">Incluir</th>
+                                      <td>
+                                          <select name="categoria" id="" class="form-control" readonly>
+                                             <%for(int i = 0; i < categorias.size(); i++){ 
+                                             %>
+											<option value="<%=categorias.get(i) %>"><%=categorias.get(i)%></option>
+										<%  }%>
+                                          </select> 
+                                      </td>
+                                      <td>
+                                          <select name="servico" id="" class="form-control" readonly>
+                                              
+                                          </select> 
+                                      </td>
+                                      <td colspan="3"></td>
+                                      <td>
+                                          <button type="button" class="btn btn-success">Incluir</button>
+                                          <input type="hidden" name="id_servico">
+                                      </td>
+                               	 	</tr>
+                                </tbody>
+                                <tbody>
+                                   
                                 </tbody>
                                 </table>
                         </div>
                     </div>
-
                 </form>
             </div>
         </div>

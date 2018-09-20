@@ -33,10 +33,6 @@ public class ConsultaController extends HttpServlet {
     public ConsultaController() {
         super();
     }
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int opcao = Integer.parseInt(request.getParameter("opcao"));

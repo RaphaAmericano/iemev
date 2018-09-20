@@ -8,6 +8,16 @@ import iemev.dao.AnimalDAO;
 import iemev.models.Animal;
 
 public class AnimalManager {
+	public static Animal buscar(int id) {
+		AnimalDAO dao = new AnimalDAO();
+		try {
+			Animal retorno = dao.buscar(id);
+			return retorno;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	public static String cadastrarAnimal( Animal animal ) {
 		AnimalDAO dao = new AnimalDAO();
 		try {

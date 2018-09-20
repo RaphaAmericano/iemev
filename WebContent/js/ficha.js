@@ -34,12 +34,12 @@
         	}
         });
         
-        
 }( jQuery) );
 
 ( function($){
 	var $btnClienteSelect = $("#cliente_ficha button.btn-success");
 	var $btnAnimalSelect = $("#ficha_atendimento select[name=select_nome_animal]");
+	var $btnDetalhar;
 	//Seleciona oo cliente
 	$btnClienteSelect.on('click', function(e){
 		e.preventDefault();
@@ -53,15 +53,14 @@
 			},
 			success: function(retorno){
 				var animais = JSON.parse(retorno);
-				//$("#ficha_atendimento select").html("");
 				$btnAnimalSelect.html("");
 				for( var i = 0; i < animais.length; i++ ){
 					var $option =  "<option value='"+animais[i].id+"'>"+animais[i].nome+"</option>";
-					//$("#ficha_atendimento select").append($option);
 					$btnAnimalSelect.append($option);
 				}
 			}
 		});
+		//Lista as prescricoes
 		$.ajax({
 			method: "POST",
 			url: "FichaAtendimentoServlet.do",
@@ -77,17 +76,71 @@
 					var data = new Date(fichas[i].dataAbertura);
 					datatime = data.getFullYear()+"-"+(data.getMonth()+1)+'-'+data.getDate();
 					data = data.getDate()+'/'+(data.getMonth()+1)+'/'+data.getFullYear();
-					var $linha =  '<tr><th scope="row">'+fichas[i].numeroFicha+'</th><td><time datetime="'+datatime+'">'+data.get+'</time></td><td>'+fichas[i].idAnimal+'</td><td><button class="btn btn-info" name="detalhar[0]">Detalhar Ficha</button></td></tr>'
+					var $linha =  '<tr><th scope="row">'+fichas[i].numeroFicha+'</th><td><time datetime="'+datatime+'">'+data.get+'</time></td><td>'+fichas[i].idAnimal+'</td><td><button class="btn btn-info" name="detalhar">Detalhar Ficha</button></td></tr>'
 					$tabelaFichas.append($linha);
 				}	
+				$btnDetalhar = $("button[name=detalhar]");
+				for(var i = 0; i <$btnDetalhar.length; i++ ){
+					$btnDetalhar[i].addEventListener("click", function(e){
+						e.preventDefault();
+						var id_detalhar = parseInt(this.closest("td").closest("tr").children[0].innerText);
+						ajaxDetalhar(id_detalhar);
+					});
+				}
 			}
 		});
+		
 	});
+	//Funcao para o ajax de detalhar
+	function ajaxDetalhar(num){
+		$.ajax({
+			method: "POST",
+			url: "FichaAtendimentoServlet.do",
+			data:{
+				opcao: 5,
+				data:num
+			},
+			success:function(retorno){
+				var dadosFicha = JSON.parse(retorno);
+				console.log(dadosFicha);
+				//data abertura ficha
+				var dataAbertura = dadosFicha[2].data_abertura.split(' ');
+				//dataAbertura = "'"+dataAbertura[1]+" "+dataAbertura[2]+" "+dataAbertura[5]+"'";
+				//dataAbertura = new Date(dataAbertura[0]);
+				console.log(dataAbertura);
+				//data nascimento
+				var dataNascimento = dadosFicha[0].data.split(' ');
+				//dataNascimento = "'"+dataNascimento[1]+" "+dataNascimento[2]+" "+dataNascimento[5]+"'";
+				//dataNascimento = new Date(dataNascimento);
+				var $inputs = $("#ficha_atendimento input");
+				$inputs[2].value = dadosFicha[2].status;
+				$inputs[3].value = dadosFicha[2].numero_sequencial;
+				$inputs[4].value = dataAbertura[0];
+				$inputs[5].value = dataNascimento[0];
+				
+				$inputs[6].value = dadosFicha[0].especie;
+				$inputs[7].value = dadosFicha[0].raca;
+				if(dadosFicha[0].sexo === "M"){
+					$inputs[8].checked = true;	
+				} else {
+					$inputs[9].checked = true;
+				}
+				$inputs[10].value = dadosFicha[0].porte;
+				$inputs[11].value = dadosFicha[0].pelagem;
+				$inputs[12].value = dadosFicha[0].temperamento;
+				$inputs[13].value = dadosFicha[1].nome;
+				$inputs[14].value = dadosFicha[1].cpf;
+				$inputs[15].value = dadosFicha[1].telefone;
+				$inputs[16].value = dadosFicha[1].celular;
+				$inputs[17].value = dadosFicha[1].email;
+			}
+		})
+	}
+	
 	//Selecao animal
 	$btnAnimalSelect.on('click', function(e){
 		e.preventDefault();
 		var animal = this.value; 
-		console.log(animal);
 		$.ajax({
 			method: 'POST',
 			url: 'FichaAtendimentoServlet.do',
@@ -120,46 +173,39 @@
 				$inputs[17].value = dadosAnimal[1].email;
 			}
 		});
-	});
-	
+	});	
 	
 }( jQuery ) );
 
 ( function ($){
-	var $tabelaServicos = $("#tabelaServicos");
-	var $formButtons = $("#tabelaServicos button");
-	var $formSelects = $("#tabelaServicos select");
+	var $tabelaServicos = $("#tabelaServicos");	
+	var $formSelects = $("#tabelaServicos select");	
 	var $botaoAbrirFicha = $("#ficha_atendimento button.btn-success");
 	var $botaoEditarFicha = $("#ficha_atendimento button.btn-warning");
-	console.log($formButtons);
-	console.log($formSelects);
 	$botaoAbrirFicha.on('click', function(e){
-		e.preventDefault();
-		
+		e.preventDefault();	
 	});
 	
 	$botaoEditarFicha.on('click', function(e){
 		e.preventDefault();
 		//
+		var $formButtons = $("#tabelaServicos button");
 		$("html, body").animate({
 			scrollTo: $tabelaServicos
 		}, 500, 'linear');
 		//
-		
-		
 		console.log($formButtons[i]);
 		for(var i = 0; i < $formButtons; i++){
-			
+			console.log($formButtons[i]);
 			$formButtons[i].disabled = false;
 		}
 		for(var i = 0; i < $formSelects; i++){
 			$formSelects[i].readOnly = false;
-		}
-		
+		}	
 	})
 	
 }( jQuery ) );
-
+//Carregar select de servicos a partir da categoria
 ( function($){
 	var $selectCategoria = $("select[name=categoria]");
 	var $selectServico = $("select[name=servico]");
@@ -181,5 +227,34 @@
 				}
 			}
 		})
+	})
+}( jQuery ));
+//Incluir servico na prescricao
+( function($){
+	var $btnIncluirServicos = $("#tabelaServicos .btn.btn-success");
+	var $selectServicos = $("#tabelaServicos select[name=servico]");
+	var $inputFicha = $("#ficha_atendimento input[name=id_ficha]");
+	//trocar o campo para o veterinario
+	var $inputAtendente = $("#ficha_atendimento input[name=idatendente]");
+	//trocar o campo para o veterinario
+	$btnIncluirServicos.on('click', function(e){
+		e.preventDefault();
+		var idservico = $selectServicos.val();
+		var idficha = $inputFicha.val();
+		var idveterinario = $inputAtendente.val();
+		console.log(idservico);
+		$.ajax({
+			method: "POST",
+			url:'prescricaoServlet.do',
+			data:{
+				opcao: 0,
+				ficha: idficha,
+				servico: idservico,
+				veterinario: idveterinario
+			},
+			success:function(retorno){
+				console.log(retorno);
+			}
+		});
 	})
 }( jQuery ));
