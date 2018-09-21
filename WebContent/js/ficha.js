@@ -102,22 +102,13 @@
 			},
 			success:function(retorno){
 				var dadosFicha = JSON.parse(retorno);
-				console.log(dadosFicha);
-				//data abertura ficha
 				var dataAbertura = dadosFicha[2].data_abertura.split(' ');
-				//dataAbertura = "'"+dataAbertura[1]+" "+dataAbertura[2]+" "+dataAbertura[5]+"'";
-				//dataAbertura = new Date(dataAbertura[0]);
-				console.log(dataAbertura);
-				//data nascimento
 				var dataNascimento = dadosFicha[0].data.split(' ');
-				//dataNascimento = "'"+dataNascimento[1]+" "+dataNascimento[2]+" "+dataNascimento[5]+"'";
-				//dataNascimento = new Date(dataNascimento);
 				var $inputs = $("#ficha_atendimento input");
 				$inputs[2].value = dadosFicha[2].status;
 				$inputs[3].value = dadosFicha[2].numero_sequencial;
 				$inputs[4].value = dataAbertura[0];
-				$inputs[5].value = dataNascimento[0];
-				
+				$inputs[5].value = dataNascimento[0];			
 				$inputs[6].value = dadosFicha[0].especie;
 				$inputs[7].value = dadosFicha[0].raca;
 				if(dadosFicha[0].sexo === "M"){
@@ -150,7 +141,6 @@
 			},
 			success: function(retorno){
 				var dadosAnimal = JSON.parse(retorno);
-				console.log(dadosAnimal);
 				var dataNascimento = dadosAnimal[0].data.split(' ');
 				dataNascimento = "'"+dataNascimento[1]+" "+dataNascimento[2]+" "+dataNascimento[5]+"'";
 				dataNascimento = new Date(dataNascimento);
@@ -236,13 +226,15 @@
 	var $inputFicha = $("#ficha_atendimento input[name=id_ficha]");
 	//trocar o campo para o veterinario
 	var $inputAtendente = $("#ficha_atendimento input[name=idatendente]");
+	var $inputVeterinario = $("#ficha_atendimento input[name=cpf_veterinario]");
 	//trocar o campo para o veterinario
 	$btnIncluirServicos.on('click', function(e){
 		e.preventDefault();
 		var idservico = $selectServicos.val();
 		var idficha = $inputFicha.val();
-		var idveterinario = $inputAtendente.val();
-		console.log(idservico);
+		var idatendente = $inputAtendente.val();
+		var idveterinario = $inputVeterinario.val(); 
+		
 		$.ajax({
 			method: "POST",
 			url:'prescricaoServlet.do',
@@ -250,6 +242,7 @@
 				opcao: 0,
 				ficha: idficha,
 				servico: idservico,
+				atendente: idatendente,
 				veterinario: idveterinario
 			},
 			success:function(retorno){

@@ -74,4 +74,22 @@ public class ServicoDAO {
 		//....
 		return sql;
 	}
+	
+	public static Servico buscarPorId(int id) {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = "SELECT * FROM T_SERVICO WHERE idServico = ?";
+		ResultSet rs = null;
+		try {
+			PreparedStatement stm = con.prepareStatement(sql);
+			stm.setInt(1, id);
+			rs = stm.executeQuery();
+			Servico retorno = new Servico(rs.getInt("idServico"), rs.getString("categoria"), rs.getString("nomeServico"), rs.getDouble("preco"), rs.getInt("idAdministradorDeCadastramento"));
+			stm.close();
+			con.close();
+			return retorno;
+		} catch( SQLException se ) {
+			se.printStackTrace();
+		}
+		return null;
+	}
 }

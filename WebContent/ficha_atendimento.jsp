@@ -187,6 +187,7 @@ List<String> categorias = ServicoManager.buscarTodasCategorias();
                         <div class="col-md-2">
                             <label for="idatendente">Nome do Atendente</label>
                             <input class="form-control" type="text" name="idatendente" placeholder="Lineu Silva" value="1" readonly>
+                            <input type="hidden" name="cpf_veterinario" value="55555555555">
                         </div>
                     </div>
                     
@@ -267,7 +268,6 @@ List<String> categorias = ServicoManager.buscarTodasCategorias();
                                       <td colspan="3"></td>
                                       <td>
                                           <button type="button" class="btn btn-success">Incluir</button>
-                                          <input type="hidden" name="id_servico">
                                       </td>
                                	 	</tr>
                                 </tbody>

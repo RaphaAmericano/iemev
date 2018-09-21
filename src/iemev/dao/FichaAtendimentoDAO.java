@@ -33,12 +33,13 @@ public class FichaAtendimentoDAO {
 				dataAbertura = dataFormat.parse(rs.getString("dataAbertura"));
 			}catch(Exception e){
 				e.printStackTrace();
-			}
+			} 
 			try {
-				dataFechamento = dataFormat.parse(rs.getString("dataFechamento"));
+				dataFechamento = dataFormat.parse(rs.getString("dataFechamento"));	
 			}catch(Exception e){
 				e.printStackTrace();
 			}
+			
 			int idAnimal = Integer.parseInt(rs.getString("idAnimal"));
 			int idAtendAbriu = Integer.parseInt(rs.getString("idAtendenteAbriuFicha"));
 			int idAtendFechou = Integer.parseInt(rs.getString("idAtendenteFechouFicha"));

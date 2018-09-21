@@ -5,11 +5,24 @@ import java.util.Date;
 public class Prescricao {
 	private int idPrescricao;
 	private int numeroFicha;
-	private int cpfVeterinario;
+	private long cpfVeterinario;
 	private int idServico;
 	private Date dataPrescricaoServico;
 	private int idEmpregadoDeOrdenacao;
 	private Date dataFila;
+	
+	public Prescricao(){
+		super();
+	}
+	
+	public Prescricao(int id, int ficha, long cpf, int servico, Date data, int empregado) {
+		this.idPrescricao = id;
+		this.numeroFicha = ficha;
+		this.cpfVeterinario = cpf;
+		this.idServico = servico;
+		this.dataPrescricaoServico = data;
+		this.idEmpregadoDeOrdenacao = empregado;
+	}
 	
 	public int getIdPrescricao() {
 		return idPrescricao;
@@ -23,10 +36,10 @@ public class Prescricao {
 	public void setNumeroFicha(int numeroFicha) {
 		this.numeroFicha = numeroFicha;
 	}
-	public int getCpfVeterinario() {
+	public long getCpfVeterinario() {
 		return cpfVeterinario;
 	}
-	public void setCpfVeterinario(int cpfVeterinario) {
+	public void setCpfVeterinario(long cpfVeterinario) {
 		this.cpfVeterinario = cpfVeterinario;
 	}
 	public int getIdServico() {

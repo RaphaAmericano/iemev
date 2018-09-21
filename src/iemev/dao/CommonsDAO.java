@@ -23,6 +23,4 @@ public abstract class CommonsDAO implements GenericDAO{
 		}
 		return true;
 	};
-//	public List<?> selecionarTodos();
-//	public Object selecionarPorID ( int identificado );
 }
