@@ -93,6 +93,61 @@
 		});
 		
 	});
+	//Funcao para adicionar prescricao
+	var $btnIncluirServicos = $("#tabelaServicos .btn.btn-success");
+	var $selectServicos = $("#tabelaServicos select[name=servico]");
+	var $inputFicha = $("#ficha_atendimento input[name=id_ficha]");
+	//trocar o campo para o veterinario
+	var $inputAtendente = $("#ficha_atendimento input[name=idatendente]");
+	var $inputVeterinario = $("#ficha_atendimento input[name=cpf_veterinario]");
+	var $tabelaServicos = $("#tabelaServicos");
+	
+	//trocar o campo para o veterinario
+	$btnIncluirServicos.on('click', function(e){
+		e.preventDefault();
+		var idservico = $selectServicos.val();
+		var idficha = $inputFicha.val();
+		var idatendente = $inputAtendente.val();
+		var idveterinario = $inputVeterinario.val(); 
+		
+		$.ajax({
+			method: "POST",
+			url:'prescricaoServlet.do',
+			data:{
+				opcao: 0,
+				ficha: idficha,
+				servico: idservico,
+				atendente: idatendente,
+				veterinario: idveterinario
+			},
+			success:function(retorno){
+				var servico = JSON.parse(retorno);
+				var numeroItem = $("#tabelaServicos tr").length;
+				var ultimaLinha = $("#tabelaServicos tr:last-child");
+				var data = servico[0].data_prescricao_servico;
+				var preco = servico[1].preco.toFixed(2);
+				data = data.split(' ');
+				data = data[0].replace('-', '/').replace('-', '/');
+				var $linha = '<tr><th scope="row">'+numeroItem+'</th><td>'+servico[1].nome_servico+'</td><td>'+servico[1].categoria+'</td><td>Jorge Teste</td><td><time>'+data+'</time></td><td>R$'+preco+'</td><td><button type="button" class="btn btn-danger">Excluir</button></td></tr>';
+				$tabelaServicos.prepend($linha);
+				
+				var $linhas = $("#tabelaServicos tr");
+				var total = 0;
+				for(var i = 0; i < $linhas.length -1; i++ ){
+					var valor =  $linhas.find('td')[4];
+					valor = valor.innerText;
+					valor = valor.replace('R$','');
+					valor = parseFloat(valor);
+					total += valor;
+				}
+				total = (Math.round(total * 100) / 100).toFixed(2);
+				total = total.toString().replace('.', ',');
+				ultimaLinha.find('td')[3].innerText = "R$"+total;
+			}
+		});
+	})
+	
+	///
 	//Funcao para o ajax de detalhar
 	function ajaxDetalhar(num){
 		$.ajax({
@@ -138,35 +193,68 @@
 				valor: num
 			}, success: function(retorno){
 				var servicos = JSON.parse(retorno);
+				
 				var $tabelaServicos = $("#tabelaServicos");	
 				$("#tabelaServicos tr").remove(':not(:last-child)');
 				var numeroItem = $("#tabelaServicos tr").length;
-				var ultimaLinha = $("#tabelaServicos tr:last-child");
+				
 				for( var i = 0; i < servicos.length; i++ ){
-					console.log(servicos[i]);
+					
 					var data = servicos[i][0].data_prescricao_servico;
 					var preco = servicos[i][1].preco.toFixed(2);
 					data = data.split(' ');
 					data = data[0].replace('-', '/').replace('-', '/');
-					var $linha = '<tr><th scope="row">'+i+'</th><td>'+servicos[i][1].nome_servico+'</td><td>'+servicos[i][1].categoria+'</td><td>Jorge Teste</td><td><time>'+data+'</time></td><td>R$'+preco+'</td><td><button type="button" class="btn btn-danger">Excluir</button></td></tr>';
+					var $linha = '<tr><th scope="row">'+(i + 1)+'</th><td>'+servicos[i][1].nome_servico+'</td><td>'+servicos[i][1].categoria+'</td><td>Jorge Teste</td><td><time>'+data+'</time></td><td>R$'+preco+'</td><td><button type="button" class="btn btn-danger" value='+servicos[i][0].id_prescricao+'>Excluir</button></td></tr>';
 					$tabelaServicos.prepend($linha);
 
 				}
-				var $linhas = $("#tabelaServicos tr");
-				var total = 0;
-				for(var k = 0; k < $linhas.length -1; k++ ){
-					var valor =  $linhas.find('td')[4];
-					valor = valor.innerText;
-					valor = valor.replace('R$','');
-					valor = parseFloat(valor);
-					total += valor;
-				}
-				total = (Math.round(total * 100) / 100).toFixed(2);
-				total = total.toString().replace('.', ',');
-				ultimaLinha.find('td')[3].innerText = "R$"+total;	
+				calcularTotal();
+				botoesExcluir();
 			}
 		})
 	}
+	
+	function calcularTotal(){
+		var ultimaLinha = $("#tabelaServicos tr:last-child");
+		var $linhas = $("#tabelaServicos tr");
+		var total = 0;
+		for(var k = 0; k < $linhas.length -1; k++ ){
+			var valor =  $linhas.find('td')[4];
+			valor = valor.innerText;
+			valor = valor.replace('R$','');
+			valor = parseFloat(valor);
+			total += valor;
+		}
+		total = (Math.round(total * 100) / 100).toFixed(2);
+		total = total.toString().replace('.', ',');
+		ultimaLinha.find('td')[3].innerText = "R$"+total;
+	}
+	
+	function botoesExcluir(){
+		var $botoesExcluir = $("#tabelaServicos .btn.btn-danger");
+		$botoesExcluir.on('click', function(e){
+			
+			var id_prescricao = this.value;
+			$.ajax({
+				method: "POST",
+				url: "prescricaoServlet.do",
+				data: {
+					opcao: 2,
+					id: id_prescricao
+				}, 
+				success: function(retorno){
+					if(retorno == 1 ){
+						$linha = $(".btn.btn-danger[value="+id_prescricao+"]").closest('td').closest('tr');
+						console.log($linha);
+						$linha.remove();
+						calcularTotal();
+					}
+				}
+			});
+			
+		});	
+	}
+	
 	
 	//Selecao animal
 	$btnAnimalSelect.on('click', function(e){
@@ -260,56 +348,5 @@
 }( jQuery ));
 //Incluir servico na prescricao
 ( function($){
-	var $btnIncluirServicos = $("#tabelaServicos .btn.btn-success");
-	var $selectServicos = $("#tabelaServicos select[name=servico]");
-	var $inputFicha = $("#ficha_atendimento input[name=id_ficha]");
-	//trocar o campo para o veterinario
-	var $inputAtendente = $("#ficha_atendimento input[name=idatendente]");
-	var $inputVeterinario = $("#ficha_atendimento input[name=cpf_veterinario]");
-	var $tabelaServicos = $("#tabelaServicos");
 	
-	//trocar o campo para o veterinario
-	$btnIncluirServicos.on('click', function(e){
-		e.preventDefault();
-		var idservico = $selectServicos.val();
-		var idficha = $inputFicha.val();
-		var idatendente = $inputAtendente.val();
-		var idveterinario = $inputVeterinario.val(); 
-		
-		$.ajax({
-			method: "POST",
-			url:'prescricaoServlet.do',
-			data:{
-				opcao: 0,
-				ficha: idficha,
-				servico: idservico,
-				atendente: idatendente,
-				veterinario: idveterinario
-			},
-			success:function(retorno){
-				var servico = JSON.parse(retorno);
-				var numeroItem = $("#tabelaServicos tr").length;
-				var ultimaLinha = $("#tabelaServicos tr:last-child");
-				var data = servico[0].data_prescricao_servico;
-				var preco = servico[1].preco.toFixed(2);
-				data = data.split(' ');
-				data = data[0].replace('-', '/').replace('-', '/');
-				var $linha = '<tr><th scope="row">'+numeroItem+'</th><td>'+servico[1].nome_servico+'</td><td>'+servico[1].categoria+'</td><td>Jorge Teste</td><td><time>'+data+'</time></td><td>R$'+preco+'</td><td><button type="button" class="btn btn-danger">Excluir</button></td></tr>';
-				$tabelaServicos.prepend($linha);
-				
-				var $linhas = $("#tabelaServicos tr");
-				var total = 0;
-				for(var i = 0; i < $linhas.length -1; i++ ){
-					var valor =  $linhas.find('td')[4];
-					valor = valor.innerText;
-					valor = valor.replace('R$','');
-					valor = parseFloat(valor);
-					total += valor;
-				}
-				total = (Math.round(total * 100) / 100).toFixed(2);
-				total = total.toString().replace('.', ',');
-				ultimaLinha.find('td')[3].innerText = "R$"+total;
-			}
-		});
-	})
 }( jQuery ));

@@ -224,33 +224,6 @@ List<String> categorias = ServicoManager.buscarTodasCategorias();
                                 </thead>
                                 <tbody id="tabelaServicos">
                                     <tr>
-                                    <th scope="row">1</th>
-                                    <td>Vacina</td>
-                                    <td>Raiva</td>
-                                    <td>Ubirajara Castro</td>
-                                    <td><time>20/02/2018</time></td>
-                                    <td>R$100,00</td>
-                                    <td><button type="button" class="btn btn-danger">Excluir</button></td>
-                                    </tr>
-                                    <tr>
-                                    <th scope="row">2</th>
-                                    <td>Anestesia</td>
-                                    <td>Local</td>
-                                    <td>Vandecir Gomes</td>
-                                    <td><time>10/02/2018</time></td>
-                                    <td>R$200,00</td>
-                                    <td><button type="button" class="btn btn-danger">Excluir</button></td>
-                                    </tr>
-                                    <tr>
-                                    <th scope="row">3</th>
-                                    <td>Operação</td>
-                                    <td>Próstata</td>
-                                    <td>Maria Eduarda Coutinho</td>
-                                    <td><time>04/04/2018</time></td>
-                                    <td>R$500,00</td>
-                                    <td><button type="button" class="btn btn-danger">Excluir</button></td>
-                                    </tr>
-                                    <tr>
                                    	<th scope="row">Incluir</th>
                                       <td>
                                           <select name="categoria" id="" class="form-control" readonly>

@@ -79,6 +79,15 @@ public class PrescricaoController extends HttpServlet {
 			response.setContentType("text/plain");
 			response.getWriter().write(retorno);
 			break;
+		case 2:
+			int id_prescricao = Integer.parseInt(request.getParameter("id"));
+			
+			int deletar = PrescricaoManager.deletar(id_prescricao);
+			retorno = new Gson().toJson(deletar);
+			
+			response.setContentType("text/plain");
+			response.getWriter().write(retorno);
+			break;
 		default:
 			break;
 		}

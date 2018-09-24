@@ -20,6 +20,17 @@ public class PrescricaoManager {
 		}
 		return 0;
 	}
+	public static int deletar(int id_prescricao) {
+		PrescricaoDAO dao = new PrescricaoDAO();
+		try {
+			int deletar = dao.deletar(id_prescricao);
+			return deletar;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
 	public static Prescricao buscar(int id) {
 		PrescricaoDAO dao = new PrescricaoDAO();
 		try {
