@@ -265,14 +265,12 @@ List<String> categorias = ServicoManager.buscarTodasCategorias();
                                               
                                           </select> 
                                       </td>
-                                      <td colspan="3"></td>
+                                      <td colspan="2"></td>
+                                      <td></td>
                                       <td>
                                           <button type="button" class="btn btn-success">Incluir</button>
                                       </td>
                                	 	</tr>
-                                </tbody>
-                                <tbody>
-                                   
                                 </tbody>
                                 </table>
                         </div>

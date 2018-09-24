@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import iemev.models.Prescricao;
 import iemev.models.Servico;
@@ -58,6 +60,36 @@ public class PrescricaoDAO {
 		} catch( SQLException se) {
 			se.printStackTrace();
 		}
+		return null;
+	}
+	public List<Prescricao> buscarTodasPrescricoes(int ficha){
+		Connection con = ConnectionFactory.getConnection();
+		String sql = "SELECT * FROM T_PRESCRICAO WHERE numeroFicha = ?";
+		ResultSet rs = null;
+		SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		try {
+			PreparedStatement stm = con.prepareStatement(sql);
+			stm.setInt(1, ficha);
+			rs = stm.executeQuery();
+			List<Prescricao> retorno = new ArrayList<Prescricao>();
+			while(rs.next()) {
+				Date data = new Date();
+				try {
+					data = dataFormat.parse(rs.getString("dataPrescricaoServico"));
+				}catch(Exception e ) {
+					e.printStackTrace();
+				}
+				Prescricao prescricao = new Prescricao(rs.getInt("idPrescricao"), rs.getInt("numeroFicha"), rs.getLong("cpfVeterinario"), rs.getInt("idServico"), data, rs.getInt("idEmpregadoDeOrdenacao"));
+				retorno.add(prescricao);
+			}
+			rs.close();
+			stm.close();
+			con.close();
+			return retorno;
+		} catch(SQLException se) {
+			se.printStackTrace();
+		}
+		
 		return null;
 	}
 }

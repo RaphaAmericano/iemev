@@ -35,11 +35,11 @@ public class PrescricaoController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	int opcao = Integer.parseInt(request.getParameter("opcao"));
-	
+	int numeroficha;
 	switch(opcao) {
 		case 0:
 			
-			int  numeroficha = Integer.parseInt(request.getParameter("ficha")); 
+			numeroficha = Integer.parseInt(request.getParameter("ficha")); 
 			int numeroservico = Integer.parseInt(request.getParameter("servico"));
 			int idatendente = Integer.parseInt(request.getParameter("atendente"));
 			long cpfveterinario = Long.parseLong(request.getParameter("veterinario"));
@@ -48,18 +48,21 @@ public class PrescricaoController extends HttpServlet {
 			Servico servico = ServicoManager.buscar(prescricao.getIdServico());
 			JsonObject json_prescricao = PrescricaoManager.prescricaoJson(prescricao);
 			JsonObject json_servico = ServicoManager.servicoJson(servico);
-			System.out.println(prescricao);
-			System.out.println(servico);
-			System.out.println(json_prescricao);
-			System.out.println(json_servico);
+			
 			//nome veterinario
 			List<JsonObject> objeto = new ArrayList<JsonObject>();
 			objeto.add(json_prescricao);
 			objeto.add(json_servico);
 			String retorno = new Gson().toJson(objeto);  
-			
 			response.setContentType("text/plain");
-			response.getWriter().write("OK");
+			response.getWriter().write(retorno);
+			break;
+		case 1:
+			numeroficha = Integer.parseInt(request.getParameter("valor")); 
+			List<Prescricao> listaprescricoes = PrescricaoManager.buscarTodasPrescricoes(numeroficha);
+			System.out.println(listaprescricoes);
+			response.setContentType("text/plain");
+			response.getWriter().write("Ok");
 			break;
 		default:
 			break;

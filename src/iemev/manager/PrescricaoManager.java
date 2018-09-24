@@ -1,6 +1,8 @@
 package iemev.manager;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import com.google.gson.JsonObject;
 
@@ -37,7 +39,19 @@ public class PrescricaoManager {
 		retorno.addProperty("id_servico", prescricao.getIdServico());
 		retorno.addProperty("data_prescricao_servico", dataFormat.format(prescricao.getDataPrescricaoServico()));
 		retorno.addProperty("id_empregado_ordenacao", prescricao.getIdEmpregadoDeOrdenacao());
-		retorno.addProperty("data_fila", dataFormat.format(prescricao.getDataFila()));
+		if(prescricao.getDataFila() != null ) {
+			retorno.addProperty("data_fila", dataFormat.format(prescricao.getDataFila()));
+		}
 		return retorno;
+	}
+	public static List<Prescricao> buscarTodasPrescricoes(int ficha){
+		PrescricaoDAO dao = new PrescricaoDAO();
+		try {
+			List<Prescricao> retorno = dao.buscarTodasPrescricoes(ficha);
+			return retorno;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

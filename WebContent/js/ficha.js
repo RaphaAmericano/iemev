@@ -85,6 +85,8 @@
 						e.preventDefault();
 						var id_detalhar = parseInt(this.closest("td").closest("tr").children[0].innerText);
 						ajaxDetalhar(id_detalhar);
+						ajaxServicos(id_detalhar);
+						//Aqui tem que chamr uma funcao preenchendo os servicos
 					});
 				}
 			}
@@ -124,6 +126,18 @@
 				$inputs[15].value = dadosFicha[1].telefone;
 				$inputs[16].value = dadosFicha[1].celular;
 				$inputs[17].value = dadosFicha[1].email;
+			}
+		})
+	}
+	function ajaxServicos(num){
+		$.ajax({
+			method: "POST",
+			url: "prescricaoServlet.do",
+			data: {
+				opcao: 1,
+				valor: num
+			}, success: function(retorno){
+				console.log(retorno);
 			}
 		})
 	}
@@ -227,6 +241,8 @@
 	//trocar o campo para o veterinario
 	var $inputAtendente = $("#ficha_atendimento input[name=idatendente]");
 	var $inputVeterinario = $("#ficha_atendimento input[name=cpf_veterinario]");
+	var $tabelaServicos = $("#tabelaServicos");
+	
 	//trocar o campo para o veterinario
 	$btnIncluirServicos.on('click', function(e){
 		e.preventDefault();
@@ -246,7 +262,32 @@
 				veterinario: idveterinario
 			},
 			success:function(retorno){
-				console.log(retorno);
+				var servico = JSON.parse(retorno);
+				var numeroItem = $("#tabelaServicos tr").length;
+				var ultimaLinha = $("#tabelaServicos tr:last-child");
+				var data = servico[0].data_prescricao_servico;
+				var preco = servico[1].preco.toFixed(2);
+				console.log(preco);
+				data = data.split(' ');
+				data = data[0].replace('-', '/').replace('-', '/');
+				var $linha = '<tr><th scope="row">'+numeroItem+'</th><td>'+servico[1].nome_servico+'</td><td>'+servico[1].categoria+'</td><td>Jorge Teste</td><td><time>'+data+'</time></td><td>R$'+preco+'</td><td><button type="button" class="btn btn-danger">Excluir</button></td></tr>';
+				$tabelaServicos.prepend($linha);
+				
+				var $linhas = $("#tabelaServicos tr");
+				var total = 0;
+				for(var i = 0; i < $linhas.length -1; i++ ){
+					var valor =  $linhas.find('td')[4];
+					valor = valor.innerText;
+					valor = valor.replace('R$','');
+					valor = parseFloat(valor);
+					console.log(valor);
+					total += valor;
+				}
+				total = (Math.round(total * 100) / 100).toFixed(2);
+				total = total.toString().replace('.', ',');
+//				console.log(ultimaLinha.find('td')[3]);
+//				console.log(total);
+				ultimaLinha.find('td')[3].innerText = "R$"+total;
 			}
 		});
 	})
