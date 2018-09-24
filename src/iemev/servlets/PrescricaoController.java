@@ -2,6 +2,7 @@ package iemev.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -36,6 +37,8 @@ public class PrescricaoController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	int opcao = Integer.parseInt(request.getParameter("opcao"));
 	int numeroficha;
+	String retorno;
+	Servico servico = null;
 	switch(opcao) {
 		case 0:
 			
@@ -45,7 +48,7 @@ public class PrescricaoController extends HttpServlet {
 			long cpfveterinario = Long.parseLong(request.getParameter("veterinario"));
 			int novo_prescricao = PrescricaoManager.inserir(cpfveterinario, numeroficha, numeroservico, idatendente);
 			Prescricao prescricao = PrescricaoManager.buscar(novo_prescricao);
-			Servico servico = ServicoManager.buscar(prescricao.getIdServico());
+			servico = ServicoManager.buscar(prescricao.getIdServico());
 			JsonObject json_prescricao = PrescricaoManager.prescricaoJson(prescricao);
 			JsonObject json_servico = ServicoManager.servicoJson(servico);
 			
@@ -53,16 +56,28 @@ public class PrescricaoController extends HttpServlet {
 			List<JsonObject> objeto = new ArrayList<JsonObject>();
 			objeto.add(json_prescricao);
 			objeto.add(json_servico);
-			String retorno = new Gson().toJson(objeto);  
+			retorno = new Gson().toJson(objeto);  
 			response.setContentType("text/plain");
 			response.getWriter().write(retorno);
 			break;
 		case 1:
 			numeroficha = Integer.parseInt(request.getParameter("valor")); 
 			List<Prescricao> listaprescricoes = PrescricaoManager.buscarTodasPrescricoes(numeroficha);
-			System.out.println(listaprescricoes);
+			List<List> retorno_json = new ArrayList<List>();
+			
+			for (int i = 0; i < listaprescricoes.size(); i++) {
+				servico = ServicoManager.buscar(listaprescricoes.get(i).getIdServico());
+				JsonObject prescricao_json = PrescricaoManager.prescricaoJson(listaprescricoes.get(i));
+				JsonObject servico_json = ServicoManager.servicoJson(servico);
+				List<JsonObject> lista_json = new ArrayList<JsonObject>();
+				lista_json.add(prescricao_json);
+				lista_json.add(servico_json);
+				retorno_json.add(lista_json);
+			}
+			retorno = new Gson().toJson(retorno_json);
+			
 			response.setContentType("text/plain");
-			response.getWriter().write("Ok");
+			response.getWriter().write(retorno);
 			break;
 		default:
 			break;

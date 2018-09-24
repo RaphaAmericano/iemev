@@ -137,7 +137,33 @@
 				opcao: 1,
 				valor: num
 			}, success: function(retorno){
-				console.log(retorno);
+				var servicos = JSON.parse(retorno);
+				var $tabelaServicos = $("#tabelaServicos");	
+				$("#tabelaServicos tr").remove(':not(:last-child)');
+				var numeroItem = $("#tabelaServicos tr").length;
+				var ultimaLinha = $("#tabelaServicos tr:last-child");
+				for( var i = 0; i < servicos.length; i++ ){
+					console.log(servicos[i]);
+					var data = servicos[i][0].data_prescricao_servico;
+					var preco = servicos[i][1].preco.toFixed(2);
+					data = data.split(' ');
+					data = data[0].replace('-', '/').replace('-', '/');
+					var $linha = '<tr><th scope="row">'+i+'</th><td>'+servicos[i][1].nome_servico+'</td><td>'+servicos[i][1].categoria+'</td><td>Jorge Teste</td><td><time>'+data+'</time></td><td>R$'+preco+'</td><td><button type="button" class="btn btn-danger">Excluir</button></td></tr>';
+					$tabelaServicos.prepend($linha);
+
+				}
+				var $linhas = $("#tabelaServicos tr");
+				var total = 0;
+				for(var k = 0; k < $linhas.length -1; k++ ){
+					var valor =  $linhas.find('td')[4];
+					valor = valor.innerText;
+					valor = valor.replace('R$','');
+					valor = parseFloat(valor);
+					total += valor;
+				}
+				total = (Math.round(total * 100) / 100).toFixed(2);
+				total = total.toString().replace('.', ',');
+				ultimaLinha.find('td')[3].innerText = "R$"+total;	
 			}
 		})
 	}
@@ -198,9 +224,8 @@
 			scrollTo: $tabelaServicos
 		}, 500, 'linear');
 		//
-		console.log($formButtons[i]);
+		
 		for(var i = 0; i < $formButtons; i++){
-			console.log($formButtons[i]);
 			$formButtons[i].disabled = false;
 		}
 		for(var i = 0; i < $formSelects; i++){
@@ -267,7 +292,6 @@
 				var ultimaLinha = $("#tabelaServicos tr:last-child");
 				var data = servico[0].data_prescricao_servico;
 				var preco = servico[1].preco.toFixed(2);
-				console.log(preco);
 				data = data.split(' ');
 				data = data[0].replace('-', '/').replace('-', '/');
 				var $linha = '<tr><th scope="row">'+numeroItem+'</th><td>'+servico[1].nome_servico+'</td><td>'+servico[1].categoria+'</td><td>Jorge Teste</td><td><time>'+data+'</time></td><td>R$'+preco+'</td><td><button type="button" class="btn btn-danger">Excluir</button></td></tr>';
@@ -280,13 +304,10 @@
 					valor = valor.innerText;
 					valor = valor.replace('R$','');
 					valor = parseFloat(valor);
-					console.log(valor);
 					total += valor;
 				}
 				total = (Math.round(total * 100) / 100).toFixed(2);
 				total = total.toString().replace('.', ',');
-//				console.log(ultimaLinha.find('td')[3]);
-//				console.log(total);
 				ultimaLinha.find('td')[3].innerText = "R$"+total;
 			}
 		});
