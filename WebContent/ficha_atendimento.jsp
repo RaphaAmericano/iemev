@@ -47,7 +47,7 @@ List<String> categorias = ServicoManager.buscarTodasCategorias();
     <div class="container">
         <div class="row justify-content-md-center">
             <div class="col col-xs col-md-auto col-md-12">
-                <form action="ficha_atendimento.html">
+                <form action="ficha_atendimento.html" id="tabela_prescricoes">
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -71,10 +71,10 @@ List<String> categorias = ServicoManager.buscarTodasCategorias();
                 <h1>Ficha de Atendimento</h1>
                 <form action="FichaAtendimentoServlet.do" method="POST" id="ficha_atendimento">
                     
-                <div class="form-row mt-2">
+                	<div class="form-row mt-2">
                         <div class="col-md-6 mb-3">
                             <label for="select_nome_animal">Nome do Animal</label>
-                            <select name="select_nome_animal" class="form-control">
+                            <select name="select_nome_animal" class="form-control" disabled>
                             </select>
                             <div class="valid-feedback">Inválido</div>
                         </div>
@@ -82,9 +82,9 @@ List<String> categorias = ServicoManager.buscarTodasCategorias();
                     </div>
                     <div class="form-row mt-2">
                         <div class="col-3 col-xs-12 col-md-auto">
-                            <input type="submit" class="btn btn-success" value="Abrir Ficha">
-                            <button type="button" class="btn btn-warning">Alterar Ficha</button>
-                            <button type="button" class="btn btn-danger">Excluir Ficha</button>
+                            <input type="submit" class="btn btn-success" value="Abrir Ficha" disabled>
+                            <button type="button" class="btn btn-warning" disabled>Alterar Ficha</button>
+                            <button type="button" class="btn btn-danger" disabled>Excluir Ficha</button>
                             <input type="hidden" name="opcao" value="3">
                         </div>
                     </div>
@@ -226,7 +226,7 @@ List<String> categorias = ServicoManager.buscarTodasCategorias();
                                     <tr>
                                    	<th scope="row">Incluir</th>
                                       <td>
-                                          <select name="categoria" id="" class="form-control" readonly>
+                                          <select name="categoria" id="" class="form-control" disabled>
                                              <%for(int i = 0; i < categorias.size(); i++){ 
                                              %>
 											<option value="<%=categorias.get(i) %>"><%=categorias.get(i)%></option>
@@ -234,14 +234,14 @@ List<String> categorias = ServicoManager.buscarTodasCategorias();
                                           </select> 
                                       </td>
                                       <td>
-                                          <select name="servico" id="" class="form-control" readonly>
+                                          <select name="servico" id="" class="form-control" disabled>
                                               
                                           </select> 
                                       </td>
                                       <td colspan="2"></td>
                                       <td></td>
                                       <td>
-                                          <button type="button" class="btn btn-success">Incluir</button>
+                                          <button type="button" class="btn btn-success" disabled="disabled">Incluir</button>
                                       </td>
                                	 	</tr>
                                 </tbody>
