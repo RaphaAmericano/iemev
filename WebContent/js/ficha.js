@@ -105,6 +105,7 @@
 			},
 			success: function(retorno){
 				var fichas = JSON.parse(retorno);
+				console.log(fichas);
 				var $tabelaFichas = $("#tabelaFichas");
 				if(fichas.length > 0 ){
 					if($("#tabela_prescricoes .alert")){

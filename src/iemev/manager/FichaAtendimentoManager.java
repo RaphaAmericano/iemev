@@ -1,6 +1,7 @@
 package iemev.manager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import iemev.dao.FichaAtendimentoDAO;
 import iemev.models.FichaDeAtendimento;
@@ -67,6 +68,16 @@ public class FichaAtendimentoManager {
 			ArrayList<FichaDeAtendimento> fichas = dao.fichasUsuario(id);
 			return fichas;
 		} catch(Exception e ) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public static List<FichaDeAtendimento> todasFichas(){
+		FichaAtendimentoDAO dao = new FichaAtendimentoDAO();
+		try {
+			List<FichaDeAtendimento> fichas = dao.todasFichas();
+			return fichas;
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;

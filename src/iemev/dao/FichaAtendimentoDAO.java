@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
@@ -191,5 +192,39 @@ public class FichaAtendimentoDAO {
 		};
 		return retorno;
 	}
-	
+	public List<FichaDeAtendimento> todasFichas(){
+		Connection con = ConnectionFactory.getConnection();
+		ResultSet rs = null;
+		String sql = "SELECT * FROM T_FICHADEATENDIMENTO";
+		List<FichaDeAtendimento> retorno = new ArrayList<FichaDeAtendimento>();
+		try {
+			PreparedStatement stm = con.prepareStatement(sql);
+			rs = stm.executeQuery();
+			SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			while(rs.next()) {
+				Date data = new Date();
+				try {
+					data = dateformat.parse(rs.getString("dataAbertura"));
+					FichaDeAtendimento ficha = new FichaDeAtendimento();
+					ficha.setDataAbertura(dateformat.parse(rs.getString("dataAbertura")));
+					ficha.setDataFechamento(dateformat.parse(rs.getString("dataFechamento")));
+					ficha.setNumeroFicha(rs.getInt("numeroFicha"));
+					ficha.setIdAnimal(rs.getInt("idAnimal"));
+					ficha.setIdAtendenteAbriuFicha(rs.getInt("idAtendenteAbriuFicha"));
+					ficha.setIdAtendenteAbriuFicha(rs.getInt("idAtendenteAbriuFicha"));
+					ficha.setStatusFicha(rs.getString("statusFicha"));
+					retorno.add(ficha);
+				} catch(Exception e ) {
+					e.printStackTrace();
+				}
+			}
+			rs.close();
+			stm.close();
+			con.close();
+			return retorno;
+		}catch (SQLException se) {
+			se.printStackTrace();
+		}
+		return retorno;
+	}
 }

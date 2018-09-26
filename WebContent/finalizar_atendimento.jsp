@@ -1,4 +1,17 @@
+<%@page import="iemev.models.Cliente"%>
+<%@page import="iemev.manager.ClienteManager"%>
+<%@page import="iemev.models.Animal"%>
+<%@page import="iemev.manager.AnimalManager"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="iemev.models.FichaDeAtendimento"%>
+<%@page import="java.util.List"%>
+<%@page import="iemev.manager.FichaAtendimentoManager"%>
 <%@include file="_header.jsp" %>
+<%
+List<FichaDeAtendimento> atendimentos = FichaAtendimentoManager.todasFichas();
+SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
+%>
+
 <!-- Consulta -->
     <div class="container">
         <div class="row justify-content-md center">
@@ -18,7 +31,7 @@
     <div class="container">
         <div class="row justify-content-md-center">
             <div class="col col-xs col-md-auto col-md-12 mt-4">
-                <form action="ficha_atendimento.html">
+                <form action="FichaAtendimentoServlet.do">
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -30,33 +43,23 @@
                         </tr>
                     </thead>
                     <tbody>
+                    <%if(!atendimentos.isEmpty()){ 
+                    	for(int i = 0; i < atendimentos.size(); i++ ){
+                    		Animal animal = AnimalManager.buscar(atendimentos.get(i).getIdAnimal());
+                    		Cliente cliente = ClienteManager.buscarId(animal.getCpfCliente());
+                    %>
                         <tr>
-                            <th scope="row">1</th>
-                            <td>Ubirantam Márcio Pacheco</td>
-                            <td><time datetime="2016-07-31">2016-07-31</time></td>
-                            <td>Otto</td>
+                            <th scope="row"><%=i+1 %></th>
+                            <td><%=cliente.getNome() %></td>
+                            <td><time datetime="2016-07-31"><%=dateformat.format(atendimentos.get(i).getDataAbertura()) %></time></td>
+                            <td><%=animal.getNomeAnimal() %></td>
                             <td>
-                                <button class="btn btn-info" name="detalhar[0]">Selecionar</button>
+                            	<input type="hidden" value="<%=atendimentos.get(i).getNumeroFicha() %>" name="id_ficha">
+                                <button type="button" class="btn btn-info" name="detalhar">Selecionar</button>
                             </td>
                         </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Luiz Vasco Peçanha</td>
-                            <td><time datetime="2016-07-31">2016-07-31</time></td>
-                            <td>Thornton</td>
-                            <td>
-                                <button class="btn btn-info" name="detalhar[0]">Selecionar</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Jorge Carlos Almeida</td>
-                            <td><time datetime="2016-07-31">2016-07-31</time></td>
-                            <td>the Bird</td>
-                            <td>
-                                <button class="btn btn-info" name="detalhar[0]">Selecionar</button>
-                            </td>
-                        </tr>
+                    <% }
+                    } %>
                     </tbody>
                 </table>
                 </form>
@@ -68,11 +71,11 @@
         <div class="row">
             <div class="col col-xs mt-4">
                 <h1>Ficha de Atendimento</h1>
-                <form action="">
+                <form action="FichaAtendimentoServlet.do" id="ficha_atendimento">
                     <div class="form-row mt-2">
                         <div class="col-md-3 md-3">
                             <label for="">Status</label>
-                            <input class="form-control" name="status" type="text">
+                            <input class="form-control" name="status" type="text" readonly>
                         </div>
                         <div class="col-md-3 md-3">
                             <label for="">Número Sequecial</label>
@@ -80,7 +83,7 @@
                         </div>
                         <div class="col-md-3 mb-3">
                             <label for="data">Data de Abertura</label>
-                            <input type="date" name="data_abertura" class="form-control">
+                            <input type="date" name="data_abertura" class="form-control" readonly>
                             <div class="valid-feedback">Inválido</div>
                         </div>
                         <div class="col-md-3">
@@ -92,11 +95,12 @@
                     <div class="form-row mt-2">
                         <div class="col-md-6 mb-3">
                             <label for="cpfcliente">Nome do Cliente</label>
-                            <input class="form-control is-invalid" type="text" name="nomecliente">
+                            <input class="form-control" type="text" name="nomecliente" readonly>
+                            <div class="valid-feedback">Inválido</div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="nome">Nome do Animal</label>
-                            <input type="text" name="name" class="form-control">
+                            <input type="text" name="name" class="form-control" readonly>
                             <div class="valid-feedback">Inválido</div>
                         </div>
                     </div>
@@ -106,7 +110,7 @@
                     <div class="form-row mt-2">     
                         <div class="col-md-6">
                             <label for="cpfcliente">CPF do Cliente</label>
-                            <input class="form-control is-invalid" type="number" name="cpfcliente">
+                            <input class="form-control" type="number" name="cpfcliente" readonly>
                         </div>
                         <div class="col-md-6">
                             <label for="pagamento">Forma de Pagamento</label>
@@ -120,19 +124,20 @@
                                 <label for="pagamento" class="form-check-label">Cheque</label>
                             </div>
                             <div class="form-check">
-                                    <input type="radio" class="form-check-imput" name="pagamento" value="1">
-                                    <label for="pagamento" class="form-check-label">Cartão</label>
-                                </div>
+                                <input type="radio" class="form-check-imput" name="pagamento" value="1">
+                                <label for="pagamento" class="form-check-label">Cartão</label>
+                            </div>
                         </div>
                     </div>
 
                     <div class="form-row mt-2">
                         <div class="col-md-12">
                             <h2>Serviços</h2>
-                            <table class="table table-hover">
+                            <table class="table table-hover" id="tabela_servicos">
                                 <thead>
                                     <tr>
                                     <th scope="col">Item #</th>
+                                    <th scope="col">Categoria</th>
                                     <th scope="col">Serviço</th>
                                     <th scope="col">Nome do Veterinário</th>
                                     <th scope="col">Data da Prescrição</th>
@@ -162,8 +167,8 @@
                                     <td>R$300,00</td>
                                     </tr>
                                     <tr>
-                                        <th scope="row" colspan="4">Total</th>
-                                        <td>R$900,00</td>
+                                        <th scope="row" colspan="5">Total</th>
+                                        <td></td>
                                     </tr>
                                 </tbody>
                                 </table>

@@ -102,6 +102,17 @@ public class FichaAtendimentoController extends HttpServlet {
 		case 4:
 			long idcliente = Long.parseLong(request.getParameter("idcliente"));
 			ArrayList<FichaDeAtendimento> fichas = FichaAtendimentoManager.fichasUsuario(idcliente);
+			ArrayList<JsonObject> animais_ = new ArrayList<JsonObject>();
+			for (int i = 0; i < fichas.size(); i++) {
+				JsonObject animal_ = AnimalManager.buscarAnimalId(fichas.get(i).getIdAnimal());
+				animais_.add(animal_);
+			}
+//			ArrayList retorno_ = new ArrayList();
+//			String fichas_json = new Gson().toJson(fichas);
+//			String animais_json = new Gson().toJson(animais_);
+//			retorno_.add(fichas_json);
+//			retorno_.add(fichas_json);
+//			json_fichas_animais.add(fichas_json);
 			//Buscar data de abertura e nome do animal
 			
 			String retornojson = new Gson().toJson(fichas);
@@ -169,6 +180,7 @@ public class FichaAtendimentoController extends HttpServlet {
 			request.setAttribute("status_delete", mensagem);
 			view.forward(request, response);
 			break;
+			
 		default:
 			break;
 		}
