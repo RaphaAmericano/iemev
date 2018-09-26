@@ -40,6 +40,16 @@ public class FichaAtendimentoManager {
 		return fichaId;
 	}
 	
+	public static int deletar(int id_ficha) {
+		FichaAtendimentoDAO dao = new FichaAtendimentoDAO();
+		try {
+			int deletar = dao.deletarFicha(id_ficha);
+			return deletar;
+		} catch( Exception e ) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
 	public static FichaDeAtendimento buscarPorId(int id ) {
 		FichaAtendimentoDAO dao = new FichaAtendimentoDAO();
 		try {

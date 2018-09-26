@@ -60,9 +60,10 @@
 	var $tabelaServicos = $("#tabelaServicos");	
 	var $formSelects = $("#tabelaServicos select");	
 	var $botaoAbrirFicha = $("#ficha_atendimento input.btn-success");
-	var $botaoEditarFicha = $("#ficha_atendimento button.btn-alertg");
-	var $botaorFicha = $("#ficha_atendimento button.btn-warning");
-	
+	var $botaoEditarFicha = $("#ficha_atendimento button.btn-warning");
+	var $botaoExcluirFicha = $("#ficha_atendimento button.btn-danger");
+	var $botaoExcluirServico;
+	var $modalExluir = $("#modalExcluir");
 	//Seleciona oo cliente
 	$btnClienteSelect.on('click', function(e){
 		e.preventDefault();
@@ -120,9 +121,12 @@
 					$btnDetalhar = $("button[name=detalhar]");
 					for(var i = 0; i < $btnDetalhar.length; i++ ){
 						$btnDetalhar[i].addEventListener("click", function(e){
+							
 							e.preventDefault();
 							$botaoEditarFicha.prop('disabled', false);
+							$botaoExcluirFicha.prop('disabled', false);
 							var id_detalhar = parseInt(this.closest("td").closest("tr").children[0].innerText);
+							$("input[name=ficha]").val(id_detalhar);
 							ajaxDetalhar(id_detalhar);
 							ajaxServicos(id_detalhar);
 							//Aqui tem que chamr uma funcao preenchendo os servicos
@@ -145,14 +149,17 @@
 	//Comandos dos botoes de crud da ficha
 	
 	$botaoAbrirFicha.on('click', function(e){
-		e.preventDefault();	
+//		e.preventDefault();	
 	});
 	
 	$botaoEditarFicha.on('click', function(e){
 		e.preventDefault();
-		$btnIncluirServico.prop("disabled", false);
+		$botaoExcluirServico = $("#tabelaServicos .btn.btn-danger");
+		$botaoExcluirServico.prop('disabled', false);
+		$btnIncluirServicos.prop('disabled', false);
 		$selectServicos.prop("disabled", false);
 		$selectCategoria.prop("disabled", false);
+		
 		//
 		var $formButtons = $("#tabelaServicos button");
 		$("html, body").animate({
@@ -168,9 +175,12 @@
 		}	
 	})
 	
-	//
-	
-	
+	$modalExluir.on("show.bs.modal", function(){
+		$('input[name=opcao]').val(6);
+	});
+	$modalExluir.on("hide.bs.modal", function(){
+		$('input[name=opcao]').val(3);
+	});
 	//trocar o campo para o veterinario
 	var $inputAtendente = $("#ficha_atendimento input[name=idatendente]");
 	var $inputVeterinario = $("#ficha_atendimento input[name=cpf_veterinario]");
@@ -202,7 +212,7 @@
 				var preco = servico[1].preco.toFixed(2);
 				data = data.split(' ');
 				data = data[0].replace('-', '/').replace('-', '/');
-				var $linha = '<tr><th scope="row">'+numeroItem+'</th><td>'+servico[1].nome_servico+'</td><td>'+servico[1].categoria+'</td><td>Jorge Teste</td><td><time>'+data+'</time></td><td>R$'+preco+'</td><td><button type="button" class="btn btn-danger">Excluir</button></td></tr>';
+				var $linha = '<tr><th scope="row">'+numeroItem+'</th><td>'+servico[1].categoria+'</td><td>'+servico[1].nome_servico+'</td><td>'+servico[2].nome+'</td><td><time>'+data+'</time></td><td>R$'+preco+'</td><td><button type="button" class="btn btn-danger" value="'+servico[0].id_prescricao+'">Excluir</button></td></tr>';
 				$tabelaServicos.prepend($linha);
 				
 				var $linhas = $("#tabelaServicos tr");
@@ -217,6 +227,8 @@
 				total = (Math.round(total * 100) / 100).toFixed(2);
 				total = total.toString().replace('.', ',');
 				ultimaLinha.find('td')[3].innerText = "R$"+total;
+				numerarServicos();
+				botoesExcluir();
 			}
 		});
 	})
@@ -273,16 +285,15 @@
 				var numeroItem = $("#tabelaServicos tr").length;
 				
 				for( var i = 0; i < servicos.length; i++ ){
-					
 					var data = servicos[i][0].data_prescricao_servico;
 					var preco = servicos[i][1].preco.toFixed(2);
 					data = data.split(' ');
 					data = data[0].replace('-', '/').replace('-', '/');
-					var $linha = '<tr><th scope="row">'+(i + 1)+'</th><td>'+servicos[i][1].nome_servico+'</td><td>'+servicos[i][1].categoria+'</td><td>Jorge Teste</td><td><time>'+data+'</time></td><td>R$'+preco+'</td><td><button type="button" class="btn btn-danger" value='+servicos[i][0].id_prescricao+' disabled>Excluir</button></td></tr>';
+					var $linha = '<tr><th scope="row">'+(i + 1)+'</th><td>'+servicos[i][1].categoria+'</td><td>'+servicos[i][1].nome_servico+'</td><td>Jorge Teste</td><td><time>'+data+'</time></td><td>R$'+preco+'</td><td><button type="button" class="btn btn-danger" value='+servicos[i][0].id_prescricao+' disabled>Excluir</button></td></tr>';
 					$tabelaServicos.prepend($linha);
-
 				}
 				calcularTotal();
+				numerarServicos();
 				botoesExcluir();
 			}
 		})
@@ -304,10 +315,16 @@
 		ultimaLinha.find('td')[3].innerText = "R$"+total;
 	}
 	
+	function numerarServicos(){
+		var linhas = $('#tabelaServicos th');
+		for(var i = 0; i < linhas.length - 1; i++ ){
+			linhas[i].innerText = i + 1;
+		}
+	}
+	
 	function botoesExcluir(){
 		var $botoesExcluir = $("#tabelaServicos .btn.btn-danger");
-		$botoesExcluir.on('click', function(e){
-			
+		$botoesExcluir.on('click', function(e){		
 			var id_prescricao = this.value;
 			$.ajax({
 				method: "POST",
@@ -321,6 +338,7 @@
 						$linha = $(".btn.btn-danger[value="+id_prescricao+"]").closest('td').closest('tr');
 						console.log($linha);
 						$linha.remove();
+						numerarServicos();
 						calcularTotal();
 					}
 				}
@@ -393,3 +411,4 @@
 		})
 	})
 }( jQuery ));
+

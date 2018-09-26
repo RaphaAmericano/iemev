@@ -46,7 +46,6 @@ public class PrescricaoDAO {
 			PreparedStatement stm = con.prepareStatement(sql);
 			stm.setInt(1, id_prescricao);
 			retorno = stm.executeUpdate();
-			System.out.println(retorno);
 			stm.close();
 			con.close();
 			return retorno;
@@ -54,6 +53,24 @@ public class PrescricaoDAO {
 			se.printStackTrace();
 		}
 		return retorno;
+	}
+	public int deletarTodas(int id_ficha) {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = "DELETE FROM T_PRESCRICAO WHERE numeroFicha = ?";
+		ResultSet rs = null;
+		int retorno = 0;
+		try {
+			PreparedStatement stm = con.prepareStatement(sql);
+			stm.setInt(1, id_ficha);
+			retorno = stm.executeUpdate();
+			stm.close();
+			con.close();
+			return retorno;
+		} catch(SQLException se){
+			se.printStackTrace();
+		}
+		return retorno;
+				
 	}
 	public Prescricao buscar(int id) {
 		Connection con = ConnectionFactory.getConnection();

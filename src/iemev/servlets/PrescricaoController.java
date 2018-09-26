@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,8 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import iemev.manager.PessoaManager;
 import iemev.manager.PrescricaoManager;
 import iemev.manager.ServicoManager;
+import iemev.models.Pessoa;
 import iemev.models.Prescricao;
 import iemev.models.Servico;
 
@@ -47,15 +50,16 @@ public class PrescricaoController extends HttpServlet {
 			int idatendente = Integer.parseInt(request.getParameter("atendente"));
 			long cpfveterinario = Long.parseLong(request.getParameter("veterinario"));
 			int novo_prescricao = PrescricaoManager.inserir(cpfveterinario, numeroficha, numeroservico, idatendente);
+			Pessoa veterinario = PessoaManager.buscarId(cpfveterinario);
 			Prescricao prescricao = PrescricaoManager.buscar(novo_prescricao);
 			servico = ServicoManager.buscar(prescricao.getIdServico());
 			JsonObject json_prescricao = PrescricaoManager.prescricaoJson(prescricao);
 			JsonObject json_servico = ServicoManager.servicoJson(servico);
-			
-			//nome veterinario
+			JsonObject json_veterinario = PessoaManager.pessoaJson(veterinario);
 			List<JsonObject> objeto = new ArrayList<JsonObject>();
 			objeto.add(json_prescricao);
 			objeto.add(json_servico);
+			objeto.add(json_veterinario);
 			retorno = new Gson().toJson(objeto);  
 			response.setContentType("text/plain");
 			response.getWriter().write(retorno);

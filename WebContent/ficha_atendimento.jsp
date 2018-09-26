@@ -6,6 +6,8 @@
 <%
 List<Servico> servicos = ServicoManager.buscarTodosServicos();
 List<String> categorias = ServicoManager.buscarTodasCategorias();
+String mensagem = null;
+
 %>
 
 
@@ -84,7 +86,7 @@ List<String> categorias = ServicoManager.buscarTodasCategorias();
                         <div class="col-3 col-xs-12 col-md-auto">
                             <input type="submit" class="btn btn-success" value="Abrir Ficha" disabled>
                             <button type="button" class="btn btn-warning" disabled>Alterar Ficha</button>
-                            <button type="button" class="btn btn-danger" disabled>Excluir Ficha</button>
+                            <button type="button" class="btn btn-danger" disabled data-toggle="modal" data-target="#modalExcluir">Excluir Ficha</button>
                             <input type="hidden" name="opcao" value="3">
                         </div>
                     </div>
@@ -207,6 +209,23 @@ List<String> categorias = ServicoManager.buscarTodasCategorias();
                     </div>
                     <% } %>
                     
+                    <!--  -->
+                    <% if(request.getAttribute("status_delete") != null ){ %>
+                    <div class="form-row mt-2">
+                        <div class="col-12">
+                        	<% if(request.getAttribute("status_delete") == "Ficha excluída com sucesso" ){ %>
+                        	<div class="alert alert-success" role="alert">
+							  <%=request.getAttribute("status_delete") %>
+							</div> 
+							<% } else {  %>
+	                       <div class="alert alert-danger" role="alert">
+							  <%=request.getAttribute("status_delete") %>
+							</div>
+						 	 <% } %>
+                    	</div>
+                    </div>
+                    <% } %>
+                    <!--  -->
                     <div class="form-row mt-4">
                         <div class="col-md-12">
                             <h2>Serviços</h2>
@@ -248,6 +267,27 @@ List<String> categorias = ServicoManager.buscarTodasCategorias();
                                 </table>
                         </div>
                     </div>
+                    <!-- Modal de confirmação -->
+                    <div class="modal fade" id="modalExcluir" tabindex="-1" role="dialog" aria-labelledby="modalConfirmacaoLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+	                        <div class="modal-content">
+	                            <div class="modal-header">
+	                            <h5 class="modal-title" id="modalConfirmacaoLabel">Confirme a Exclusão da Ficha de Atendimento</h5>
+	                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	                                <span aria-hidden="true">&times;</span>
+	                            </button>
+	                            </div>
+	                            <div class="modal-body">
+	                            Deseja excluir o atendimento
+	                            </div>
+	                            <div class="modal-footer">
+	                            <input type="submit" class="btn btn-danger" value="Sim">
+	                            <button type="button" class="btn btn-success" data-dismiss="modal" aria-label="Close">Não</button>
+	                            </div>
+	                        </div>
+                        </div>
+                    </div>
+                    <!-- /Modal de confirmação -->
                 </form>
             </div>
         </div>

@@ -24,6 +24,7 @@ import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 import iemev.manager.AnimalManager;
 import iemev.manager.ClienteManager;
 import iemev.manager.FichaAtendimentoManager;
+import iemev.manager.PrescricaoManager;
 import iemev.models.Animal;
 import iemev.models.Cliente;
 import iemev.models.FichaDeAtendimento;
@@ -45,7 +46,9 @@ public class FichaAtendimentoController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int opcao = Integer.parseInt(request.getParameter("opcao"));
-		
+		RequestDispatcher view = request.getRequestDispatcher("ficha_atendimento.jsp");;
+		int id_ficha;
+		String mensagem;
 		switch (opcao) {
 		case 0:
 			String palavra = request.getParameter("busca");
@@ -76,7 +79,7 @@ public class FichaAtendimentoController extends HttpServlet {
 			Date data = new Date();
 			int idAtendAbri = Integer.parseInt(request.getParameter("idatendente"));
 			int idAnimal = Integer.parseInt(request.getParameter("select_nome_animal"));
-			String mensagem = "Não foi possível cadastrar nova ficha";
+			mensagem = "Não foi possível cadastrar nova ficha";
 			System.out.println(idAnimal);
 			FichaDeAtendimento ficha = new FichaDeAtendimento(data, idAnimal, idAtendAbri);
 			
@@ -94,18 +97,19 @@ public class FichaAtendimentoController extends HttpServlet {
 			request.setAttribute("status", fichaRequest.getStatusFicha());
 //			.....completar os setAttributes como os acima			
 			request.setAttribute("status_insert", mensagem);
-			RequestDispatcher view = request.getRequestDispatcher("ficha_atendimento.jsp");
 			view.forward(request, response);
 			break;
 		case 4:
 			long idcliente = Long.parseLong(request.getParameter("idcliente"));
 			ArrayList<FichaDeAtendimento> fichas = FichaAtendimentoManager.fichasUsuario(idcliente);
+			//Buscar data de abertura e nome do animal
+			
 			String retornojson = new Gson().toJson(fichas);
 			response.setContentType("text/plain");
 			response.getWriter().write(retornojson);
 			break;
 		case 5:
-			int id_ficha = Integer.parseInt(request.getParameter("data"));
+			id_ficha = Integer.parseInt(request.getParameter("data"));
 			FichaDeAtendimento ficha_detalhe = FichaAtendimentoManager.buscarPorId(id_ficha);
 			Animal ficha_animal = AnimalManager.buscar(ficha_detalhe.getIdAnimal());
 			Cliente ficha_cliente = ClienteManager.buscarId(ficha_animal.getCpfCliente());
@@ -153,6 +157,17 @@ public class FichaAtendimentoController extends HttpServlet {
 			//
 			response.setContentType("text/plain");
 			response.getWriter().write(retornoJson);
+			break;
+		case 6:
+			id_ficha = Integer.parseInt(request.getParameter("id_ficha"));
+			int deletar = FichaAtendimentoManager.deletar(id_ficha);
+			mensagem = "Não foi possível excluir a ficha";
+			if( deletar > 0 ) {
+				mensagem = "Ficha excluída com sucesso";
+				PrescricaoManager.deletarTodas(id_ficha);
+			}
+			request.setAttribute("status_delete", mensagem);
+			view.forward(request, response);
 			break;
 		default:
 			break;

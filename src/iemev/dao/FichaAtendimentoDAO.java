@@ -143,6 +143,25 @@ public class FichaAtendimentoDAO {
 		}
 		return retorno;
 	}
+	
+	public int deletarFicha(int id_ficha ) {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = "DELETE FROM T_FICHADEATENDIMENTO WHERE numeroFicha = ?";
+		ResultSet rs = null;
+		int retorno = 0;
+		try {
+			PreparedStatement stm = con.prepareStatement(sql);
+			stm.setInt(1, id_ficha);
+			retorno = stm.executeUpdate();
+			stm.close();
+			con.close();
+			return retorno;
+		} catch (SQLException se ) {
+			se.printStackTrace();
+		}
+		return retorno;
+	}
+	
 	public ArrayList<FichaDeAtendimento> fichasUsuario(long id){
 		Connection con = ConnectionFactory.getConnection();
 		ResultSet rs = null;
