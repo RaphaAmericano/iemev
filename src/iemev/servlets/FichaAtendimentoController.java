@@ -48,6 +48,7 @@ public class FichaAtendimentoController extends HttpServlet {
 		int opcao = Integer.parseInt(request.getParameter("opcao"));
 		RequestDispatcher view = request.getRequestDispatcher("ficha_atendimento.jsp");;
 		int id_ficha;
+		int alterar;
 		String mensagem;
 		switch (opcao) {
 		case 0:
@@ -180,10 +181,32 @@ public class FichaAtendimentoController extends HttpServlet {
 			request.setAttribute("status_delete", mensagem);
 			view.forward(request, response);
 			break;
-			
+		case 7:
+			id_ficha = Integer.parseInt(request.getParameter("id_ficha"));
+			alterar = FichaAtendimentoManager.abrirFicha(id_ficha);
+			mensagem = "Não foi possível abrir a ficha";
+			if(alterar > 0 ) {
+				mensagem = "Ficha número "+request.getParameter("id_ficha")+" aberta com sucesso";
+			}
+			request.setAttribute("status_ficha", mensagem);
+			view = request.getRequestDispatcher("finalizar_atendimento.jsp");;
+			view.forward(request, response);
+			break;
+		case 8:
+			id_ficha = Integer.parseInt(request.getParameter("id_ficha"));
+			alterar = FichaAtendimentoManager.fecharFicha(id_ficha);
+			mensagem = "Não foi possível fechar a ficha";
+			if(alterar > 0 ) {
+				mensagem = "Ficha número "+request.getParameter("id_ficha")+" fechada com sucesso";
+			}
+			request.setAttribute("status_ficha", mensagem);
+			view = request.getRequestDispatcher("finalizar_atendimento.jsp");;
+			view.forward(request, response);
+			break;
 		default:
 			break;
 		}
+		
 	}
 
 }

@@ -227,4 +227,36 @@ public class FichaAtendimentoDAO {
 		}
 		return retorno;
 	}
+	public int fecharFicha(int id_ficha) {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = "UPDATE T_FICHADEATENDIMENTO SET statusFicha = 'Fechada' WHERE numeroFicha = ?";
+		int retorno = 0;
+		try {
+			PreparedStatement stm = con.prepareStatement(sql);
+			stm.setInt(1, id_ficha);
+			retorno = stm.executeUpdate();
+			stm.close();
+			con.close();
+			return retorno;
+		}catch (SQLException se) {
+			se.printStackTrace();
+		}
+		return retorno;
+	}
+	public int abrirFicha(int id_ficha) {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = "UPDATE T_FICHADEATENDIMENTO SET statusFicha = 'Aberta' WHERE numeroFicha = ?";
+		int retorno = 0;
+		try {
+			PreparedStatement stm = con.prepareStatement(sql);
+			stm.setInt(1, id_ficha);
+			retorno = stm.executeUpdate();
+			stm.close();
+			con.close();
+			return retorno;
+		}catch (SQLException se) {
+			se.printStackTrace();
+		}
+		return retorno;
+	}
 }

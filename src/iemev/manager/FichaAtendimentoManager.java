@@ -82,4 +82,24 @@ public class FichaAtendimentoManager {
 		}
 		return null;
 	}
+	public static int fecharFicha(int id_ficha) {
+		FichaAtendimentoDAO dao = new FichaAtendimentoDAO();
+		try {
+			int retorno = dao.fecharFicha(id_ficha);
+			return retorno;
+		} catch (Exception e ) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	public static int abrirFicha(int id_ficha) {
+		FichaAtendimentoDAO dao = new FichaAtendimentoDAO();
+		try {
+			int retorno = dao.abrirFicha(id_ficha);
+			return retorno;
+		} catch (Exception e ) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
 }
