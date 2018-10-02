@@ -10,4 +10,7 @@
 <%@include file="_navbar.jsp" %>
 
 <!-- Fazer uma verificação para exibir apenas se não for tela de login -->
+<% if(session != null ){ 
+	if(session.getAttribute("empregado") != null ){ %>
 <%@include file="_navbar_sticky.jsp" %>
+<%} } %> 

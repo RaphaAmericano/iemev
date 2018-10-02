@@ -19,7 +19,7 @@ public class LogoutController extends HttpServlet {
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession();
 		session.removeAttribute("empregado");
 		session.removeAttribute("pessoa");
 		session.getMaxInactiveInterval();

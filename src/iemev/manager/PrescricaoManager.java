@@ -52,6 +52,18 @@ public class PrescricaoManager {
 		}
 		return null;
 	}
+	
+	public static List<Prescricao> buscarLista(){
+		PrescricaoDAO dao = new PrescricaoDAO();
+		try {
+			List<Prescricao> prescricoes = dao.buscaListaPrescricoes();
+			return prescricoes;
+		} catch (Exception e ) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public static JsonObject prescricaoJson(Prescricao prescricao) {
 		JsonObject retorno = new JsonObject();
 		SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

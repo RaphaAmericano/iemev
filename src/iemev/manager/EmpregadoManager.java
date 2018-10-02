@@ -6,7 +6,12 @@ import iemev.models.Empregado;
 public class EmpregadoManager {
 	public static Empregado buscar(long cpf ) {
 		EmpregadoDAO dao = new EmpregadoDAO();
-		Empregado retorno = dao.buscar(cpf);
-		return retorno;
+		try {
+			Empregado retorno = dao.buscar(cpf);
+			return retorno;	
+		} catch( Exception e ) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

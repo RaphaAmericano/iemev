@@ -1,6 +1,13 @@
 <%@include file="_header.jsp" %>
-
+<% String perfil = null;
+if(session != null ){ 
+	if(session.getAttribute("empregado") != null && session.getAttribute("pessoa") != null ){
+		Empregado empregado = (Empregado) session.getAttribute("empregado");
+		Pessoa pessoa = (Pessoa) session.getAttribute("pessoa");
+		perfil = empregado.getTipoEmpregado();
+	}%>
 <div class="container">
+	<% if(perfil.equals("administrador") || perfil.equals("atendente")){ %>
     <div class="row">
         <div class="col col-xs mt-5">
             <div class="card-deck">
@@ -35,11 +42,14 @@
                 </div>
         </div>
     </div>
+    <% } %>
 </div>
+
 <div class="container">
-  <div class="row">
-      <div class="col col-xs mt-5">
+  <div class="row justify-content-center">
+      <div class="<%=perfil.equals("veterinario") ? "col-6" : "col-9"%> col-xs mt-5">
           <div class="card-deck">
+       		  
               <div class="card">
                   <img class="card-img-top" src="img/veterinaria_iemev.jpg" alt="Card image cap">
                   <div class="card-body">
@@ -55,6 +65,7 @@
                       <a href="lista_atendimento.jsp" class="btn btn-primary btn-block">Gerenciar Listas</a>
                   </div>
               </div>
+              <%if(!perfil.equals("veterinario")){ %>
               <div class="card">
                   <img class="card-img-top" src="img/veterinaria_iemev.jpg" alt="Card image cap">
                   <div class="card-body">
@@ -62,13 +73,16 @@
                       <a href="finalizar_atendimento.jsp" class="btn btn-primary btn-block">Finalizar Atendimento</a>
                   </div>
               </div>
+              <%} %>
           </div>
       </div>
   </div>
 </div>
+<%
+if( perfil.equals("administrador") ){ %>
 <div class="container">
-    <div class="row">
-        <div class="col col-xs mt-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-xs mt-5">
             <div class="card-deck">
                 <div class="card">
                     <img class="card-img-top" src="img/veterinaria_iemev.jpg" alt="Card image cap">
@@ -88,33 +102,39 @@
                     <img class="card-img-top" src="img/veterinaria_iemev.jpg" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">Relatórios</h5>
-                        <a href="relatorios.html" class="btn btn-primary btn-block">Incluir Relatório</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="container">
-    <div class="row">
-        <div class="col col-xs mt-5">
-            <div class="card-deck">
-                <div class="card">
-                    <img class="card-img-top" src="img/veterinaria_iemev.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Boxes</h5>
-                        <a href="boxes.html" class="btn btn-primary btn-block">Incluir Box</a>
+                        <a href="relatorios.jsp" class="btn btn-primary btn-block">Incluir Relatório</a>
                     </div>
                 </div>
                 <div class="card">
                     <img class="card-img-top" src="img/veterinaria_iemev.jpg" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">Prontuários</h5>
-                            <a href="prontuario.html" class="btn btn-primary btn-block">Visualizar Prontuários</a>
+                            <a href="prontuario.jsp" class="btn btn-primary btn-block">Visualizar Prontuários</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<% } 
+if(perfil.equals("veterinario") ){ %>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-3 col-xs mt-5">
+            <div class="card-deck">
+                <div class="card">
+                  <img class="card-img-top" src="img/veterinaria_iemev.jpg" alt="Card image cap">
+                  <div class="card-body">
+                      <h5 class="card-title">Boxes</h5>
+                      <a href="boxes.html" class="btn btn-primary btn-block">Incluir Box</a>
+                  </div>
+             	</div>
+                
+            </div>
+        </div>
+    </div>
+    <% } %>
+</div>
+
+<% }%>
 <%@include file="_footer.jsp" %>

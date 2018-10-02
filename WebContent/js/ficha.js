@@ -54,6 +54,10 @@
 }( jQuery) );
 
 ( function($){
+	
+	//Ficha de atendimento
+
+	//
 	var $btnClienteSelect = $("#cliente_ficha button.btn-success");
 	var $btnAnimalSelect = $("#ficha_atendimento select[name=select_nome_animal]");
 	var $btnDetalhar;
@@ -105,7 +109,6 @@
 			},
 			success: function(retorno){
 				var fichas = JSON.parse(retorno);
-				console.log(fichas);
 				var $tabelaFichas = $("#tabelaFichas");
 				if(fichas.length > 0 ){
 					if($("#tabela_prescricoes .alert")){
@@ -264,9 +267,12 @@
 				$inputs[11].value = dadosFicha[0].pelagem;
 				$inputs[12].value = dadosFicha[0].temperamento;
 				$inputs[13].value = dadosFicha[1].nome;
-				$inputs[14].value = dadosFicha[1].cpf;
-				$inputs[15].value = dadosFicha[1].telefone;
-				$inputs[16].value = dadosFicha[1].celular;
+//				$inputs[14].value = dadosFicha[1].cpf;
+				$inputs[14].placeholder = placeholderCpf(dadosFicha[1].cpf);
+				//$inputs[15].value = dadosFicha[1].telefone;
+				$inputs[15].placeholder =  placeholderTelefone(dadosFicha[1].telefone);
+				//$inputs[16].value = dadosFicha[1].celular;
+				$inputs[16].placeholder = placeholderTelefone(dadosFicha[1].celular);
 				$inputs[17].value = dadosFicha[1].email;
 			}
 		})
@@ -337,7 +343,6 @@
 				success: function(retorno){
 					if(retorno == 1 ){
 						$linha = $(".btn.btn-danger[value="+id_prescricao+"]").closest('td').closest('tr');
-						console.log($linha);
 						$linha.remove();
 						numerarServicos();
 						calcularTotal();
@@ -386,6 +391,24 @@
 		});
 	});	
 	
+	function placeholderTelefone(val){
+		var retorno;
+		console.log(val);
+		if(val.length  > 10 ){
+			retorno = "("+val.substr(0,2)+") "+val.substr(3,4)+"-"+val.substr(5,4);
+		} else {
+			retorno = "("+val.substr(0,2)+") "+val.substr(3,1)+" "+val.substr(4,4)+"-"+val.substr(6,4);
+		}
+		return retorno;	
+	}
+	function placeholderCpf(val){
+		var retorno;
+		val = val.toString();
+		console.log(val);
+		retorno = val.substr(0,3)+"."+val.substr(3,3)+"."+val.substr(6,3)+"-"+val.substr(9,2);
+		console.log(retorno);
+		return retorno;
+	}
 }( jQuery ) );
 
 //Carregar select de servicos a partir da categoria

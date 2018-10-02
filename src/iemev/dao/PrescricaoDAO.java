@@ -127,4 +127,31 @@ public class PrescricaoDAO {
 		
 		return null;
 	}
+	public List<Prescricao> buscaListaPrescricoes(){
+		Connection con = ConnectionFactory.getConnection();
+		String sql = "SELECT * FROM T_PRESCRICAO";
+		ResultSet rs = null;
+		SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		List<Prescricao> retorno = new ArrayList<Prescricao>();
+		try {
+			PreparedStatement stm = con.prepareStatement(sql);
+			rs = stm.executeQuery();
+			while(rs.next()) {
+				Date data = new Date();
+				try {
+					data = dataFormat.parse(rs.getString("dataPrescricaoServico"));
+				}catch(Exception e ) {
+					e.printStackTrace();
+				}
+				Prescricao prescricao = new Prescricao(rs.getInt("idPrescricao"), rs.getInt("numeroFicha"), rs.getLong("cpfVeterinario"), rs.getInt("idServico"), data, rs.getInt("idEmpregadoDeOrdenacao"));
+				retorno.add(prescricao);
+			}
+			
+			return retorno;
+		}catch( SQLException se) {
+			se.printStackTrace();
+		}
+		return retorno;
+	}
+		
 }

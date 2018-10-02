@@ -39,16 +39,18 @@
 				$inputFields[5].value = ficha[0].nome;
 				$inputFields[6].value = ficha[1].cpf;
 				console.log($inputFields);
-				$inputFields[7].disabled = false;
-				$inputFields[8].disabled = false;
-				$inputFields[9].disabled = false;				
-				
 				if(ficha[2].status == "Aberta"){
+					$inputFields[7].disabled = false;
+					$inputFields[8].disabled = false;
+					$inputFields[9].disabled = false;				
+				}
+				//if(ficha[2].status == "Aberta"){
 //					$botaoReabrirFicha.setAttribute("disabled", true);
 //					$botaoFecharFicha.removeAttribute("disabled");
-				} else if (ficha[2].status == "Fechada"){
-//					$botaoReabrirFicha.removeAttribute("disabled");
-//					$botaoFecharFicha.setAttribute("disabled", true);
+				//} else 
+				if (ficha[2].status == "Fechada"){
+					$botaoReabrirFicha.removeAttribute("disabled");
+					$botaoFecharFicha.setAttribute("disabled", true);
 				}
 				
 				var $linhasServico = $listaServicos.find('tr');
@@ -63,14 +65,10 @@
 	});
 	
 	$botaoReabrirFicha.addEventListener('click', function(e){
-		e.preventDefault();
-		$inputFields[16].value = 7
-		//submit depois que mudar o valor
+		$inputFields[10].value = 7;
 	});
 	$botaoFecharFicha.addEventListener('click', function(e){
-		
-		$inputFields[16].value = 8;
-		//submit depois que mudar o valor ou mudar apartir jsp de acordo com o status
+		$inputFields[10].value = 8;
 	});
 	$radioPagamento.on("change", function(){
 		if($inputFields[0].value == "Aberta"){

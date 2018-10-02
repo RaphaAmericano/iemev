@@ -12,7 +12,7 @@ public class EmpregadoDAO {
 	public static Empregado buscar(long cpf ) {
 		Connection con = ConnectionFactory.getConnection();
 		Empregado empregado = new Empregado();
-		String sql = "SELECT * FROM T_EMPREGADO WHERE cpfEmpregado = ? ;";
+		String sql = "SELECT * FROM T_EMPREGADO WHERE cpfEmpregado = ?";
 		try {
 			
 			PreparedStatement stm = con.prepareStatement(sql);
@@ -21,12 +21,14 @@ public class EmpregadoDAO {
 			empregado.setCpf(rs.getLong("cpfEmpregado"));
 			empregado.setIdEmpregado(rs.getInt("idEmpregado"));
 			empregado.setSenha(rs.getString("senha"));
+			empregado.setTipoEmpregado(rs.getString("tipoEmpregado"));
+			rs.close();
 			stm.close();
 			con.close();
+			return empregado;
 		} catch(SQLException se) {
 			se.printStackTrace();
 			return null;
 		}
-		return empregado;
 	}
 }

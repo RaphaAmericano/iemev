@@ -46,13 +46,13 @@ public class FichaAtendimentoController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int opcao = Integer.parseInt(request.getParameter("opcao"));
-		RequestDispatcher view = request.getRequestDispatcher("ficha_atendimento.jsp");;
+		RequestDispatcher view = request.getRequestDispatcher("ficha_atendimento.jsp");
 		int id_ficha;
 		int alterar;
 		String mensagem;
 		switch (opcao) {
 		case 0:
-			String palavra = request.getParameter("busca");
+			String palavra = request.getParameter("busca").trim();
 			ArrayList<String> resultArray = FichaAtendimentoManager.buscarString(palavra);
 			String result = new Gson().toJson(resultArray);
 			response.setContentType("text/plain");
@@ -61,7 +61,15 @@ public class FichaAtendimentoController extends HttpServlet {
 		case 1:
 			long idusuario = Long.parseLong(request.getParameter("idcliente"));
 			ArrayList<String> animais = FichaAtendimentoManager.buscarAnimais(idusuario);
-			String resultAnimal = new Gson().toJson(animais);
+			String resultAnimal;
+			if(animais == null ) {
+				resultAnimal = "Errou ao buscar no banco";
+			} 
+			else if(animais.size() == 0) {
+				resultAnimal = "Nenhum animal encontrado";
+			} else {
+				resultAnimal = new Gson().toJson(animais);	
+			}
 			response.setContentType("text/plain");
 			response.getWriter().write(resultAnimal);	
 			break;
@@ -95,7 +103,8 @@ public class FichaAtendimentoController extends HttpServlet {
 			request.setAttribute("id_animal", fichaRequest.getIdAnimal());
 			request.setAttribute("id_atendente_abriu", fichaRequest.getIdAtendenteAbriuFicha());
 			request.setAttribute("id_atendente_fechou", fichaRequest.getIdAtendenteFechouFicha());
-			request.setAttribute("status", fichaRequest.getStatusFicha());
+			//request.setAttribute("status", fichaRequest.getStatusFicha());
+			request.setAttribute("status", fichaRequest.getStatusAtual().stateString());
 //			.....completar os setAttributes como os acima			
 			request.setAttribute("status_insert", mensagem);
 			view.forward(request, response);
@@ -155,7 +164,8 @@ public class FichaAtendimentoController extends HttpServlet {
 			}
 			JsonObject fichaJson = new JsonObject();
 			try {
-				fichaJson.addProperty("status", ficha_detalhe.getStatusFicha());
+				//fichaJson.addProperty("status", ficha_detalhe.getStatusFicha());
+				fichaJson.addProperty("status", ficha_detalhe.getStatusAtual().stateString());
 				fichaJson.addProperty("numero_sequencial", ficha_detalhe.getNumeroFicha());
 				fichaJson.addProperty("data_abertura", dataFormat.format(ficha_detalhe.getDataAbertura()));
 			} catch(JsonIOException je) {

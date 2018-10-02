@@ -162,18 +162,18 @@ String mensagem = null;
                         </div>
                         <div class="col-md-6">
                             <label for="cpfcliente">CPF do Cliente</label>
-                            <input class="form-control" type="number" name="cpfcliente" readonly>
+                            <input class="form-control" type="number" name="cpfcliente" placeholder="000.000.000-00" readonly>
                         </div>
                     </div>
                     
                     <div class="form-row mt-2">
                         <div class="col-md-4">
                             <label for="telefone">Telefone Residencial</label>
-                            <input class="form-control" type="number" name="telefone" readonly>
+                            <input class="form-control" type="number" name="telefone" placeholder="(00) 0000-0000" readonly>
                         </div>
                         <div class="col-md-4">
                             <label for="celular">Telefone Celular</label>
-                            <input class="form-control" type="number" name="celular" readonly>
+                            <input class="form-control" type="number" name="celular" placeholder="(00) 0-0000-0000" readonly>
                         </div>
                         <div class="col-md-4">
                             <label for="email">Email</label>

@@ -25,22 +25,19 @@ public class LoginController extends HttpServlet {
         super();
     }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String cpf = request.getParameter("cpf").replace(".", "").replaceAll("-", "");
-		System.out.println(cpf);
+		String cpf = request.getParameter("cpf").replace(".", "").replaceAll("-", "");		
 		String senha = request.getParameter("senha");
 		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-		
 		int acao = Integer.parseInt(request.getParameter("login"));
-
 		Empregado empregado = EmpregadoManager.buscar(Long.parseLong(cpf));
 		String mensagem_erro;
 		long cpfLong = Long.parseLong(cpf);
+		if(empregado == null ) {
+			mensagem_erro = "Usuário inexistente";
+			request.setAttribute("mensagem_erro", mensagem_erro);
+			rd.forward(request, response);
+		}
 		
 		if(cpfLong != empregado.getCpf() ) {
 			mensagem_erro = "CPF inválido";
@@ -48,7 +45,6 @@ public class LoginController extends HttpServlet {
 			rd.forward(request, response);
 		}
 		if(!senha.equals(empregado.getSenha())) {
-			rd = request.getRequestDispatcher("index.jsp");
 			mensagem_erro = "Senha inválida";
 			request.setAttribute("mensagem_erro", mensagem_erro);
 			rd.forward(request, response);
