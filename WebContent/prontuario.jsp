@@ -1,4 +1,28 @@
 <%@include file="_header.jsp" %>
+<%
+Empregado empregado = (Empregado) session.getAttribute("empregado");
+if(empregado != null ){
+	if(!empregado.getTipoEmpregado().equals("veterinario")){
+		response.sendRedirect("main.jsp");
+	}	
+}
+%>
+<!-- Consulta -->
+<div class="container">
+    <div class="row justify-content-md center">
+        <div class="col col-xs col-md-auto col-md-12">
+            <h1 class="font-weight-bold">Consultar Prontuário</h1>
+            <form action="">
+                <div class="form-group">
+                    <label for="">Buscar prontuário</label>
+                    <input class="form-control" type="number" placeholder="CPF do Cliente">
+                </div>
+                <button class="btn btn-primary" type="submit">Localizar cliente</button>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div class="container">
         <div class="row justify-content-md-center">
             <div class="col col-xs col-md-auto col-md-12 mt-2">

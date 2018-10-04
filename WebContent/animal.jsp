@@ -1,15 +1,23 @@
 <%@include file="_header.jsp" %>
+<%
+Empregado empregado = (Empregado) session.getAttribute("empregado");
+if(empregado != null ){
+	if(empregado.getTipoEmpregado().equals("veterinario")){
+		response.sendRedirect("main.jsp");
+	}	
+}
+%>
     <!-- Consulta -->
     <div class="container">
         <div class="row justify-content-md center">
             <div class="col col-xs col-md-auto col-md-12 mt-2">
-                <h1>Consultar Animal</h1>
+                <h1 class="font-weight-bold">Consultar Animal</h1>
                 <form action="">
                     <div class="form-group col-6 p-0">
-                        <label for="">Buscar</label>
+                        <label for="">Buscar animal</label>
                         <input class="form-control" type="search">
                     </div>
-                    <button class="btn btn-primary" type="submit">Localizar</button>
+                    <button class="btn btn-primary" type="submit">Localizar Animal</button>
                 </form>
             </div>
         </div>

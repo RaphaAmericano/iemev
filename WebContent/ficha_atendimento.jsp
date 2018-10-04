@@ -15,7 +15,7 @@ String mensagem = null;
     <div class="container">
         <div class="row justify-content-md center">
             <div class="col col-xs col-md-auto col-md-12">
-                <h1>Consultar Ficha</h1>
+                <h1 class="font-weight-bold">Consultar Ficha</h1>
                 <form action="FichaAtendimentoServlet.do" id="formBuscarUsuarios">
                     <div class="form-group">
                         <label for="">Buscar Cliente</label>

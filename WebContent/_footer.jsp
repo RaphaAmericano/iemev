@@ -1,3 +1,4 @@
+<%@page import="iemev.utils.UrlUtils"%>
 <nav class="navbar navbar-dark bg-dark mt-3">
     <footer class="container">
             <span class="navbar-text"><img src="img/logo-iemev-footer.png" alt="">Iemev</span>
@@ -10,7 +11,9 @@
 <script src="node_modules/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
 <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/main.js"></script>
+
 <script src="js/ficha.js"></script>
+
 <!-- Inserir verificacoes para o javascript correspondente a cada pagina -->
 <script src="js/finalizar.js"></script>
 <script src="js/masks.js"></script>

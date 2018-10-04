@@ -1,11 +1,25 @@
 <%@include file="_header.jsp" %>
-
+<%
+Empregado empregado = (Empregado) session.getAttribute("empregado");
+if(empregado != null ){
+	if(!empregado.getTipoEmpregado().equals("veterinario")){
+		response.sendRedirect("main.jsp");
+	}	
+}
+%>
+<div class="container">
+    <div class="row justify-content-md center">
+        <div class="col col-xs col-md-auto col-md-12 mt-2">
+            <h1 class="font-weight-bold">Boxes</h1>
+        </div>
+    </div>
+</div>
 
 <div class="container">
     <div class="row justify-content-md-center mt-2">
         <div class="col col-xs col-md-auto col-md">
-            <form action="ficha_atendimento.html">
-                <label for="boxes">Boxes</label>
+            <form action="boxesController.do">
+                
                 <div class="form-row">
                     <table class="table table-hover">
                         <thead>
@@ -53,6 +67,11 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                <div class="form-row align-items-center">
+                    <div class="col-sm-3 col-md-12 my-1">
+                        <h2 class="font-weight-bold">Incluir novo box</h2>
+                    </div>
                 </div>
                 <div class="form-row align-items-center">
                     <div class="col-sm-3 col-md-1 my-1">

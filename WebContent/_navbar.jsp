@@ -13,7 +13,7 @@
 		%>
   		<span class="navbar-text">Bem vindo <strong><%=pessoa.getNome() %></strong></span>
         <form action="logoutController.do" class="float-xs-right" method="POST">
-	        <button type="submit" class="btn btn-primary">Logout</button>
+	        <button type="submit" class="btn btn-primary">Sair</button>
    		</form>
    			<% } 
        	} else {

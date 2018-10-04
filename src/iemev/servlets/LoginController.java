@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +21,7 @@ import iemev.models.Pessoa;
 @WebServlet("/loginServlet.do")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	
     public LoginController() {
         super();
     }
@@ -49,7 +50,7 @@ public class LoginController extends HttpServlet {
 			request.setAttribute("mensagem_erro", mensagem_erro);
 			rd.forward(request, response);
 		}	
-
+		
 		Pessoa pessoa = PessoaManager.buscarId(empregado.getCpf());
 		HttpSession session = request.getSession(true);
 		session.setAttribute("cpf", cpf );

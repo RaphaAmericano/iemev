@@ -7,8 +7,7 @@ public class FichaFechadaState implements FichaState{
 	public FichaFechadaState(FichaDeAtendimento ficha ){
 		super();
 		this.ficha = ficha;
-	}
-	
+	}	
 	@Override
 	public void abrir() {
 		ficha.setStatusAtual(ficha.getFichaAberta());

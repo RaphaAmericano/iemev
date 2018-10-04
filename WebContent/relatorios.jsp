@@ -5,7 +5,13 @@ if(request.getAttribute("relatorio") != null){
 	valor_medio = (double) request.getAttribute("relatorio");
 } 
 %>
-
+<div class="container">
+    <div class="row justify-content-md center">
+        <div class="col col-xs col-md-auto col-md-12">
+            <h1 class="font-weight-bold">Relatórios</h1>
+        </div>
+    </div>
+</div>
 <!-- Lista de animais - exibir apenas em caso da tela ser acessada pela funcionalidade de busca -->
 <div class="container">
     <div class="row justify-content-md-center">

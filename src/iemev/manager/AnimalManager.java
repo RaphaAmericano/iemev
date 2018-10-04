@@ -2,10 +2,12 @@ package iemev.manager;
 
 import java.util.List;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import iemev.dao.AnimalDAO;
 import iemev.models.Animal;
+import iemev.utils.DataUtils;
 
 public class AnimalManager {
 	public static Animal buscar(int id) {
@@ -57,5 +59,26 @@ public class AnimalManager {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public static JsonObject animalJson(Animal animal ) {
+		JsonObject retorno = new JsonObject();
+		retorno.addProperty("idAnimal", animal.getIdAnimal());
+		retorno.addProperty("nomeAnimal", animal.getNomeAnimal());
+		retorno.addProperty("sexo", animal.getSexo());
+		if(animal.getDataDeNascimentoAnimal() != null ) {
+			retorno.addProperty("dataDeNascimentoAnimal", DataUtils.formatarData(animal.getDataDeNascimentoAnimal()));
+		} else {
+			retorno.addProperty("dataDeNascimentoAnimal", "");
+		}
+		
+		retorno.addProperty("especie", animal.getEspecie());
+		retorno.addProperty("porte", animal.getPorte());
+		retorno.addProperty("raca", animal.getRaca());
+		retorno.addProperty("pelagem", animal.getPelagem());
+		retorno.addProperty("temperamento", animal.getTemperamento());
+		retorno.addProperty("cpfCliente", animal.getCpfCliente());
+		retorno.addProperty("idAtendimentoDeCadastramento", animal.getIdAtendimentoDeCadastramento());
+		return retorno;
 	}
 }

@@ -109,6 +109,7 @@
 			},
 			success: function(retorno){
 				var fichas = JSON.parse(retorno);
+				console.log(fichas);
 				var $tabelaFichas = $("#tabelaFichas");
 				if(fichas.length > 0 ){
 					if($("#tabela_prescricoes .alert")){
@@ -116,16 +117,15 @@
 					}
 					$tabelaFichas.html("");
 					for( var i = 0; i < fichas.length; i++ ){
-						var data = new Date(fichas[i].dataAbertura);
+						var data = new Date(fichas[i][1].dataAbertura);
 						datatime = data.getFullYear()+"-"+(data.getMonth()+1)+'-'+data.getDate();
 						data = data.getDate()+'/'+(data.getMonth()+1)+'/'+data.getFullYear();
-						var $linha =  '<tr><th scope="row">'+fichas[i].numeroFicha+'</th><td><time datetime="'+datatime+'">'+data.get+'</time></td><td>'+fichas[i].idAnimal+'</td><td><button class="btn btn-info" name="detalhar">Detalhar Ficha</button></td></tr>'
+						var $linha =  '<tr><th scope="row">'+fichas[i][1].numeroFicha+'</th><td><time datetime="'+datatime+'">'+data+'</time></td><td>'+fichas[i][0].idAnimal+'</td><td><button class="btn btn-info" name="detalhar">Detalhar Ficha</button></td></tr>'
 						$tabelaFichas.append($linha);
 					}	
 					$btnDetalhar = $("button[name=detalhar]");
 					for(var i = 0; i < $btnDetalhar.length; i++ ){
 						$btnDetalhar[i].addEventListener("click", function(e){
-							
 							e.preventDefault();
 							$botaoEditarFicha.prop('disabled', false);
 							$botaoExcluirFicha.prop('disabled', false);
@@ -151,10 +151,6 @@
 	var $inputFicha = $("#ficha_atendimento input[name=id_ficha]");
 	
 	//Comandos dos botoes de crud da ficha
-	
-	$botaoAbrirFicha.on('click', function(e){
-//		e.preventDefault();	
-	});
 	
 	$botaoEditarFicha.on('click', function(e){
 		e.preventDefault();

@@ -28,18 +28,20 @@
 			},
 			success:function(retorno){
 				var ficha = JSON.parse(retorno);
+				console.log(ficha);
+				var status = ficha[2].status.charAt(0).toUpperCase() + ficha[2].status.substr(1);
+				console.log(status);
 				var data = ficha[2].data_abertura;
-				
 				data = data.split(' ')[0];
 				
-				$inputFields[0].value = ficha[2].status;
+				$inputFields[0].value = ficha[2].status.charAt(0).toUpperCase() + ficha[2].status.substr(1);
 				$inputFields[1].value = ficha[2].numero_sequencial;
 				$inputFields[2].value = data;
 				$inputFields[4].value = ficha[1].nome;
 				$inputFields[5].value = ficha[0].nome;
 				$inputFields[6].value = ficha[1].cpf;
-				console.log($inputFields);
-				if(ficha[2].status == "Aberta"){
+				
+				if(ficha[2].status == "aberta"){
 					$inputFields[7].disabled = false;
 					$inputFields[8].disabled = false;
 					$inputFields[9].disabled = false;				
@@ -48,7 +50,7 @@
 //					$botaoReabrirFicha.setAttribute("disabled", true);
 //					$botaoFecharFicha.removeAttribute("disabled");
 				//} else 
-				if (ficha[2].status == "Fechada"){
+				if (ficha[2].status == "fechada"){
 					$botaoReabrirFicha.removeAttribute("disabled");
 					$botaoFecharFicha.setAttribute("disabled", true);
 				}

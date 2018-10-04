@@ -108,6 +108,8 @@ public class FichaAtendimentoDAO {
 					je.printStackTrace();
 				}
 			}
+			rs.close();
+			stm.close();
 			con.close();
 			return retorno;
 		} catch (SQLException e) {
@@ -123,20 +125,17 @@ public class FichaAtendimentoDAO {
 		String sqlFicha = "INSERT INTO T_FICHADEATENDIMENTO ( idAnimal, idAtendenteAbriuFicha, statusFicha) VALUES (?,?,?);";
 		System.out.println(ficha.getIdAnimal());
 		try {
-			 
 			PreparedStatement stm = con.prepareStatement(sqlFicha, Statement.RETURN_GENERATED_KEYS);
 			stm.setInt(1, ficha.getIdAnimal());
 			stm.setInt(2, ficha.getIdAtendenteAbriuFicha());
-			stm.setString(3, ficha.getStatusFicha());
+			stm.setString(3, ficha.getStatusAtual().stateString());
 			int linha = stm.executeUpdate();
-			
 			if(linha == 1 ) {
 				rs = stm.getGeneratedKeys();
 				if(rs.next()) {
 					retorno = rs.getInt(1);	
 				}
-			}
-			
+			}	
 			stm.close();
 			con.close();
 		} catch (SQLException se) {
@@ -186,7 +185,9 @@ public class FichaAtendimentoDAO {
 				ficha.setDataAbertura(data);
 				retorno.add(ficha);
 			}
-			
+			stm.close();
+			rs.close();
+			con.close();
 		} catch(SQLException se) {
 			se.printStackTrace();
 		};
@@ -212,7 +213,12 @@ public class FichaAtendimentoDAO {
 					ficha.setIdAnimal(rs.getInt("idAnimal"));
 					ficha.setIdAtendenteAbriuFicha(rs.getInt("idAtendenteAbriuFicha"));
 					ficha.setIdAtendenteAbriuFicha(rs.getInt("idAtendenteAbriuFicha"));
-					ficha.setStatusFicha(rs.getString("statusFicha"));
+					if(rs.getString("statusFicha").equals("aberta")) {
+						ficha.abrirFicha();;	
+					} else {
+						ficha.fecharFicha();
+					}
+					
 					retorno.add(ficha);
 				} catch(Exception e ) {
 					e.printStackTrace();
@@ -229,7 +235,7 @@ public class FichaAtendimentoDAO {
 	}
 	public int fecharFicha(int id_ficha) {
 		Connection con = ConnectionFactory.getConnection();
-		String sql = "UPDATE T_FICHADEATENDIMENTO SET statusFicha = 'Fechada' WHERE numeroFicha = ?";
+		String sql = "UPDATE T_FICHADEATENDIMENTO SET statusFicha = 'fechada' WHERE numeroFicha = ?";
 		int retorno = 0;
 		try {
 			PreparedStatement stm = con.prepareStatement(sql);
@@ -245,7 +251,7 @@ public class FichaAtendimentoDAO {
 	}
 	public int abrirFicha(int id_ficha) {
 		Connection con = ConnectionFactory.getConnection();
-		String sql = "UPDATE T_FICHADEATENDIMENTO SET statusFicha = 'Aberta' WHERE numeroFicha = ?";
+		String sql = "UPDATE T_FICHADEATENDIMENTO SET statusFicha = 'aberta' WHERE numeroFicha = ?";
 		int retorno = 0;
 		try {
 			PreparedStatement stm = con.prepareStatement(sql);

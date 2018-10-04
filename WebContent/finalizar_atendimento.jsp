@@ -8,13 +8,21 @@
 <%@page import="iemev.manager.FichaAtendimentoManager"%>
 <%@include file="_header.jsp" %>
 <%
-String status = "Aberta";
+Empregado empregado = (Empregado) session.getAttribute("empregado");
+if(empregado != null ){
+	if(!empregado.getTipoEmpregado().equals("veterinario")){
+		response.sendRedirect("main.jsp");
+	}	
+}
+%>
+<%
+String status = "aberta";
 
 if(request.getParameter("status") != null){
 	if(request.getParameter("status").contentEquals("0")){
-		status = "Fechada";
+		status = "fechada";
 	} else if (request.getParameter("status").contentEquals("1")){
-		status = "Aberta";
+		status = "aberta";
 	}	
 }
 List<FichaDeAtendimento> atendimentos = FichaAtendimentoManager.todasFichas();
@@ -25,13 +33,13 @@ SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
     <div class="container">
         <div class="row justify-content-md center">
             <div class="col col-xs col-md-auto col-md-12 mt-2">
-                <h1>Finalização de Atendimento</h1>
+                <h1 class="font-weight-bold">Finalização de Atendimento</h1>
                 <form action="finalizar_atendimento.jsp" class="form-inline" method="POST">
-                	<%if(status.contentEquals("Aberta")){ %>
+                	<%if(status.contentEquals("aberta")){ %>
                 	<input type="hidden" name="status" value="0">
                 	<button class="btn btn-primary btn-lg" type="submit" disabled>Fichas Abertas</button>
                     <button class="btn btn-warning btn-lg" type="submit">Fichas Fechadas</button>
-                	<%} else if (status.contentEquals("Fechada")){%>
+                	<%} else if (status.contentEquals("fechada")){%>
                 	<input type="hidden" name="status" value="1">
                     <button class="btn btn-primary btn-lg" type="submit">Fichas Abertas</button>
                     <button class="btn btn-warning btn-lg" type="submit" disabled>Fichas Fechadas</button>
@@ -61,7 +69,7 @@ SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
                     <tbody>
                     <%if(!atendimentos.isEmpty()){ 
                     	for(int i = 0; i < atendimentos.size(); i++ ){
-                    		if(atendimentos.get(i).getStatusFicha().contentEquals(status) ){
+                    		if(atendimentos.get(i).getStatusAtual().stateString().contentEquals(status) ){
                     		Animal animal = AnimalManager.buscar(atendimentos.get(i).getIdAnimal());
                     		Cliente cliente = ClienteManager.buscarId(animal.getCpfCliente());
                     %>

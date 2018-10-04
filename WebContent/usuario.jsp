@@ -1,9 +1,17 @@
 <%@include file="_header.jsp" %>
+<%
+Empregado empregado = (Empregado) session.getAttribute("empregado");
+if(empregado != null ){
+	if(!empregado.getTipoEmpregado().equals("atendente")){
+		response.sendRedirect("main.jsp");
+	}	
+}
+%>
 <!-- Busca -->
     <div class="container">
         <div class="row justify-content-md center">
             <div class="col col-xs col-md-auto col-md-12 mt-2">
-                <h1>Consultar Usuário</h1>
+                <h1 class="font-weight-bold">Consultar Usuário</h1>
                 <form action="">
                     <div class="form-group">
                         <label for="">Buscar usuário</label>

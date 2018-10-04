@@ -3,6 +3,14 @@
 <%@page import="java.util.List"%>
 <%@include file="_header.jsp" %>
 <%
+Empregado empregado = (Empregado) session.getAttribute("empregado");
+if(empregado != null ){
+	if(empregado.getTipoEmpregado().equals("veterinario")){
+		response.sendRedirect("main.jsp");
+	}	
+}
+%>
+<%
 List<Servico> servicos = ServicoManager.buscarTodosServicos();
 String resposta_update = (String)request.getAttribute("resposta_update");
 String resposta_delete = (String)request.getAttribute("resposta_delete");
@@ -13,7 +21,7 @@ String resposta_insert = (String)request.getAttribute("resposta_insert");
     <div class="container">
         <div class="row justify-content-md center">
             <div class="col col-xs col-md-auto col-md-12 mt-2" id="buscaData">
-                <h1>Consultar agendamento por data</h1>
+                <h2 class="font-weight-bold">Consultar agendamento por data</h2>
                 <div class="form-group col-2 p-0">
                     <label for="">Buscar por data</label>
                     <input class="form-control" name="data" type="date">
@@ -26,7 +34,7 @@ String resposta_insert = (String)request.getAttribute("resposta_insert");
     <div class="container">
         <div class="row justify-content-md center">
             <div class="col col-xs col-md-auto col-md-12 mt-2" id="buscaNome">
-                <h1>Consultar agendamento por nome do cliente</h1>
+                <h2 class="font-weight-bold">Consultar agendamento por nome do cliente</h2>
                 <div>
                     <div class="form-group col-6 p-0">
                         <label for="">Buscar por nome</label>

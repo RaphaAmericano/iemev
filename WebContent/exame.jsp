@@ -1,12 +1,20 @@
 <%@include file="_header.jsp" %>
+<%
+Empregado empregado = (Empregado) session.getAttribute("empregado");
+if(empregado != null ){
+	if(empregado.getTipoEmpregado().equals("veterinario")){
+		response.sendRedirect("main.jsp");
+	}	
+}
+%>
 <!-- Por data -->
     <div class="container">
         <div class="row justify-content-md center">
             <div class="col col-xs col-md-auto col-md-12 mt-2">
-                <h1>Consultar exame por data</h1>
+                <h2 class="font-weight-bold">Consultar exame por data</h2>
                 <form action="">
                     <div class="form-group col-2 p-0">
-                            <label for="">Buscar</label>
+                            <label for="">Buscar por data</label>
                         <input class="form-control" name="data" type="date">
                     </div>
                     <button class="btn btn-primary" type="submit">Localizar</button>
@@ -18,10 +26,10 @@
     <div class="container">
         <div class="row justify-content-md center">
             <div class="col col-xs col-md-auto col-md-12 mt-2">
-                <h1>Consultar exame por nome do cliente</h1>
+                <h2 class="font-weight-bold">Consultar exame por nome do cliente</h2>
                 <form action="" >
                     <div class="form-group col-6 p-0">
-                        <label for="">Buscar</label>
+                        <label for="">Buscar por nome do cliente</label>
                         <input class="form-control" type="search">
                     </div>
                     <button class="btn btn-primary" type="submit">Localizar</button>
@@ -38,10 +46,10 @@
                 <form action="animal.html">
                     <div class="form-group"><label for="animal">Exames</label>
                         <select name="animal[id]" class="form-control" multiple="multiple">
-                            <option value="0">18:00 - Jorge Luiz - Rex</option>
-                            <option value="1">18:15 - Humberto Jorge Silva - Tobby</option>
-                            <option value="2">18:30 - Maria da Conceição - Billy</option>
-                            <option value="3">18:45 - Maria Bonita Araújo - Judith</option>
+                            <option value="0">2018-02-10 | 18:00 - Jorge Luiz - Rex</option>
+                            <option value="1">2018-02-10 | 18:15 - Humberto Jorge Silva - Tobby</option>
+                            <option value="2">2018-02-10 | 18:30 - Maria da Conceição - Billy</option>
+                            <option value="3">2018-02-10 | 18:45 - Maria Bonita Araújo - Judith</option>
                         </select>
                         <button class="btn btn-success mt-2" value="selecionar" name="agendamento" type="submit">Detalhar</button>
                     </div>

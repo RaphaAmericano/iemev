@@ -1,4 +1,12 @@
 <%@include file="_header.jsp" %>
+<% 
+Empregado empregado = null;
+if(session != null && session.getAttribute("empregado") != null ){ 
+	empregado = (Empregado) session.getAttribute("empregado");
+	if(empregado.getTipoEmpregado().equals("veterinario")){
+		response.sendRedirect("main.jsp");
+	}	
+}%> 
 <!-- Busca -->
     <div class="container">
         <div class="row justify-content-md center">
@@ -7,10 +15,10 @@
                 <form action="clienteServlet.do" method="POST">
                 	<input type="hidden" name="tipoFormulario" value="0">
                     <div class="form-group">
-                        <label for="" class="col-md-2 col-form-label">Buscar</label>
+                        <label for="" class="col-md-2 col-form-label">Buscar cliente</label>
                         <input class="form-control" type="search">
                     </div>
-                    <button class="btn btn-primary" type="submit">Localizar</button>
+                    <button class="btn btn-primary" type="submit">Localizar Cliente</button>
                     <input type="hidden" name="opcao" value="0">
                 </form>
             </div>
@@ -103,7 +111,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="idatendente">ID do Atendente</label>
-                            <input class="form-control" type="number" name="idatendente" value="1" readonly>
+                            <input class="form-control" type="number" name="idatendente" value="<%=empregado.getIdEmpregado() %>" readonly>
                         </div>
                     </div>
                     <div class="form-row mt-2">

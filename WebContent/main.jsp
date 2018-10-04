@@ -82,7 +82,7 @@ if(session != null ){
 if( perfil.equals("administrador") ){ %>
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-12 col-xs mt-5">
+        <div class="col-9 col-xs mt-5">
             <div class="card-deck">
                 <div class="card">
                     <img class="card-img-top" src="img/veterinaria_iemev.jpg" alt="Card image cap">
@@ -105,13 +105,7 @@ if( perfil.equals("administrador") ){ %>
                         <a href="relatorios.jsp" class="btn btn-primary btn-block">Incluir Relatório</a>
                     </div>
                 </div>
-                <div class="card">
-                    <img class="card-img-top" src="img/veterinaria_iemev.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Prontuários</h5>
-                            <a href="prontuario.jsp" class="btn btn-primary btn-block">Visualizar Prontuários</a>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </div>
@@ -120,16 +114,22 @@ if( perfil.equals("administrador") ){ %>
 if(perfil.equals("veterinario") ){ %>
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-3 col-xs mt-5">
+        <div class="col-6 col-xs mt-5">
             <div class="card-deck">
                 <div class="card">
                   <img class="card-img-top" src="img/veterinaria_iemev.jpg" alt="Card image cap">
                   <div class="card-body">
                       <h5 class="card-title">Boxes</h5>
-                      <a href="boxes.html" class="btn btn-primary btn-block">Incluir Box</a>
+                      <a href="boxes.jsp" class="btn btn-primary btn-block">Incluir Box</a>
                   </div>
              	</div>
-                
+                <div class="card">
+                    <img class="card-img-top" src="img/veterinaria_iemev.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Prontuários</h5>
+                            <a href="prontuario.jsp" class="btn btn-primary btn-block">Visualizar Prontuários</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

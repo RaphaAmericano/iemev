@@ -3,8 +3,11 @@ package iemev.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.JsonObject;
+
 import iemev.dao.FichaAtendimentoDAO;
 import iemev.models.FichaDeAtendimento;
+import iemev.utils.DataUtils;
 
 public class FichaAtendimentoManager {
 	public static ArrayList buscarString(String palavra) {
@@ -101,5 +104,15 @@ public class FichaAtendimentoManager {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+	public static JsonObject fichaJson(FichaDeAtendimento ficha ) {
+		JsonObject retorno = new JsonObject();
+		retorno.addProperty("numeroFicha", ficha.getNumeroFicha());
+		retorno.addProperty("dataAbertura", DataUtils.formatarData(ficha.getDataAbertura()));
+		retorno.addProperty("dataFechamento", DataUtils.formatarData(ficha.getDataAbertura()));
+		retorno.addProperty("idAnimal", ficha.getIdAnimal());
+		retorno.addProperty("idAtendenteAbriuFicha", ficha.getIdAtendenteAbriuFicha());
+		retorno.addProperty("idAtendenteFechouFicha", ficha.getIdAtendenteFechouFicha());
+		return retorno;
 	}
 }

@@ -110,22 +110,21 @@ public class FichaAtendimentoController extends HttpServlet {
 			view.forward(request, response);
 			break;
 		case 4:
-			long idcliente = Long.parseLong(request.getParameter("idcliente"));
+			long idcliente = Long.parseLong(request.getParameter("idcliente"));	
 			ArrayList<FichaDeAtendimento> fichas = FichaAtendimentoManager.fichasUsuario(idcliente);
-			ArrayList<JsonObject> animais_ = new ArrayList<JsonObject>();
+			ArrayList<ArrayList> fichas_ = new ArrayList<ArrayList>();		
 			for (int i = 0; i < fichas.size(); i++) {
-				JsonObject animal_ = AnimalManager.buscarAnimalId(fichas.get(i).getIdAnimal());
-				animais_.add(animal_);
+				Animal animal_obj = AnimalManager.buscar(fichas.get(i).getIdAnimal());
+				JsonObject ficha_ = FichaAtendimentoManager.fichaJson(fichas.get(i));
+				JsonObject animal_ = AnimalManager.animalJson(animal_obj);
+				ArrayList<JsonObject> conjunto_ = new ArrayList<JsonObject>();
+				
+				conjunto_.add(animal_);
+				conjunto_.add(ficha_);
+				fichas_.add(conjunto_);
 			}
-//			ArrayList retorno_ = new ArrayList();
-//			String fichas_json = new Gson().toJson(fichas);
-//			String animais_json = new Gson().toJson(animais_);
-//			retorno_.add(fichas_json);
-//			retorno_.add(fichas_json);
-//			json_fichas_animais.add(fichas_json);
-			//Buscar data de abertura e nome do animal
-			
-			String retornojson = new Gson().toJson(fichas);
+
+			String retornojson = new Gson().toJson(fichas_);
 			response.setContentType("text/plain");
 			response.getWriter().write(retornojson);
 			break;

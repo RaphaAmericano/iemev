@@ -13,4 +13,8 @@
 <% if(session != null ){ 
 	if(session.getAttribute("empregado") != null ){ %>
 <%@include file="_navbar_sticky.jsp" %>
-<%} } %> 
+<%	} else {
+		//response.sendRedirect("index.jsp");
+	}
+} 
+%> 
