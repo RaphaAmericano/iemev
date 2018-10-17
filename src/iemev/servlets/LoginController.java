@@ -57,7 +57,7 @@ public class LoginController extends HttpServlet {
 		session.setAttribute("senha", senha );
 		session.setAttribute("pessoa", pessoa);
 		session.setAttribute("empregado", empregado);
-		session.setMaxInactiveInterval(30);
+		session.setMaxInactiveInterval(30 * 60);
 		response.sendRedirect("main.jsp");		
 	}
 

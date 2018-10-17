@@ -10,6 +10,31 @@ import iemev.models.Animal;
 import iemev.utils.DataUtils;
 
 public class AnimalManager {
+	
+	public static int deletar( int id ) {
+		AnimalDAO dao = new AnimalDAO();
+		int retorno = 0;
+		try {
+			retorno = dao.deletar(id);
+			return retorno;
+		} catch (Exception e ) {
+			e.printStackTrace();
+		}
+		return retorno;
+	}
+	
+	public static int editar( Animal animal ) {
+		AnimalDAO dao = new AnimalDAO();
+		int retorno = 0;
+		try {
+			retorno = dao.editar(animal);
+			return retorno;
+		} catch (Exception e ) {
+			e.printStackTrace();
+		}
+		return retorno;
+	}
+	
 	public static Animal buscar(int id) {
 		AnimalDAO dao = new AnimalDAO();
 		try {
@@ -20,6 +45,18 @@ public class AnimalManager {
 		}
 		return null;
 	}
+	
+	public static List<Animal> buscarNome(String nome ){
+		AnimalDAO dao = new AnimalDAO();
+		try {
+			List<Animal> retorno = dao.buscarNome(nome);
+			return retorno;
+		} catch (Exception e ) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public static String cadastrarAnimal( Animal animal ) {
 		AnimalDAO dao = new AnimalDAO();
 		try {

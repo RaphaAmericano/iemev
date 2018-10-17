@@ -2,7 +2,7 @@
 <%
 Empregado empregado = (Empregado) session.getAttribute("empregado");
 if(empregado != null ){
-	if(!empregado.getTipoEmpregado().equals("atendente")){
+	if(!empregado.getTipoEmpregado().equals("administrador")){
 		response.sendRedirect("main.jsp");
 	}	
 }

@@ -15,6 +15,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 
 import iemev.models.Animal;
+import iemev.utils.DataUtils;
 import iemev.utils.bd.ConnectionFactory;
 
 public class AnimalDAO extends CommonsDAO {
@@ -77,6 +78,88 @@ public class AnimalDAO extends CommonsDAO {
 			return false;
 		}
 		return true;
+	}
+	
+	public int editar( Animal animal ) {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = "UPDATE T_ANIMAL SET nomeAnimal = ?, sexo = ?, dataDeNascimentoAnimal = ?, especie = ?, porte = ?, raca = ?, pelagem = ?, temperamento = ? WHERE idAnimal = ?";
+		int retorno = 0;
+		try {
+			PreparedStatement stm = con.prepareStatement(sql);
+			stm.setString(1, animal.getNomeAnimal());
+			stm.setString(2, animal.getSexo().toString());
+			stm.setString(3, DataUtils.formatarData(animal.getDataDeNascimentoAnimal()));
+			stm.setString(4, animal.getEspecie());
+			stm.setString(5, animal.getPorte());
+			stm.setString(6, animal.getRaca());
+			stm.setString(7, animal.getPelagem());
+			stm.setString(8, animal.getTemperamento());
+			retorno = stm.executeUpdate();
+			System.out.println(retorno);
+			stm.close();
+			con.close();
+			return retorno;
+		} catch (Exception e ) {
+			e.printStackTrace();
+		}
+		return retorno;
+	}
+	
+	public int deletar(int id ) {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = "DELETE FROM T_ANIMAL WHERE idAnimal = ?";
+		ResultSet rs = null;
+		int retorno = 0; 
+		try {
+			PreparedStatement stm = con.prepareStatement(sql);
+			stm.setLong(1, id);
+			retorno = stm.executeUpdate();
+			rs.close();
+			stm.close();
+			con.close();
+			return retorno;
+		} catch( SQLException se ) {
+			se.printStackTrace();
+		}
+		return retorno;
+	}
+	
+	public List<Animal> buscarNome( String nome ) {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = "SELECT * FROM T_ANIMAL WHERE nomeAnimal LIKE ?";
+		ResultSet rs = null;
+		
+		try {
+			PreparedStatement stm = con.prepareStatement(sql);
+			stm.setString(1, "%"+nome+"%");
+			rs = stm.executeQuery();
+			List<Animal> retorno = new ArrayList<Animal>();
+			while(rs.next()) {
+				Date data = new Date();
+				data = DataUtils.parseData(rs.getString("dataDeNascimentoAnimal"));
+				Animal animal = new Animal(
+						rs.getInt("idAnimal"),
+						rs.getString("nomeAnimal"),
+						rs.getString("Sexo").charAt(0),
+						data,
+						rs.getString("especie"),
+						rs.getString("porte"),
+						rs.getString("raca"),
+						rs.getString("pelagem"),
+						rs.getString("temperamento"),
+						rs.getLong("cpfCliente"),
+						rs.getInt("idAtendenteDeCadastramento")
+						);
+				retorno.add(animal);
+			}
+			rs.close();
+			stm.close();
+			con.close();
+			return retorno;
+		} catch (SQLException se ) {
+			se.printStackTrace();
+		}
+		return null;
 	}
 	
 	public Animal buscar(int id) {
@@ -154,7 +237,6 @@ public class AnimalDAO extends CommonsDAO {
 			ResultSet rs = stm.executeQuery(sqlDono);
 			try {
 				dono.addProperty("nome", rs.getString("nome"));
-				dono.addProperty("cpf", rs.getString("cpf"));
 				dono.addProperty("cpf", rs.getString("cpf"));
 				dono.addProperty("telefone", rs.getString("telefoneResidencial"));
 				dono.addProperty("celular", rs.getString("celular"));

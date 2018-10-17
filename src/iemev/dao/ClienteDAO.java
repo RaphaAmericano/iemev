@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import iemev.models.Cliente;
+import iemev.utils.DataUtils;
 import iemev.utils.bd.ConnectionFactory;
 
 public class ClienteDAO extends CommonsDAO{
@@ -33,33 +34,44 @@ public class ClienteDAO extends CommonsDAO{
 		return null;
 	}
 
-	public boolean inserir(Cliente cliente) {
+	public int deletar(long cpf ) {
 		Connection con = ConnectionFactory.getConnection();
-		SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String sql = "DELETE FROM T_CLIENTE WHERE cpfUsuario = ?";
+		ResultSet rs = null;
+		int retorno = 0;
 		try {
-			String sqlPessoa = "INSERT INTO T_PESSOA (cpf, rg, nome, endereco, telefoneResidencial, celular, dataDeNascimento) VALUES ("
-					+ cliente.getCpf()+","
-					+ cliente.getRg()+",'"
-					+ cliente.getNome()+"','"
-					+ cliente.getEndereco()+"','"
-					+ cliente.getTelefoneResidencial()+"','"
-					+ cliente.getCelular()+"','"
-					+ formater.format(cliente.getDataDeNascimento())+"')";
-			
-			String sqlCliente = "INSERT INTO T_CLIENTE (cpfUsuario,emailCliente, idAtendenteDeCadastramento) VALUES ("
-					+ cliente.getCpf()+",'"
-					+ cliente.getEmailCliente()+"',"
-					+ cliente.getIdAtendentDeCadastramento()+")";
-			Statement stm = con.createStatement();
-			stm.executeUpdate(sqlPessoa);
-			stm.executeUpdate(sqlCliente);
+			PreparedStatement stm = con.prepareStatement(sql);
+			stm.setLong(1, cpf);
+			retorno = stm.executeUpdate();
+			rs.close();
+			stm.close();
 			con.close();
+		} catch (SQLException se ) {
+			se.printStackTrace();
+		}
+		return retorno;
+	}
+	
+	public int inserir(Cliente cliente) {
+		Connection con = ConnectionFactory.getConnection();
+		String sql = "INSERT INTO T_CLIENTE (cpfUsuario, emailCliente, idAtendenteDeCadastramento) VALUES (?, ?, ? )";
+		ResultSet rs = null;
+		int retorno = 0;
+		try {
+			PreparedStatement stm = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			stm.setLong(1, cliente.getCpf());
+			stm.setString(2, cliente.getEmailCliente());
+			stm.setInt(3, cliente.getIdAtendentDeCadastramento());
+			retorno = stm.executeUpdate();
+			rs.close();
+			stm.close();
+			con.close();
+			
 		}catch (SQLException e) {
 			e.printStackTrace();
-			return false;
+			return retorno;
 		}
-		
-		return true;
+		return retorno;
 	}
 	
 	public boolean apagar(int id) {
@@ -123,6 +135,29 @@ public class ClienteDAO extends CommonsDAO{
 			return cliente;
 		} 
 		catch(SQLException se) {
+			se.printStackTrace();
+		}
+		return null;
+	}
+	public List<Cliente> buscarCpf(long cpf){
+		Connection con = ConnectionFactory.getConnection();
+		//mudar para cpf na tabela cliente
+		String sql = "SELECT * FROM T_CLIENTE WHERE cpfUsuario = ?";
+		ResultSet rs = null;
+		try {
+			PreparedStatement stm = con.prepareStatement(sql);
+			stm.setLong(1, cpf);
+			rs = stm.executeQuery();
+			List<Cliente> retorno = new ArrayList<Cliente>();
+			while(rs.next()) {
+				Cliente cliente = new Cliente();
+				retorno.add(cliente);
+			}
+			rs.close();
+			stm.close();
+			con.close();
+			return retorno;
+		}catch( SQLException se) {
 			se.printStackTrace();
 		}
 		return null;

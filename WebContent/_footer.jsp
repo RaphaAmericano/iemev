@@ -7,16 +7,38 @@
     </footer>
 </nav>
 <!-- Scripts -->
+
+
+
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
 <script src="node_modules/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
 <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
 <script src="js/main.js"></script>
+<%
+if(request != null ){
+String url =  request.getRequestURI();
+String[] parts = url.split("/");
+int partsLength = parts.length; 
+String pagina = parts[partsLength - 1];
 
+if( pagina.equals("index.jsp") || partsLength == 2){ %>
+<script src="js/index.js"></script>
+<% } 
+if( pagina.equals("ficha_atendimento.jsp")){ %>
 <script src="js/ficha.js"></script>
-
-<!-- Inserir verificacoes para o javascript correspondente a cada pagina -->
+<% } 
+if( pagina.equals("animal.jsp")){ %>
+<script src="js/animal.js"></script>
+<% }
+if( pagina.equals("cliente.jsp")){ %>
+<script src="js/cliente.js"></script>
+<% } if( pagina.equals("finalizar_atendimento.jsp")){ %>
 <script src="js/finalizar.js"></script>
-<script src="js/masks.js"></script>
+<% } }%>
+<!-- Inserir verificacoes para o javascript correspondente a cada pagina -->
+
+
 <!-- /Scripts -->
 </body>
 </html>

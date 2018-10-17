@@ -123,7 +123,6 @@ public class FichaAtendimentoDAO {
 		int retorno = 0;
 		ResultSet rs = null;
 		String sqlFicha = "INSERT INTO T_FICHADEATENDIMENTO ( idAnimal, idAtendenteAbriuFicha, statusFicha) VALUES (?,?,?);";
-		System.out.println(ficha.getIdAnimal());
 		try {
 			PreparedStatement stm = con.prepareStatement(sqlFicha, Statement.RETURN_GENERATED_KEYS);
 			stm.setInt(1, ficha.getIdAnimal());

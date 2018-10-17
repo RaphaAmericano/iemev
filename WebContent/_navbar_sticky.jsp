@@ -25,10 +25,8 @@ String perfil = empregado.getTipoEmpregado();
             <%if(!perfil.equals("veterinario")){ %>
             <a class="nav-item nav-link <%=pagina.equals("finalizar_atendimento.jsp") ? "active": "" %>" data-toggle="tooltip" data-animation="false" data-placement="bottom" title="Finalizar os atendimentos" href="finalizar_atendimento.jsp">Finalizar Atendimento</a>
             <%} 
-            if(perfil.equals("atendente")){ %>
-            <a class="nav-item nav-link <%=pagina.equals("usuario.jsp") ? "active": "" %> <%=perfil.equals("atendente") ? "": "disabled" %>" data-toggle="tooltip" data-animation="false" data-placement="bottom" title="Administração dos usuários do sistema" href="usuario.jsp">Usuário</a>
-            <%}
             if(perfil.equals("administrador")){ %>
+            <a class="nav-item nav-link <%=pagina.equals("usuario.jsp") ? "active": "" %> <%=perfil.equals("atendente") ? "": "disabled" %>" data-toggle="tooltip" data-animation="false" data-placement="bottom" title="Administração dos usuários do sistema" href="usuario.jsp">Usuário</a>
             <a class="nav-item nav-link <%=pagina.equals("servico.jsp") ? "active": "" %>" data-toggle="tooltip" data-animation="false" data-placement="bottom" title="Gerencie os sistemas" href="servico.jsp">Serviços</a>
             <a class="nav-item nav-link <%=pagina.equals("relatorios.jsp") ? "active": "" %>" data-toggle="tooltip" data-animation="false" data-placement="bottom" title="Emissão dos relatórios" href="relatorios.jsp">Relatórios</a>
             

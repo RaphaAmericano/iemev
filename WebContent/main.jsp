@@ -88,14 +88,14 @@ if( perfil.equals("administrador") ){ %>
                     <img class="card-img-top" src="img/veterinaria_iemev.jpg" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">Usuário</h5>
-                        <a href="usuario.html" name="incluir" class="btn btn-primary btn-block">Incluir Usuário</a>
+                        <a href="usuario.jsp" name="incluir" class="btn btn-primary btn-block">Incluir Usuário</a>
                     </div>
                 </div>
                 <div class="card">
                     <img class="card-img-top" src="img/veterinaria_iemev.jpg" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">Serviços</h5>
-                        <a href="servico.html" name="incluir" class="btn btn-primary btn-block">Incluir Usuário</a>
+                        <a href="servico.jsp" name="incluir" class="btn btn-primary btn-block">Incluir Usuário</a>
                     </div>
                 </div>
                 <div class="card">

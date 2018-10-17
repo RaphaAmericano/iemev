@@ -10,7 +10,7 @@
 <%
 Empregado empregado = (Empregado) session.getAttribute("empregado");
 if(empregado != null ){
-	if(!empregado.getTipoEmpregado().equals("veterinario")){
+	if(empregado.getTipoEmpregado().equals("veterinario")){
 		response.sendRedirect("main.jsp");
 	}	
 }
@@ -67,7 +67,7 @@ SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
                         </tr>
                     </thead>
                     <tbody>
-                    <%if(!atendimentos.isEmpty()){ 
+                      <%if(!atendimentos.isEmpty()){ 
                     	for(int i = 0; i < atendimentos.size(); i++ ){
                     		if(atendimentos.get(i).getStatusAtual().stateString().contentEquals(status) ){
                     		Animal animal = AnimalManager.buscar(atendimentos.get(i).getIdAnimal());
@@ -75,7 +75,7 @@ SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
                     %>
                         <tr>
                             <th scope="row"><%=i+1 %></th>
-                            <td><%=cliente.getNome() %></td>
+                            <td><%=cliente != null ? cliente.getNome() : "" %></td>
                             <td><time datetime="2016-07-31"><%=dateformat.format(atendimentos.get(i).getDataAbertura()) %></time></td>
                             <td><%=animal.getNomeAnimal() %></td>
                             <td>

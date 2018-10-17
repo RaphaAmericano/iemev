@@ -71,7 +71,7 @@
 	});
 	
 	$inputDetalhar.on('click', function(e){
-		var data = $selectAgendamento.find("option:selected").val()
+		var data = $selectAgendamento.find("option:selected").val();
 		$formularioConsulta.find('input')[0].readOnly = true;
 		$formularioConsulta.find('input')[2].readOnly = true;
 		$formularioConsulta.find('input')[3].readOnly = true;
