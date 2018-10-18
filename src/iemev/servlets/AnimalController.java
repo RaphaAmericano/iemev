@@ -47,6 +47,8 @@ public class AnimalController extends HttpServlet {
 		String porte;
 		String pelagem;
 		String temperamento;
+		long cpf;
+		int idatendente;
 		
 		switch (opcao) {
 		case 0:
@@ -71,7 +73,25 @@ public class AnimalController extends HttpServlet {
 			break;
 		case 2:
 			//case incluir
+			nome = request.getParameter("nome");
+			sexo = request.getParameter("sexo").toUpperCase().charAt(0);
+			data = DataUtils.parseData(request.getParameter("dataNascimento"));
+			especie = request.getParameter("especie");
+			porte = request.getParameter("porte");
+			raca = request.getParameter("raca");
+			pelagem = request.getParameter("pelagem");
+			temperamento = request.getParameter("temperamento");
+			cpf = Long.parseLong(request.getParameter("cpf"));
+			idatendente = Integer.parseInt(request.getParameter("idatendente"));
+			animal = new Animal(nome, sexo, data, especie, porte, raca, pelagem, temperamento, cpf, idatendente);
+			int incluir = AnimalManager.cadastrarAnimal(animal);
 			
+			if( incluir == 1 ) {
+				mensagem = "Animal incluído com sucesso";	
+			} else {
+				mensagem = "Não foi possível incluir o animal";
+			}
+			request.setAttribute("mensagem_crud", mensagem);
 			view.forward(request, response);
 			break;
 		case 3:
@@ -85,12 +105,14 @@ public class AnimalController extends HttpServlet {
 			raca = request.getParameter("raca");
 			pelagem = request.getParameter("pelagem");
 			temperamento = request.getParameter("temperamento");
-			
 			animal = new Animal(idAnimal, nome, sexo, data, especie, porte, raca, pelagem, temperamento );
-			
 			int editar = AnimalManager.editar(animal);
-			System.out.println(editar);
-			
+			if( editar == 1 ) {
+				mensagem = "Animal editado com sucesso";	
+			} else {
+				mensagem = "Não foi possível editar o animal";
+			}
+			request.setAttribute("mensagem_crud", mensagem);
 			view.forward(request, response);
 			break;
 		case 4:

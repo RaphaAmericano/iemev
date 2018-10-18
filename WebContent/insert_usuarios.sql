@@ -1,0 +1,4 @@
+--insert into T_PESSOA(cpf, rg, nome, endereco, telefoneResidencial, celular, dataDeNascimento ) values ( 11111111111, 111111111, "Fausto Silva", "Teatro Fenix", "2122223333", "21922223333", "1950-05-02 00:00:00");
+--insert into T_PESSOA(cpf, rg, nome, endereco, telefoneResidencial, celular, dataDeNascimento ) values ( 22222222222, 222222222, "José Luiz Datena", "Alvaro Ramos 50", "2133334444", "21933334444", "1957-05-19 00:00:00");
+--insert into T_PESSOA(cpf, rg, nome, endereco, telefoneResidencial, celular, dataDeNascimento ) values ( 33333333333, 333333333, "Galvão Bueno", "Rua Monaco 20", "2144445555", "21944445555", "1950-07-21 00:00:00");
+insert into T_PESSOA(cpf, rg, nome, endereco, telefoneResidencial, celular, dataDeNascimento ) values ( 44444444444, 444444444, "Marcelo Rezende", "Avenida do Contorno", "215556666", "21955556666", "1951-11-12 00:00:00");

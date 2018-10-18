@@ -1,4 +1,6 @@
 (function( $ ){
+	//Mascara
+	$('input[name=cpf]').mask('999.999.999-99');
 	//Campo busca
 	var busca = $('#formularioBusca');
 	var $campo = busca.find('input.form-control');
@@ -79,6 +81,10 @@
 				$camposInput[9].value = animal.cpfCliente;
 				$camposInput[10].value = animal.idAtendimentoDeCadastramento;
 				$camposInput[11].value = animal.idAnimal;
+				$camposInput[9].readOnly = true;
+				
+			}, complete:function(){
+				$('input[name=cpf]').mask('999.999.999-99');
 			}
 		});
 	});
@@ -90,6 +96,7 @@
 		leituraCampos(false);
 		//$camposInput[10].value = animal.idAtendimentoDeCadastramento;
 		//$camposInput[11].value = "";
+		$camposInput[9].readOnly = false;
 		$camposInput[13].disabled = false;
 	});
 	$botaoEditar.addEventListener('click', function(e){

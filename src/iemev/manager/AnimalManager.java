@@ -57,15 +57,16 @@ public class AnimalManager {
 		return null;
 	}
 	
-	public static String cadastrarAnimal( Animal animal ) {
+	public static int cadastrarAnimal( Animal animal ) {
 		AnimalDAO dao = new AnimalDAO();
+		int retorno = 0;
 		try {
-			dao.inserir(animal);
+			retorno = dao.inserir(animal);
+			return retorno;
 		}  catch (Exception e ) {
 			e.printStackTrace();
-			return "Erro";
 		}
-		return "Sucesso";
+		return retorno;
 	}
 	public static JsonObject buscarAnimalId(int idanimal) {
 		AnimalDAO dao = new AnimalDAO();

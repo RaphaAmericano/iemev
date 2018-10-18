@@ -15,9 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import iemev.manager.EmpregadoManager;
 import iemev.manager.PessoaManager;
 import iemev.manager.PrescricaoManager;
 import iemev.manager.ServicoManager;
+import iemev.models.Empregado;
 import iemev.models.Pessoa;
 import iemev.models.Prescricao;
 import iemev.models.Servico;

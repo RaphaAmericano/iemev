@@ -31,4 +31,26 @@ public class EmpregadoDAO {
 			return null;
 		}
 	}
+	public static Empregado buscarId(int id ) {
+		Connection con = ConnectionFactory.getConnection();
+		Empregado empregado = new Empregado();
+		String sql = "SELECT * FROM T_EMPREGADO WHERE idEmpregado = ?";
+		try {
+			
+			PreparedStatement stm = con.prepareStatement(sql);
+			stm.setInt(1, id);
+			ResultSet rs = stm.executeQuery();
+			empregado.setCpf(rs.getLong("cpfEmpregado"));
+			empregado.setIdEmpregado(rs.getInt("idEmpregado"));
+			empregado.setSenha(rs.getString("senha"));
+			empregado.setTipoEmpregado(rs.getString("tipoEmpregado"));
+			rs.close();
+			stm.close();
+			con.close();
+			return empregado;
+		} catch(SQLException se) {
+			se.printStackTrace();
+			return null;
+		}
+	}
 }

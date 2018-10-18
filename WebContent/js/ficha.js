@@ -109,7 +109,6 @@
 			},
 			success: function(retorno){
 				var fichas = JSON.parse(retorno);
-				console.log(fichas);
 				var $tabelaFichas = $("#tabelaFichas");
 				if(fichas.length > 0 ){
 					if($("#tabela_prescricoes .alert")){
@@ -245,6 +244,7 @@
 			},
 			success:function(retorno){
 				var dadosFicha = JSON.parse(retorno);
+				console.log(dadosFicha);
 				var dataAbertura = dadosFicha[2].data_abertura.split(' ');
 				var dataNascimento = dadosFicha[0].data.split(' ');
 				var $inputs = $("#ficha_atendimento input");
@@ -348,8 +348,6 @@
 			
 		});	
 	}
-	
-	
 	//Selecao animal
 	$btnAnimalSelect.on('click', function(e){
 		e.preventDefault();
@@ -389,7 +387,6 @@
 	
 	function placeholderTelefone(val){
 		var retorno;
-		console.log(val);
 		if(val.length  > 10 ){
 			retorno = "("+val.substr(0,2)+") "+val.substr(3,4)+"-"+val.substr(5,4);
 		} else {
@@ -400,9 +397,7 @@
 	function placeholderCpf(val){
 		var retorno;
 		val = val.toString();
-		console.log(val);
 		retorno = val.substr(0,3)+"."+val.substr(3,3)+"."+val.substr(6,3)+"-"+val.substr(9,2);
-		console.log(retorno);
 		return retorno;
 	}
 }( jQuery ) );

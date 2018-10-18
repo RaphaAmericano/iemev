@@ -50,19 +50,16 @@ public class AnimalDAO extends CommonsDAO {
 		return null;
 	}
 	
-	public boolean inserir( Animal animal ) {
+	public int inserir( Animal animal ) {
 		Connection con = ConnectionFactory.getConnection();
 		ResultSet rs = null;
-		SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String sqlAnimal = "INSERT INTO T_ANIMAL ( nomeAnimal, sexo, dataDeNascimentoAnimal, especie, porte, raca, pelagem, temperamento, cpfCliente, idAtendenteDeCadastramento) values (?,?,?,?,?,?,?,?,?,?)"; 
-				//"values(   "+animal.getIdAtendimentoDeCadastramento()+" );";
+		int retorno = 0;
 		try {
-			
-			
 			PreparedStatement stm = con.prepareStatement(sqlAnimal);
 			stm.setString(1, animal.getNomeAnimal());
 			stm.setString(2, String.valueOf(animal.getSexo()));
-			stm.setString(3, formater.format(animal.getDataDeNascimentoAnimal()));
+			stm.setString(3, DataUtils.formatarData(animal.getDataDeNascimentoAnimal()));
 			stm.setString(4, animal.getEspecie());
 			stm.setString(5, animal.getPorte());
 			stm.setString(6, animal.getRaca());
@@ -70,14 +67,14 @@ public class AnimalDAO extends CommonsDAO {
 			stm.setString(8, animal.getTemperamento());
 			stm.setLong(9, animal.getCpfCliente());
 			stm.setLong(10, animal.getIdAtendimentoDeCadastramento());
-			stm.executeUpdate();
+			retorno = stm.executeUpdate();
 			stm.close();
 			con.close();
+			return retorno;
 		} catch (Exception e ) {
 			e.printStackTrace();
-			return false;
 		}
-		return true;
+		return retorno;
 	}
 	
 	public int editar( Animal animal ) {
@@ -94,8 +91,8 @@ public class AnimalDAO extends CommonsDAO {
 			stm.setString(6, animal.getRaca());
 			stm.setString(7, animal.getPelagem());
 			stm.setString(8, animal.getTemperamento());
+			stm.setInt(9, animal.getIdAnimal());
 			retorno = stm.executeUpdate();
-			System.out.println(retorno);
 			stm.close();
 			con.close();
 			return retorno;

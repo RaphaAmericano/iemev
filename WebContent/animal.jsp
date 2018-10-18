@@ -58,10 +58,10 @@ String mensagem_crud = (String)request.getAttribute("mensagem_crud");
                     </div>
                     
                     <% if(mensagem_crud != null ) {  
-                    	if(mensagem_crud.contentEquals("Animal apagado com sucesso") ){
+                    	if(mensagem_crud.contentEquals("Animal apagado com sucesso") || mensagem_crud.contentEquals("Animal editado com sucesso") || mensagem_crud.contentEquals("Animal incluído com sucesso") ){
                     %>
                     <div class="alert alert-success mt-2" role="alert">
-                    <% } else if(mensagem_crud.contentEquals("Não foi possível apagar o animal") ){  %>
+                    <% } else if(mensagem_crud.contentEquals("Não foi possível apagar o animal") || mensagem_crud.contentEquals("Não foi possível editar o animal") || mensagem_crud.contentEquals("Não foi possível incluir o animal") ){  %>
                     <div class="alert alert-danger mt-2" role="alert">
                     <% } %>
 					<%=mensagem_crud %>
@@ -119,11 +119,11 @@ String mensagem_crud = (String)request.getAttribute("mensagem_crud");
                     <div class="form-row mt-2">
                         <div class="col-md-6">
                             <label for="cpfcliente">CPF do Cliente</label>
-                            <input class="form-control" type="text" name="cpfcliente" readonly>
+                            <input class="form-control" type="text" name="cpf" readonly>
                         </div>
                         <div class="col-md-6">
                             <label for="idatendente">ID do Atendente</label>
-                            <input class="form-control" type="number" name="idatendente" value="1" readonly>
+                            <input class="form-control" type="number" name="idatendente" value="<%=empregado.getTipoEmpregado().equals("atendente") ? empregado.getIdAdministradoDeCadastramento() : 1 %>" readonly>
                         </div>
                     </div>
                     <div class="form-row mt-2">

@@ -23,10 +23,12 @@ import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 
 import iemev.manager.AnimalManager;
 import iemev.manager.ClienteManager;
+import iemev.manager.EmpregadoManager;
 import iemev.manager.FichaAtendimentoManager;
 import iemev.manager.PrescricaoManager;
 import iemev.models.Animal;
 import iemev.models.Cliente;
+import iemev.models.Empregado;
 import iemev.models.FichaDeAtendimento;
 
 /**
@@ -133,8 +135,10 @@ public class FichaAtendimentoController extends HttpServlet {
 			FichaDeAtendimento ficha_detalhe = FichaAtendimentoManager.buscarPorId(id_ficha);
 			Animal ficha_animal = AnimalManager.buscar(ficha_detalhe.getIdAnimal());
 			Cliente ficha_cliente = ClienteManager.buscarId(ficha_animal.getCpfCliente());
+			//Empregado atendente = EmpregadoManager.buscarId(ficha_detalhe.getIdAtendenteAbriuFicha());
 			//
 			SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			//JsonObject json_atendente = EmpregadoManager.empregadoJson(atendente);
 			JsonObject animalJson = new JsonObject();
 			try {
 				animalJson.addProperty("id", ficha_animal.getIdAnimal());
@@ -163,17 +167,20 @@ public class FichaAtendimentoController extends HttpServlet {
 			}
 			JsonObject fichaJson = new JsonObject();
 			try {
-				//fichaJson.addProperty("status", ficha_detalhe.getStatusFicha());
 				fichaJson.addProperty("status", ficha_detalhe.getStatusAtual().stateString());
 				fichaJson.addProperty("numero_sequencial", ficha_detalhe.getNumeroFicha());
 				fichaJson.addProperty("data_abertura", dataFormat.format(ficha_detalhe.getDataAbertura()));
 			} catch(JsonIOException je) {
 				je.printStackTrace();
 			}
+			
+			//Fazer um decorator para retornar o valar da soma dos precos
+			
 			List<JsonObject> retornoLista = new ArrayList<JsonObject>();
 			retornoLista.add(animalJson);
 			retornoLista.add(donoJson);
 			retornoLista.add(fichaJson);
+			//retornoLista.add(json_atendente);
 			String retornoJson = new Gson().toJson(retornoLista);
 			//
 			response.setContentType("text/plain");
