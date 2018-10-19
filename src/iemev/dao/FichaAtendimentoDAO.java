@@ -21,8 +21,9 @@ public class FichaAtendimentoDAO {
 	public FichaDeAtendimento selecionarPorId(int id) {
 		Connection con = ConnectionFactory.getConnection();
 		SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String sqlSelect = "SELECT * FROM T_FICHADEATENDIMENTO WHERE numeroFicha =  ? ;";
 		try {
-			String sqlSelect = "SELECT * FROM T_FICHADEATENDIMENTO WHERE numeroFicha =  ? ;";
+			
 			PreparedStatement stm = con.prepareStatement(sqlSelect);
 			stm.setInt(1, id);
 			ResultSet rs = stm.executeQuery();

@@ -61,7 +61,7 @@ String mensagem_crud = (String)request.getAttribute("mensagem_crud");
                     	if(mensagem_crud.contentEquals("Animal apagado com sucesso") || mensagem_crud.contentEquals("Animal editado com sucesso") || mensagem_crud.contentEquals("Animal incluído com sucesso") ){
                     %>
                     <div class="alert alert-success mt-2" role="alert">
-                    <% } else if(mensagem_crud.contentEquals("Não foi possível apagar o animal") || mensagem_crud.contentEquals("Não foi possível editar o animal") || mensagem_crud.contentEquals("Não foi possível incluir o animal") ){  %>
+                    <% } else if(mensagem_crud.contentEquals("Não foi possível apagar o animal") || mensagem_crud.contentEquals("Não foi possível editar o animal") || mensagem_crud.contentEquals("Não foi possível incluir o animal") || mensagem_crud.contentEquals("Cliente inexistente") ){  %>
                     <div class="alert alert-danger mt-2" role="alert">
                     <% } %>
 					<%=mensagem_crud %>

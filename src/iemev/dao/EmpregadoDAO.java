@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import iemev.models.Empregado;
+import iemev.utils.DataUtils;
 import iemev.utils.bd.ConnectionFactory;
 
 public class EmpregadoDAO {
@@ -42,8 +43,14 @@ public class EmpregadoDAO {
 			ResultSet rs = stm.executeQuery();
 			empregado.setCpf(rs.getLong("cpfEmpregado"));
 			empregado.setIdEmpregado(rs.getInt("idEmpregado"));
+			empregado.setDataDeAdmissaoEmpregado(DataUtils.parseData(rs.getString("dataDeAdmissaoEmpregado")));
+			empregado.setRamal(rs.getInt("ramal"));
+			empregado.setEmailEmpregado(rs.getString("emailEmpregado"));
 			empregado.setSenha(rs.getString("senha"));
+			empregado.setIndicadorNovaSenha(rs.getBoolean("indicadorNovaSenha"));
 			empregado.setTipoEmpregado(rs.getString("tipoEmpregado"));
+			empregado.setIdAdministradoDeCadastramento(rs.getInt("idAdministradorDeCadastramento"));
+			
 			rs.close();
 			stm.close();
 			con.close();

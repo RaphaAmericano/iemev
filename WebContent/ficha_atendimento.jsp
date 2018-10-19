@@ -6,6 +6,7 @@
 <%
 List<Servico> servicos = ServicoManager.buscarTodosServicos();
 List<String> categorias = ServicoManager.buscarTodasCategorias();
+Empregado empregado = (Empregado) session.getAttribute("empregado");
 String mensagem = null;
 
 %>
@@ -188,8 +189,10 @@ String mensagem = null;
                     <div class="form-row mt-2">
                         <div class="col-md-2">
                             <label for="idatendente">Nome do Atendente</label>
-                            <input class="form-control" type="text" name="idatendente" placeholder="Lineu Silva" value="1" readonly>
-                            <input type="hidden" name="cpf_veterinario" value="55555555555">
+                            <input class="form-control" type="text" name="nome_atendente" placeholder="" value="" readonly>
+                            <input class="form-control" type="hidden" name="idatendente" value="" readonly>
+                            <input type="hidden" name="cpf_veterinario" value="<%=empregado.getCpf() %>">
+                            <input class="form-control" type="hidden" name="id_atendente_ativo" value="<%=empregado.getIdEmpregado() %>" readonly>
                         </div>
                     </div>
                     

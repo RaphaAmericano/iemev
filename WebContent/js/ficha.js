@@ -109,6 +109,7 @@
 			},
 			success: function(retorno){
 				var fichas = JSON.parse(retorno);
+				console.log(fichas);
 				var $tabelaFichas = $("#tabelaFichas");
 				if(fichas.length > 0 ){
 					if($("#tabela_prescricoes .alert")){
@@ -119,7 +120,7 @@
 						var data = new Date(fichas[i][1].dataAbertura);
 						datatime = data.getFullYear()+"-"+(data.getMonth()+1)+'-'+data.getDate();
 						data = data.getDate()+'/'+(data.getMonth()+1)+'/'+data.getFullYear();
-						var $linha =  '<tr><th scope="row">'+fichas[i][1].numeroFicha+'</th><td><time datetime="'+datatime+'">'+data+'</time></td><td>'+fichas[i][0].idAnimal+'</td><td><button class="btn btn-info" name="detalhar">Detalhar Ficha</button></td></tr>'
+						var $linha =  '<tr><th scope="row">'+fichas[i][1].numeroFicha+'</th><td><time datetime="'+datatime+'">'+data+'</time></td><td>'+fichas[i][0].nomeAnimal+'</td><td><button class="btn btn-info" name="detalhar">Detalhar Ficha</button></td></tr>'
 						$tabelaFichas.append($linha);
 					}	
 					$btnDetalhar = $("button[name=detalhar]");
@@ -263,13 +264,12 @@
 				$inputs[11].value = dadosFicha[0].pelagem;
 				$inputs[12].value = dadosFicha[0].temperamento;
 				$inputs[13].value = dadosFicha[1].nome;
-//				$inputs[14].value = dadosFicha[1].cpf;
 				$inputs[14].placeholder = placeholderCpf(dadosFicha[1].cpf);
-				//$inputs[15].value = dadosFicha[1].telefone;
 				$inputs[15].placeholder =  placeholderTelefone(dadosFicha[1].telefone);
-				//$inputs[16].value = dadosFicha[1].celular;
 				$inputs[16].placeholder = placeholderTelefone(dadosFicha[1].celular);
 				$inputs[17].value = dadosFicha[1].email;
+				$inputs[18].value = dadosFicha[3].nome;
+				$inputs[19].value = dadosFicha[2].id_atendente_abriu;
 			}
 		})
 	}
@@ -282,7 +282,6 @@
 				valor: num
 			}, success: function(retorno){
 				var servicos = JSON.parse(retorno);
-				
 				var $tabelaServicos = $("#tabelaServicos");	
 				$("#tabelaServicos tr").remove(':not(:last-child)');
 				var numeroItem = $("#tabelaServicos tr").length;

@@ -1,6 +1,7 @@
 package iemev.utils;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DataUtils {
@@ -19,6 +20,11 @@ public class DataUtils {
 		}catch(Exception e ) {
 			e.printStackTrace();
 		}
+		return retorno;
+	}
+	public static String horaAtual() {
+		Calendar agora = Calendar.getInstance();
+		String retorno = agora.get(Calendar.HOUR_OF_DAY)+":"+agora.get(Calendar.MINUTE)+":"+agora.get(Calendar.SECOND);
 		return retorno;
 	}
 }

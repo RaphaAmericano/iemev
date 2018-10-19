@@ -45,8 +45,7 @@ public class PrescricaoController extends HttpServlet {
 	String retorno;
 	Servico servico = null;
 	switch(opcao) {
-		case 0:
-			
+		case 0:			
 			numeroficha = Integer.parseInt(request.getParameter("ficha")); 
 			int numeroservico = Integer.parseInt(request.getParameter("servico"));
 			int idatendente = Integer.parseInt(request.getParameter("atendente"));
@@ -70,7 +69,6 @@ public class PrescricaoController extends HttpServlet {
 			numeroficha = Integer.parseInt(request.getParameter("valor")); 
 			List<Prescricao> listaprescricoes = PrescricaoManager.buscarTodasPrescricoes(numeroficha);
 			List<List> retorno_json = new ArrayList<List>();
-			
 			for (int i = 0; i < listaprescricoes.size(); i++) {
 				servico = ServicoManager.buscar(listaprescricoes.get(i).getIdServico());
 				JsonObject prescricao_json = PrescricaoManager.prescricaoJson(listaprescricoes.get(i));
@@ -81,16 +79,13 @@ public class PrescricaoController extends HttpServlet {
 				retorno_json.add(lista_json);
 			}
 			retorno = new Gson().toJson(retorno_json);
-			
 			response.setContentType("text/plain");
 			response.getWriter().write(retorno);
 			break;
 		case 2:
 			int id_prescricao = Integer.parseInt(request.getParameter("id"));
-			
 			int deletar = PrescricaoManager.deletar(id_prescricao);
 			retorno = new Gson().toJson(deletar);
-			
 			response.setContentType("text/plain");
 			response.getWriter().write(retorno);
 			break;

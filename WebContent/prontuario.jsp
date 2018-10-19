@@ -15,7 +15,7 @@ if(empregado != null ){
             <form action="">
                 <div class="form-group">
                     <label for="">Buscar prontuário</label>
-                    <input class="form-control" type="number" placeholder="CPF do Cliente">
+                    <input class="form-control" type="text" placeholder="CPF do Cliente">
                 </div>
                 <button class="btn btn-primary" type="submit">Localizar cliente</button>
             </form>

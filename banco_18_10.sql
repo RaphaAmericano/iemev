@@ -14,7 +14,7 @@ idEmpregado		INTEGER NOT NULL PRIMARY KEY,
 dataDeAdmissaoEmpregado	date NOT NULL,
 ramal			decimal (4) NOT NULL,
 emailEmpregado		text NOT NULL,
-senha			decimal (4) NOT NULL DEFAULT 0000,
+senha			varchar NOT NULL DEFAULT "senha",
 indicadorNovaSenha	boolean NOT NULL DEFAULT 1,
 tipoEmpregado		text NOT NULL,
 idAdministradorDeCadastramento	decimal(4) NOT NULL,
@@ -102,7 +102,7 @@ FOREIGN KEY (cpfVeterinario) REFERENCES T_EMPREGADO (cpfEmpregado) ON UPDATE CAS
 
 CREATE TABLE T_PRESCRICAO (
 idPrescricao		integer PRIMARY KEY,
-numeroFicha		decimal (5) NOT NULL,
+numeroFicha		integer (5) NOT NULL,
 cpfVeterinario		bigint (11) NOT NULL,
 idServico		decimal (4) NOT NULL,
 dataPrescricaoServico	date NOT NULL DEFAULT (datetime('now', 'localtime') ),
