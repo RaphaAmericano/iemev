@@ -50,7 +50,7 @@ String mensagem = null;
     <div class="container">
         <div class="row justify-content-md-center">
             <div class="col col-xs col-md-auto col-md-12">
-                <form action="ficha_atendimento.html" id="tabela_prescricoes">
+                <form action="FichaAtendimentoServlet.do" id="tabela_prescricoes">
                 <table class="table table-hover">
                     <thead>
                         <tr>

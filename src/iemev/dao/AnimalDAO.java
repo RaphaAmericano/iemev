@@ -166,18 +166,11 @@ public class AnimalDAO extends CommonsDAO {
 			String sqlAnimal = "SELECT * FROM T_ANIMAL WHERE idAnimal ="+id+";";
 			Statement stm = con.createStatement();
 			ResultSet rs = stm.executeQuery(sqlAnimal);
-			SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			try {
 				animal.setIdAnimal(rs.getInt("idAnimal"));
 				animal.setNomeAnimal(rs.getString("nomeAnimal"));
-				Date data = new Date();
-				try {
-					data = dataFormat.parse(rs.getString("dataDeNascimentoAnimal"));
-				} catch(ParseException pe) {
-					pe.printStackTrace();
-				}
 				animal.setSexo(rs.getString("sexo").charAt(0));
-				animal.setDataDeNascimentoAnimal(data);
+				animal.setDataDeNascimentoAnimal(DataUtils.parseData(rs.getString("dataDeNascimentoAnimal")));
 				animal.setEspecie(rs.getString("especie"));
 				animal.setPorte(rs.getString("porte"));
 				animal.setRaca(rs.getString("raca"));

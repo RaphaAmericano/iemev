@@ -14,6 +14,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 
 import iemev.models.FichaDeAtendimento;
+import iemev.utils.DataUtils;
 import iemev.utils.bd.ConnectionFactory;
 
 public class FichaAtendimentoDAO {
@@ -264,5 +265,48 @@ public class FichaAtendimentoDAO {
 			se.printStackTrace();
 		}
 		return retorno;
+	}
+	
+	public List<FichaDeAtendimento> fichasAnimal(int id_animal, boolean aberta){
+		Connection con = ConnectionFactory.getConnection();
+		ResultSet rs = null;
+		String sql = "SELECT * FROM T_FICHADEATENDIMENTO WHERE statusFicha = 'fechada' AND idAnimal = ?";
+		if(aberta == true ) {
+			sql = "SELECT * FROM T_FICHADEATENDIMENTO WHERE statusFicha = 'aberta' AND idAnimal = ?";	
+		}
+		List<FichaDeAtendimento> retorno = new ArrayList<FichaDeAtendimento>();
+		try {
+			PreparedStatement stm = con.prepareStatement(sql);
+			stm.setInt(1, id_animal);
+			rs = stm.executeQuery();
+			while(rs.next()) {
+				Date data = new Date();
+				try {
+					data = DataUtils.parseData(rs.getString("dataAbertura"));
+					FichaDeAtendimento ficha = new FichaDeAtendimento();
+					ficha.setDataAbertura(DataUtils.parseData(rs.getString("dataAbertura")));
+					ficha.setDataFechamento(DataUtils.parseData(rs.getString("dataFechamento")));
+					ficha.setNumeroFicha(rs.getInt("numeroFicha"));
+					ficha.setIdAnimal(rs.getInt("idAnimal"));
+					ficha.setIdAtendenteAbriuFicha(rs.getInt("idAtendenteAbriuFicha"));
+					ficha.setIdAtendenteAbriuFicha(rs.getInt("idAtendenteAbriuFicha"));
+					if(rs.getString("statusFicha").equals("aberta")) {
+						ficha.abrirFicha();;	
+					} else {
+						ficha.fecharFicha();
+					}
+					retorno.add(ficha);
+				} catch(Exception e ) {
+					e.printStackTrace();
+				}
+			}
+			rs.close();
+			stm.close();
+			con.close();
+			return retorno;
+		}catch (SQLException se) {
+			se.printStackTrace();
+		}
+		return retorno; 
 	}
 }

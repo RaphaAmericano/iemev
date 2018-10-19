@@ -85,6 +85,18 @@ public class FichaAtendimentoManager {
 		}
 		return null;
 	}
+	
+	public static List<FichaDeAtendimento> fichasAbertasAnimal(int id_animal){
+		FichaAtendimentoDAO dao = new FichaAtendimentoDAO();
+		try {
+			List<FichaDeAtendimento> fichas = dao.fichasAnimal(id_animal, false);
+			return fichas;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public static int fecharFicha(int id_ficha) {
 		FichaAtendimentoDAO dao = new FichaAtendimentoDAO();
 		try {

@@ -33,7 +33,11 @@ if( pagina.equals("animal.jsp")){ %>
 <% }
 if( pagina.equals("cliente.jsp")){ %>
 <script src="js/cliente.js"></script>
-<% } if( pagina.equals("finalizar_atendimento.jsp")){ %>
+<% }
+if( pagina.equals("prontuario.jsp")){ %>
+<script src="js/prontuario.js"></script>
+<% }
+if( pagina.equals("finalizar_atendimento.jsp")){ %>
 <script src="js/finalizar.js"></script>
 <% } }%>
 <!-- Inserir verificacoes para o javascript correspondente a cada pagina -->
