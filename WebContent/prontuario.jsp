@@ -41,7 +41,7 @@ if(empregado != null ){
 <!-- Lista de Fichas -->
 <div class="container" id="containerPrescricoes">
     <div class="row justify-content-md-center">
-        <div class="col col-xs col-md-6">
+        <div class="col col-xs col-md-8">
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -53,38 +53,19 @@ if(empregado != null ){
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><time datetime="2016-07-31">2016-07-31</time></td>
-                        <td>5</td>
-                        <td>Vacinação</td>
-                        <td>Raiva</td>
-                        <td>João Valadão</td>
-                    </tr>
-                    <tr>
-                        <td><time datetime="2016-07-31">2016-07-31</time></td>
-                        <td>2</td>
-                        <td>Cirurgia</td>
-                        <td>Fratura</td>
-                        <td>Antonio Marques</td>
-                    </tr>
-                    <tr>
-                        <td><time datetime="2016-07-31">2016-07-31</time></td>
-                        <td>10</td>
-                        <td>Internação</td>
-                        <td>Diária</td>
-                        <td>Ubiratam José Gonçalves</td>
-                       
-                    </tr>
+                    
                 </tbody>
             </table>
         </div>
 
-        <div class="col col-xs col-md-6" id="fichaAnimal">
+        <div class="col col-xs col-md-4" id="fichaAnimal">
             <fieldset disabled="disabled">
                     <div class="form-row">
-                            <div class="col-md-3"><label for="">Nome</label><input type="text" class="form-control" value=""></div>
-                            <div class="col-md-3"><label for="">Espécie</label><input type="text" class="form-control" value=""></div>
-                            <div class="col-md-2"><label for="">Sexo</label>
+                    <div class="col-md-6"><label for="">Nome</label><input type="text" class="form-control" value=""></div>
+                    <div class="col-md-6"><label for="">Espécie</label><input type="text" class="form-control" value=""></div>
+                    </div>
+                    <div class="form-row">
+                            <div class="col-md-4"><label for="">Sexo</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
@@ -94,13 +75,15 @@ if(empregado != null ){
                                     <input type="text" class="form-control" value="">
                                 </div>
                             </div>
-                            <div class="col-md-4"><label for="">Data de Nascimento</label><input type="date" class="form-control" value=""></div>
+                            <div class="col-md-8"><label for="">Data de Nascimento</label><input type="date" class="form-control" value=""></div>
                         </div>
                         <div class="form-row">
-                            <div class="col-md-3"><label for="">Raça</label><input type="text" class="form-control" value=""></div>
-                            <div class="col-md-3"><label for="">Pelagem</label><input type="text" class="form-control" value=""></div>
-                            <div class="col-md-3"><label for="">Porte</label><input type="text" class="form-control" value=""></div>
-                            <div class="col-md-3"><label for="">Tempramento</label><input type="text" class="form-control" value=""></div>
+                            <div class="col-md-6"><label for="">Raça</label><input type="text" class="form-control" value=""></div>
+                            <div class="col-md-6"><label for="">Pelagem</label><input type="text" class="form-control" value=""></div>
+                        </div>
+                        <div class="form-row">
+                       		<div class="col-md-6"><label for="">Porte</label><input type="text" class="form-control" value=""></div>
+                            <div class="col-md-6"><label for="">Tempramento</label><input type="text" class="form-control" value=""></div>
                         </div>
             </fieldset>
         </div>

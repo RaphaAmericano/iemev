@@ -115,7 +115,7 @@ public class FichaAtendimentoController extends HttpServlet {
 			break;
 		case 4:
 			long idcliente = Long.parseLong(request.getParameter("idcliente"));	
-			ArrayList<FichaDeAtendimento> fichas = FichaAtendimentoManager.fichasUsuario(idcliente);
+			ArrayList<FichaDeAtendimento> fichas = FichaAtendimentoManager.fichasUsuario(idcliente, true);
 			ArrayList<ArrayList> fichas_ = new ArrayList<ArrayList>();		
 			for (int i = 0; i < fichas.size(); i++) {
 				Animal animal_obj = AnimalManager.buscar(fichas.get(i).getIdAnimal());

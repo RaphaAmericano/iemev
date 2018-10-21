@@ -79,15 +79,18 @@ public class ProntuarioController extends HttpServlet {
 		case 1:
 			int id_animal = Integer.parseInt(request.getParameter("idanimal"));
 			Animal animal = AnimalManager.buscar(id_animal);
-			List<FichaDeAtendimento> fichas = FichaAtendimentoManager.fichasAbertasAnimal(id_animal);	
+			List<FichaDeAtendimento> fichas = FichaAtendimentoManager.fichasAbertasAnimal(id_animal);
 			List<JsonObject> fichas_j = new ArrayList<JsonObject>();
 			List<JsonObject> lista_prescricoes = new ArrayList<JsonObject>();
+			
+			
 			for(int i = 0; i < fichas.size(); i++ ) {
 				List<Prescricao> prescricoes = PrescricaoManager.buscarTodasPrescricoes(fichas.get(i).getNumeroFicha());
+				
 				for( int k = 0; k < prescricoes.size(); k++ ) {
-					JsonObject prescricao_j = PrescricaoManager.prescricaoJson(prescricoes.get(i));
-					Servico servico = ServicoManager.buscar(prescricoes.get(i).getIdServico());
-					Pessoa veterinario = PessoaManager.buscarId(prescricoes.get(i).getCpfVeterinario());
+					JsonObject prescricao_j = PrescricaoManager.prescricaoJson(prescricoes.get(k));
+					Servico servico = ServicoManager.buscar(prescricoes.get(k).getIdServico());
+					Pessoa veterinario = PessoaManager.buscarId(prescricoes.get(k).getCpfVeterinario());
 					prescricao_j.addProperty("servico", servico.getNomeServico());
 					prescricao_j.addProperty("categoria", servico.getCategoria());
 					prescricao_j.addProperty("veterinario", veterinario.getNome());

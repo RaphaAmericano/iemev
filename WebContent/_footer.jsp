@@ -14,7 +14,7 @@
 <script src="node_modules/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
 <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
-<script src="js/main.js"></script>
+<script src="js/main.js" type="text/javascript" charset="utf-8"></script>
 <%
 if(request != null ){
 String url =  request.getRequestURI();
@@ -23,22 +23,22 @@ int partsLength = parts.length;
 String pagina = parts[partsLength - 1];
 
 if( pagina.equals("index.jsp") || partsLength == 2){ %>
-<script src="js/index.js"></script>
+<script src="js/index.js" type="text/javascript" charset="utf-8"></script>
 <% } 
 if( pagina.equals("ficha_atendimento.jsp")){ %>
-<script src="js/ficha.js"></script>
+<script src="js/ficha.js" type="text/javascript" charset="utf-8"></script>
 <% } 
 if( pagina.equals("animal.jsp")){ %>
-<script src="js/animal.js"></script>
+<script src="js/animal.js" type="text/javascript" charset="utf-8"></script>
 <% }
 if( pagina.equals("cliente.jsp")){ %>
-<script src="js/cliente.js"></script>
+<script src="js/cliente.js" type="text/javascript" charset="utf-8"></script>
 <% }
 if( pagina.equals("prontuario.jsp")){ %>
-<script src="js/prontuario.js"></script>
+<script src="js/prontuario.js" type="text/javascript" charset="utf-8"></script>
 <% }
 if( pagina.equals("finalizar_atendimento.jsp")){ %>
-<script src="js/finalizar.js"></script>
+<script src="js/finalizar.js" type="text/javascript" charset="utf-8"></script>
 <% } }%>
 <!-- Inserir verificacoes para o javascript correspondente a cada pagina -->
 

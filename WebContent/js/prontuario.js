@@ -69,7 +69,8 @@
 					$inputsFicha[0].value = animal[0].nomeAnimal;
 					$inputsFicha[1].value = animal[0].especie;
 					$inputsFicha[2].value = animal[0].sexo;
-					$inputsFicha[3].value = animal[0].dataDeNascimentoAnimal.split(' ')[0];
+					var data = formatarData(animal[0].dataDeNascimentoAnimal);
+					$inputsFicha[3].value = data;
 					$inputsFicha[4].value = animal[0].raca;
 					$inputsFicha[5].value = animal[0].pelagem;
 					$inputsFicha[6].value = animal[0].porte;
@@ -85,5 +86,14 @@
 		}
 	});
 	
+	function formatarData(data){
+		var d = new Date(data);
+		var mes = "" + (d.getMonth() + 1 );
+		var dia = "" + d.getDate();
+		var ano = d.getFullYear();
+		if(mes.length  < 2 ) mes = "0" + mes;
+		if(dia.length < 2 ) dia = "0" + dia;
+		return [ano, mes, dia ].join("-");
+	}
 	
 }( jQuery ));

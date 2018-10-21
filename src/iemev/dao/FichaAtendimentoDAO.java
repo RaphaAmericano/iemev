@@ -163,14 +163,20 @@ public class FichaAtendimentoDAO {
 		return retorno;
 	}
 	
-	public ArrayList<FichaDeAtendimento> fichasUsuario(long id){
+	public ArrayList<FichaDeAtendimento> fichasUsuario(long id, boolean aberta){
 		Connection con = ConnectionFactory.getConnection();
 		ResultSet rs = null;
-		String sql = "SELECT * FROM ((T_FICHADEATENDIMENTO F INNER JOIN T_ANIMAL A ON F.idAnimal = A.idAnimal) INNER JOIN T_CLIENTE C ON A.cpfCliente = C.cpfUsuario) WHERE C.cpfUsuario = ?";
+		String sql = "SELECT * FROM ((T_FICHADEATENDIMENTO F INNER JOIN T_ANIMAL A ON F.idAnimal = A.idAnimal) INNER JOIN T_CLIENTE C ON A.cpfCliente = C.cpfUsuario) WHERE C.cpfUsuario = ? AND F.statusFicha = ?";
 		ArrayList<FichaDeAtendimento> retorno = new ArrayList<FichaDeAtendimento>();
 		try {
 			PreparedStatement stm = con.prepareStatement(sql);
 			stm.setLong(1, id);
+			if(aberta = true ) {
+				stm.setString(2, "aberta");	
+			} else {
+				stm.setString(2, "fechada");
+			}
+			
 			rs = stm.executeQuery();
 			while(rs.next()) {
 				Date data = new Date();

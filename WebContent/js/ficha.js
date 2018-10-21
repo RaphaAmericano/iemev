@@ -138,7 +138,8 @@
 					}	
 				} else {
 					$tabelaFichas.html("");
-					$("#tabela_prescricoes").append('<div class="alert alert-warning mt-2" role="alert">Os animais do cliente não possuem prescrições</div>');
+					var mensagem =  "Os animais do cliente não possuem prescrições";
+					$("#tabela_prescricoes").append('<div class="alert alert-warning mt-2" role="alert">'+mensagem+'</div>');
 				}
 			}
 		});
@@ -306,10 +307,11 @@
 		var $linhas = $("#tabelaServicos tr");
 		var total = 0;
 		for(var k = 0; k < $linhas.length -1; k++ ){
-			var valor =  $linhas.find('td')[4];
+			var valor =  $linhas[k].children[5];
 			valor = valor.innerText;
 			valor = valor.replace('R$','');
 			valor = parseFloat(valor);
+			console.log(valor);
 			total += valor;
 		}
 		total = (Math.round(total * 100) / 100).toFixed(2);

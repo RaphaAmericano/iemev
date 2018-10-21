@@ -65,10 +65,10 @@ public class FichaAtendimentoManager {
 		return null;
 	}
 	
-	public static ArrayList<FichaDeAtendimento> fichasUsuario(long id){
+	public static ArrayList<FichaDeAtendimento> fichasUsuario(long id, boolean aberta){
 		FichaAtendimentoDAO dao = new FichaAtendimentoDAO();
 		try {
-			ArrayList<FichaDeAtendimento> fichas = dao.fichasUsuario(id);
+			ArrayList<FichaDeAtendimento> fichas = dao.fichasUsuario(id, aberta);
 			return fichas;
 		} catch(Exception e ) {
 			e.printStackTrace();
