@@ -92,13 +92,13 @@ public class ClienteController extends HttpServlet {
 				int result_pessoa = PessoaManager.inserir(cliente);
 				if( result_pessoa == 0 ) {
 					int result_cliente = ClienteManager.cadastrarCliente(cliente);	
-					System.out.println("Cadastrou "+result_cliente );
 					request.setAttribute("cliente", cliente);
 				} else {
 					mensagem = "Erro ao cadastrar o cliente";
 				}
 				request.setAttribute("mensagem_crud", mensagem);
-				RequestDispatcher view = request.getRequestDispatcher("cliente.jsp");
+				request.setAttribute("cpf_cliente", Long.toString(cliente.getCpf()));
+				RequestDispatcher view = request.getRequestDispatcher("animal.jsp");
 				view.forward(request, response);
 				break;
 			}
@@ -109,9 +109,7 @@ public class ClienteController extends HttpServlet {
 			}
 			
 			case 4: {
-				System.out.println(request.getParameter("cpf"));
 				long cpf = Long.parseLong(request.getParameter("cpf"));
-				System.out.println(cpf);
 				int deletarCliente = ClienteManager.deletar(cpf);
 				String mensagem = "Cliente excluído com sucesso";
 				if(deletarCliente == 1 ) {

@@ -15,7 +15,7 @@
 	//Prescricoes 
 	var $containerPrescricoes = $("#containerPrescricoes");
 	var $corpoTabela = $containerPrescricoes.find("tbody"); 
-	
+	var $cabecalhosTabela = $containerPrescricoes.find("thead th");
 	
 	//Mascaras
 	$inputBusca.mask("000.000.000-00");
@@ -65,7 +65,6 @@
 					idanimal: valor
 				}, success:function(retorno){
 					var animal = JSON.parse(retorno);
-					console.log(animal);
 					$inputsFicha[0].value = animal[0].nomeAnimal;
 					$inputsFicha[1].value = animal[0].especie;
 					$inputsFicha[2].value = animal[0].sexo;
@@ -78,9 +77,10 @@
 					$corpoTabela.html("");
 					
 					for( var i = 0; i < animal[1].length; i++ ){
-						var $linha = "<tr><td><time datetime='"+animal[1][i].data_prescricao_servico.split(' ')[0]+"'>2016-07-31</time></td><td>"+animal[1][i].numero_ficha+"</td><td>"+animal[1][i].categoria+"</td><td>"+animal[1][i].servico+"</td><td>"+animal[1][i].veterinario+"</td></tr>";
+						var $linha = "<tr><td><time datetime='"+animal[1][i].data_prescricao_servico.split(' ')[0]+"'>"+animal[1][i].data_prescricao_servico.split(' ')[0]+"</time></td><td>"+animal[1][i].numero_ficha+"</td><td>"+animal[1][i].categoria+"</td><td>"+animal[1][i].servico+"</td><td>"+animal[1][i].veterinario+"</td></tr>";
 						$corpoTabela.append($linha);
 					}
+					$("#tabelaPrescricoes").tablesorter();
 				}
 			});
 		}
@@ -94,6 +94,6 @@
 		if(mes.length  < 2 ) mes = "0" + mes;
 		if(dia.length < 2 ) dia = "0" + dia;
 		return [ano, mes, dia ].join("-");
-	}
+	}	
 	
 }( jQuery ));

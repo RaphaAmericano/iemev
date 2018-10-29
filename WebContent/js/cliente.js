@@ -64,7 +64,6 @@
 					var cliente = JSON.parse(retorno);
 					var data = cliente[0].dataDeNascimento;
 					data = data.split(' ');
-					console.log(cliente);
 					$buttonsFormulario[0].disabled = false;
 					$buttonsFormulario[1].disabled = false;
 					$buttonsFormulario[2].disabled = false;
@@ -118,7 +117,9 @@
 	
 	$botaoEditar.addEventListener("click", function(e){
 		e.preventDefault();
-		$buttonsFormulario[0].disabled = true;
+		$buttonsFormulario[0].disabled = false;
+		$buttonsFormulario[3].disabled = false;
+		
 		$inputsFormulario[1].readOnly = false;
 		$inputsFormulario[2].readOnly = false;
 		$inputsFormulario[3].readOnly = false;

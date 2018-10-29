@@ -87,7 +87,7 @@ String resposta_insert = (String)request.getAttribute("resposta_insert");
 					<% }%>
                     <div class="form-row mt-2">
                         <div class="col-md-6 mb-3">
-                            <label for="cpfcliente">CPF do Cliente</label>
+                            <label for="cpfcliente">CPF do Cliente *</label>
                             <input class="form-control" type="number" name="cpfcliente" maxlength="99999999999" readonly>
                             <div class="mt-2">
                                 <button type="button" class="btn btn-success" disabled>OK</button>
@@ -95,7 +95,7 @@ String resposta_insert = (String)request.getAttribute("resposta_insert");
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="nome_animal">Nome do Animal</label>
+                            <label for="nome_animal">Nome do Animal *</label>
                             <select name="nome_animal" class="form-control" readonly="readonly">
                             </select>
                             <div class="valid-feedback"></div>
@@ -106,25 +106,25 @@ String resposta_insert = (String)request.getAttribute("resposta_insert");
                     </div>
                     <div class="form-row mt-2">
                         <div class="col-md-6 mb-3">
-                            <label for="nome_cliente">Nome do Cliente</label>
+                            <label for="nome_cliente">Nome do Cliente *</label>
                             <input type="text" name="nome_cliente" class="form-control" readonly>
                             <div class="valid-feedback">Inválido</div>
                         </div>
                         <div class="col-md-2 mb-3">
-                            <label for="data">Data da consulta</label>
+                            <label for="data">Data da consulta *</label>
                             <!-- Exemplo: -->
                             <input type="date" name="data" value="" class="form-control" readonly>
                             <div class="valid-feedback">Inválido</div>
                         </div>
                         <div class="col-md-2 mb-3">
-                            <label for="horario">Horário</label>
+                            <label for="horario">Horário *</label>
                             <!-- Exemplo: -->
                             <input type="time" name="horario" value="" class="form-control" readonly>
                             <!-- formato entrada 18:30 -->
                             <div class="valid-feedback">Inválido</div>
                         </div>
                         <div class="col-md-2 md-3">
-                            <label for="consulta">Tipo de Consulta</label>
+                            <label for="consulta">Tipo de Consulta *</label>
                             <select class="form-control" name="consulta" readonly="readonly">
                            	<% if( servicos != null || servicos.isEmpty() ){
                            		for( Servico servico : servicos) { %>

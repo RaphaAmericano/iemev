@@ -52,6 +52,9 @@ public class FichaAtendimentoController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int opcao = Integer.parseInt(request.getParameter("opcao"));
 		RequestDispatcher view = request.getRequestDispatcher("ficha_atendimento.jsp");
+		JsonObject animal_;
+		JsonObject ficha_;
+		JsonObject dono_;
 		int id_ficha;
 		int alterar;
 		String mensagem;
@@ -80,11 +83,16 @@ public class FichaAtendimentoController extends HttpServlet {
 			break;
 		case 2:
 			int idanimal = Integer.parseInt(request.getParameter("idAnimal"));
-			JsonObject animal = AnimalManager.buscarAnimalId(idanimal);
-			JsonObject dono = AnimalManager.buscarDonoId(idanimal);
+			Animal animal = AnimalManager.buscar(idanimal);
+			animal_ = AnimalManager.animalJson(animal);
+			//JsonObject animal_ = AnimalManager.buscarAnimalId(idanimal);
+			Pessoa dono = AnimalManager.buscarDono(idanimal);
+			Cliente cliente = ClienteManager.buscarId(dono.getCpf());
+			dono_ = PessoaManager.pessoaJson(dono);
+			dono_.addProperty("email", cliente.getEmailCliente());
 			List<JsonObject> animalDono = new ArrayList<JsonObject>();
-			animalDono.add(animal);
-			animalDono.add(dono);
+			animalDono.add(animal_);
+			animalDono.add(dono_);
 			String retorno = new Gson().toJson(animalDono);
 			response.setContentType("text/plain");
 			response.getWriter().write(retorno);	
@@ -95,7 +103,6 @@ public class FichaAtendimentoController extends HttpServlet {
 			int idAnimal = Integer.parseInt(request.getParameter("select_nome_animal"));
 			mensagem = "Não foi possível cadastrar nova ficha";
 			FichaDeAtendimento ficha = new FichaDeAtendimento(data, idAnimal, idAtendAbri);
-			
 			int idNovaFicha = FichaAtendimentoManager.novaFicha(ficha);
 			if(idNovaFicha > 0 ) {
 				mensagem = "Ficha cadastrada com sucesso";
@@ -107,7 +114,6 @@ public class FichaAtendimentoController extends HttpServlet {
 			request.setAttribute("id_animal", fichaRequest.getIdAnimal());
 			request.setAttribute("id_atendente_abriu", fichaRequest.getIdAtendenteAbriuFicha());
 			request.setAttribute("id_atendente_fechou", fichaRequest.getIdAtendenteFechouFicha());
-			//request.setAttribute("status", fichaRequest.getStatusFicha());
 			request.setAttribute("status", fichaRequest.getStatusAtual().stateString());
 //			.....completar os setAttributes como os acima			
 			request.setAttribute("status_insert", mensagem);
@@ -119,10 +125,9 @@ public class FichaAtendimentoController extends HttpServlet {
 			ArrayList<ArrayList> fichas_ = new ArrayList<ArrayList>();		
 			for (int i = 0; i < fichas.size(); i++) {
 				Animal animal_obj = AnimalManager.buscar(fichas.get(i).getIdAnimal());
-				JsonObject ficha_ = FichaAtendimentoManager.fichaJson(fichas.get(i));
-				JsonObject animal_ = AnimalManager.animalJson(animal_obj);
+				ficha_ = FichaAtendimentoManager.fichaJson(fichas.get(i));
+				animal_ = AnimalManager.animalJson(animal_obj);
 				ArrayList<JsonObject> conjunto_ = new ArrayList<JsonObject>();
-				
 				conjunto_.add(animal_);
 				conjunto_.add(ficha_);
 				fichas_.add(conjunto_);
@@ -139,50 +144,12 @@ public class FichaAtendimentoController extends HttpServlet {
 			Cliente ficha_cliente = ClienteManager.buscarId(ficha_animal.getCpfCliente());
 			Empregado ficha_empregado = EmpregadoManager.buscarId(ficha_detalhe.getIdAtendenteAbriuFicha());
 			Pessoa ficha_pessoa = PessoaManager.buscarId(ficha_empregado.getCpf()); 
-			System.out.println(DataUtils.formatarData(ficha_empregado.getDataDeAdmissaoEmpregado()));
-			System.out.println(ficha_pessoa.getNome());
-			
-			SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			JsonObject animalJson = new JsonObject();
-			try {
-				animalJson.addProperty("id", ficha_animal.getIdAnimal());
-				animalJson.addProperty("nome", ficha_animal.getNomeAnimal());
-				animalJson.addProperty("sexo", ficha_animal.getSexo());
-				animalJson.addProperty("data", dataFormat.format(ficha_animal.getDataDeNascimentoAnimal()));
-				animalJson.addProperty("especie", ficha_animal.getEspecie());
-				animalJson.addProperty("porte", ficha_animal.getPorte());
-				animalJson.addProperty("raca", ficha_animal.getRaca());
-				animalJson.addProperty("pelagem", ficha_animal.getPelagem());
-				animalJson.addProperty("temperamento", ficha_animal.getTemperamento());
-				animalJson.addProperty("cpf", ficha_animal.getCpfCliente());
-				animalJson.addProperty("idAtendente", ficha_animal.getIdAtendimentoDeCadastramento());	
-			} catch(JsonIOException je) {
-				je.printStackTrace();
-			}
-			JsonObject donoJson = new JsonObject();
-			try {
-				donoJson.addProperty("nome", ficha_cliente.getNome());
-				donoJson.addProperty("cpf", ficha_cliente.getCpf());
-				donoJson.addProperty("telefone", ficha_cliente.getTelefoneResidencial());
-				donoJson.addProperty("celular", ficha_cliente.getCelular());
-				donoJson.addProperty("email", ficha_cliente.getEmailCliente());
-			}catch(JsonIOException je) {
-				je.printStackTrace();
-			}
-			JsonObject fichaJson = new JsonObject();
-			try {
-				fichaJson.addProperty("status", ficha_detalhe.getStatusAtual().stateString());
-				fichaJson.addProperty("numero_sequencial", ficha_detalhe.getNumeroFicha());
-				fichaJson.addProperty("data_abertura", dataFormat.format(ficha_detalhe.getDataAbertura()));
-				fichaJson.addProperty("id_atendente_abriu", ficha_detalhe.getIdAtendenteAbriuFicha());
-				fichaJson.addProperty("id_atendente_fechou", ficha_detalhe.getIdAtendenteFechouFicha());
-			} catch(JsonIOException je) {
-				je.printStackTrace();
-			}
-			
+			JsonObject animalJson = AnimalManager.animalJson(ficha_animal);
+			JsonObject donoJson = PessoaManager.pessoaJson(ficha_pessoa);
+			JsonObject fichaJson = FichaAtendimentoManager.fichaJson(ficha_detalhe);			
 			JsonObject empregadoJson = EmpregadoManager.empregadoJson(ficha_empregado);
 			empregadoJson.addProperty("nome", ficha_pessoa.getNome());
-			System.out.println(empregadoJson);
+			donoJson.addProperty("email", ficha_cliente.getEmailCliente());
 			//Fazer um decorator para retornar o valar da soma dos precos
 			
 			List<JsonObject> retornoLista = new ArrayList<JsonObject>();
@@ -191,7 +158,6 @@ public class FichaAtendimentoController extends HttpServlet {
 			retornoLista.add(fichaJson);
 			retornoLista.add(empregadoJson);
 			String retornoJson = new Gson().toJson(retornoLista);
-			//
 			response.setContentType("text/plain");
 			response.getWriter().write(retornoJson);
 			break;

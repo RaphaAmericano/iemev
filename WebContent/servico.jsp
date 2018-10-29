@@ -8,20 +8,20 @@ if(empregado != null ){
 }
 %>
 <!-- Busca -->
-    <div class="container">
-        <div class="row justify-content-md center">
-            <div class="col col-xs col-md-auto col-md-12 mt-2">
-                <h1 class="font-weight-bold">Consultar Serviço</h1>
-                <form action="">
-                    <div class="form-group">
-                        <label for="" class="col-md-6 col-form-label">Buscar categoria de serviço</label>
-                        <input class="form-control" type="search">
-                    </div>
-                    <button class="btn btn-primary" type="submit">Localizar serviço</button>
-                </form>
-            </div>
+<div class="container" id="containerBusca">
+    <div class="row justify-content-md center">
+        <div class="col col-xs col-md-auto col-md-12 mt-2">
+            <h1 class="font-weight-bold">Consultar Serviço</h1>
+            <form action="">
+                <div class="form-group">
+                    <label for="" class="col-md-6 col-form-label">Buscar categoria de serviço</label>
+                    <input class="form-control" type="search">
+                </div>
+                <button class="btn btn-primary" type="submit">Localizar serviço</button>
+            </form>
         </div>
     </div>
+</div>
 <!-- /Busca -->
 
 <!-- Select Resultados -->
@@ -31,10 +31,7 @@ if(empregado != null ){
                 <form action="servico.html">
                     <div class="form-group"><label for="servico">Serviços</label>
                         <select name="servico[id]" id="" class="form-control" multiple="multiple">
-                            <option value="0">Exame de Fezes</option>
-                            <option value="1">Anestesia Geral</option>
-                            <option value="2">Anestesia Local</option>
-                            <option value="3">Exame de Urina</option>
+                            <!-- <option value="0">Exame de Fezes</option> -->
                         </select>
                         <button class="btn btn-success mt-2" value="selecionar" name="servico[acao]" type="submit">Detalhar Serviço</button>
                     </div>
@@ -57,17 +54,17 @@ if(empregado != null ){
                     </div>
                     <div class="form-row mt-2">
                         <div class="col-md-4 mb-3">
-                            <label for="cpf">Categoria do Serviço</label>
+                            <label for="cpf">Categoria do Serviço *</label>
                             <input type="number" name="cpf" class="form-control">
                             <div class="valid-feedback">Inválido</div>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <label for="nome">Nome do Serviço</label>
+                            <label for="nome">Nome do Serviço *</label>
                             <input type="text" name="name" class="form-control">
                             <div class="valid-feedback">Inválido</div>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <label for="preco">Preço</label>
+                            <label for="preco">Preço *</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">R$</span>

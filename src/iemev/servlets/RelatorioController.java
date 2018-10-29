@@ -38,7 +38,6 @@ public class RelatorioController extends HttpServlet {
 			Servico servico = ServicoManager.buscar(prescricoes.get(i).getIdServico());
 			total += servico.getPreco();
 		}
-		
 		retorno = total / fichas.size();
 		request.setAttribute("relatorio", retorno);
 		RequestDispatcher view = request.getRequestDispatcher("relatorios.jsp");

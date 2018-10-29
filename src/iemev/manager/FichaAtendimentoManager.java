@@ -36,7 +36,6 @@ public class FichaAtendimentoManager {
 		FichaAtendimentoDAO dao = new FichaAtendimentoDAO();
 		int fichaId = 0;
 		try {
-			//retorno o id da ultima ficha gerada pelo banco
 			fichaId = dao.inserir(ficha);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -125,6 +124,7 @@ public class FichaAtendimentoManager {
 		retorno.addProperty("idAnimal", ficha.getIdAnimal());
 		retorno.addProperty("idAtendenteAbriuFicha", ficha.getIdAtendenteAbriuFicha());
 		retorno.addProperty("idAtendenteFechouFicha", ficha.getIdAtendenteFechouFicha());
+		retorno.addProperty("status", ficha.getStatusAtual().stateString());
 		return retorno;
 	}
 }

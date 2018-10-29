@@ -37,7 +37,7 @@ if(empregado != null ){
                         <tbody>
                             <tr>
                                 <th scope="row">1</th>
-                                <th scope="row">4</th>
+                                <td>4</td>
                                 <td>Jorge Matos</td>
                                 <td>Otto</td>
                                 <td><time datetime="2018-07-10">2018-07-10</time></td>
@@ -47,7 +47,7 @@ if(empregado != null ){
                             </tr>
                             <tr>
                                 <th scope="row">2</th>
-                                <th scope="row"><input type="number" class="form-control"></th>
+                                <th><input type="number" class="form-control"></th>
                                 <td>-</td>
                                 <td>-</td>
                                 <td><time datetime="0000-00-00">0000-00-00</time></td>

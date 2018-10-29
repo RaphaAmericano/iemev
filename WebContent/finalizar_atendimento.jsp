@@ -139,7 +139,7 @@ SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
                             <input class="form-control" type="number" name="cpfcliente" readonly>
                         </div>
                         <div class="col-md-6">
-                            <label for="pagamento">Forma de Pagamento</label>
+                            <label for="pagamento">Forma de Pagamento *</label>
                             
                             <div class="form-check">
                                 <input type="radio" class="form-check-imput" name="pagamento" value="0" disabled>

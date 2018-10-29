@@ -12,7 +12,12 @@ h1, h2, h3, h4, h5, h6 {
     .sticky-top .navbar-nav .link:hover, .sticky-top .navbar-nav .link.active, .sticky-top .navbar-nav .nav-link:hover, .sticky-top .navbar-nav .nav-link.active {
       color: #00545f;
       font-weight: bold; }
-
+#containerPrescricoes thead th {
+	cursor: pointer;
+}
+#containerPrescricoes thead th:hover {
+	background-color: #dee2e6;
+}
 footer img {
   width: 20%;
   margin-right: 15px; }

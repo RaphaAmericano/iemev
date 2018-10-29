@@ -96,15 +96,6 @@ public class FichaAtendimentoDAO {
 				try {
 					animal.addProperty("id", rs.getString("idAnimal"));
 					animal.addProperty("nome", rs.getString("nomeAnimal"));
-//					animal.addProperty("sexo", rs.getString("sexo"));
-//					animal.addProperty("data", rs.getString("dataDeNascimentoAnimal"));
-//					animal.addProperty("especie", rs.getString("especie"));
-//					animal.addProperty("porte", rs.getString("porte"));
-//					animal.addProperty("raca", rs.getString("raca"));
-//					animal.addProperty("pelagem", rs.getString("pelagem"));
-//					animal.addProperty("temperamento", rs.getString("temperamento"));
-//					animal.addProperty("cpf", rs.getString("cpfCliente"));
-//					animal.addProperty("idAtendente", rs.getString("idAtendenteDeCadastramento"));
 					retorno.add(animal);
 				} catch(JsonIOException je ) {
 					je.printStackTrace();
@@ -166,7 +157,7 @@ public class FichaAtendimentoDAO {
 	public ArrayList<FichaDeAtendimento> fichasUsuario(long id, boolean aberta){
 		Connection con = ConnectionFactory.getConnection();
 		ResultSet rs = null;
-		String sql = "SELECT * FROM ((T_FICHADEATENDIMENTO F INNER JOIN T_ANIMAL A ON F.idAnimal = A.idAnimal) INNER JOIN T_CLIENTE C ON A.cpfCliente = C.cpfUsuario) WHERE C.cpfUsuario = ? AND F.statusFicha = ?";
+		String sql = "SELECT * FROM ((T_FICHADEATENDIMENTO F INNER JOIN T_ANIMAL A ON F.idAnimal = A.idAnimal) INNER JOIN T_CLIENTE C ON A.cpfCliente = C.cpfCliente) WHERE C.cpfCliente = ? AND F.statusFicha = ?";
 		ArrayList<FichaDeAtendimento> retorno = new ArrayList<FichaDeAtendimento>();
 		try {
 			PreparedStatement stm = con.prepareStatement(sql);

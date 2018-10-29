@@ -1,6 +1,7 @@
 package iemev.models;
 
 import java.util.Date;
+import java.util.List;
 
 import iemev.state.FichaAbertaState;
 import iemev.state.FichaFechadaState;
@@ -13,6 +14,7 @@ public class FichaDeAtendimento {
 		private int idAnimal;
 		private int idAtendenteAbriuFicha;
 		private int idAtendenteFechouFicha;
+		private List<Servico> servicos;
 		//private String statusFicha;
 		
 		
@@ -93,13 +95,7 @@ public class FichaDeAtendimento {
 		}
 		public void setIdAtendenteFechouFicha(int idAtendenteFechouFicha) {
 			this.idAtendenteFechouFicha = idAtendenteFechouFicha;
-		}
-//		public String getStatusFicha() {
-//			return statusFicha;
-//		}
-//		public void setStatusFicha(String statusFicha) {
-//			this.statusFicha = statusFicha;
-//		}		
+		}	
 		public void abrirFicha() {
 			statusFicha.abrir();
 		}
@@ -117,5 +113,8 @@ public class FichaDeAtendimento {
 		}
 		public FichaState getFichaAberta() {
 			return fichaAbertaState;
+		}
+		public void adicionarServico(Servico servico) {
+			this.servicos.add(servico);
 		}
 }

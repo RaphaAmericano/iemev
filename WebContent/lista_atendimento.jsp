@@ -1,4 +1,13 @@
+<%@page import="iemev.models.Animal"%>
+<%@page import="iemev.manager.AnimalManager"%>
+<%@page import="iemev.models.FichaDeAtendimento"%>
+<%@page import="java.util.List"%>
+<%@page import="iemev.manager.FichaAtendimentoManager"%>
 <%@include file="_header.jsp" %>
+<%
+List<FichaDeAtendimento> fichas = FichaAtendimentoManager.todasFichas();
+%>
+
 <!-- /Navbar Fixa -->
     <div class="container">
         <div class="row justify-content-md center">
@@ -12,7 +21,7 @@
     <div class="container">
         <div class="row justify-content-md-center mt-2">
             <div class="col col-xs col-md-auto col-md-5">
-                <form action="ficha_atendimento.html">
+                <form action="ficha_atendimento.jsp">
                     <label for="animal">Fila de Consulta</label>
                     <div class="form-row">
                         <table class="table table-hover">
@@ -26,7 +35,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <!-- <tr>
                                     <th scope="row">1</th>
                                     <td>Jorge Matos</td>
                                     <td>Otto</td>
@@ -34,25 +43,7 @@
                                     <td>
                                         <input type="time" class="form-control" value="18:00" readonly>
                                     </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Luiz Gomes</td>
-                                    <td>Thornton</td>
-                                    <td>Consulta</td>
-                                    <td>
-                                        <input type="time" class="form-control" value="18:15" readonly>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Ubirajara Tavares</td>
-                                    <td>the Bird</td>
-                                    <td>Internação</td>
-                                    <td>
-                                        <input type="time" class="form-control" value="18:30" readonly>
-                                    </td>
-                                </tr>
+                                </tr> -->
                             </tbody>
                         </table>
                     </div>
@@ -69,11 +60,12 @@
                     <div class="form-group">
                         <label for="animal">Fichas de Atendimento( Cliente | Animal | Serviço )</label>
                         <select name="cliente[id]" id="" class="form-control" multiple="multiple">
-                            <option value="0">Jorge Matos | Tobby | Internação</option>
-                            <option value="1">Jorge Silva | Rufus | Consulta</option>
-                            <option value="2">Jorge Loureiro | Thor | Consulta</option>
-                            <option value="3">Jorge Mascarenhas | Judith | Consulta</option>
-                            <option value="3">Jorge Mascarenhas | Janjão | Internação</option>
+                            <%for(int i = 0; i < fichas.size(); i++ ){ 
+                            	Animal animal = AnimalManager.buscar(fichas.get(i).getIdAnimal());
+                            	Pessoa dono = AnimalManager.buscarDono(animal.getIdAnimal());
+                            %>
+                            	<option value="<%=fichas.get(i).getNumeroFicha() %>"><%=dono.getNome() %> | <%=animal.getNomeAnimal() %> | Internação</option>	
+                            <% } %>
                         </select>
                         
                     </div>

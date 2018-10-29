@@ -7,6 +7,7 @@ if(empregado != null ){
 	}	
 }
 String mensagem_crud = (String)request.getAttribute("mensagem_crud");
+String cpf_cliente = (String)request.getAttribute("cpf_cliente");
 %>
     <!-- Consulta -->
     <div class="container">
@@ -30,7 +31,7 @@ String mensagem_crud = (String)request.getAttribute("mensagem_crud");
             <div class="col col-xs col-md-auto col-md-12 mt-2">
                 <form action="animalServlet.do" method="POST" style="display:none;">
                     <div class="form-group col-6 p-0">
-                        <label for="animal">Animais</label>
+                        <label for="animal">Animais *</label>
                         <select name="animal" class="form-control" multiple="multiple"></select>
                         <button class="btn btn-success mt-2" type="submit" disabled>Detalhar Animal</button>
                     </div>
@@ -58,68 +59,69 @@ String mensagem_crud = (String)request.getAttribute("mensagem_crud");
                     </div>
                     
                     <% if(mensagem_crud != null ) {  
-                    	if(mensagem_crud.contentEquals("Animal apagado com sucesso") || mensagem_crud.contentEquals("Animal editado com sucesso") || mensagem_crud.contentEquals("Animal incluído com sucesso") ){
+                    	if(mensagem_crud.contentEquals("Animal apagado com sucesso") || mensagem_crud.contentEquals("Animal editado com sucesso") || mensagem_crud.contentEquals("Animal incluído com sucesso") || mensagem_crud.contentEquals("Cliente cadastrado com sucesso") ){
                     %>
-                    <div class="alert alert-success mt-2" role="alert">
+	                    <div class="alert alert-success mt-2" role="alert">
+	                    <%=mensagem_crud %>
+	                    </div>
                     <% } else if(mensagem_crud.contentEquals("Não foi possível apagar o animal") || mensagem_crud.contentEquals("Não foi possível editar o animal") || mensagem_crud.contentEquals("Não foi possível incluir o animal") || mensagem_crud.contentEquals("Cliente inexistente") ){  %>
-                    <div class="alert alert-danger mt-2" role="alert">
-                    <% } %>
-					<%=mensagem_crud %>
-					</div>
-					<% }%>
+	                    <div class="alert alert-danger mt-2" role="alert">
+	                    <%=mensagem_crud %>
+	                    </div>
+                    <% } } %>
 					
                     <div class="form-row mt-4">
                         <div class="col-md-6 mb-3">
-                            <label for="nome">Nome do Animal</label>
-                            <input type="text" name="nome" class="form-control" readonly>
+                            <label for="nome">Nome do Animal *</label>
+                            <input type="text" name="nome" class="form-control" <%=cpf_cliente != null ? "" : "readonly" %> required>
                             <div class="valid-feedback">Inválido</div>
                         </div>
                         <div class="col-md-2 mb-3">
-                            <label for="sexo">Sexo</label>
+                            <label for="sexo">Sexo *</label>
                             <div class="form-check">
-                                <input type="radio" class="form-check-imput" name="sexo" value="masculino" disabled>
+                                <input type="radio" class="form-check-imput" name="sexo" value="masculino" <%=cpf_cliente != null ? "" : "disabled" %> required>
                                 <label for="sexo" class="form-check-label">Masculino</label>
                             </div>
                             <div class="form-check">
-                                <input type="radio" class="form-check-imput" name="sexo" value="feminino" disabled>
+                                <input type="radio" class="form-check-imput" name="sexo" value="feminino" <%=cpf_cliente != null ? "" : "disabled" %> required>
                                 <label for="sexo" class="form-check-label">Feminino</label>
                             </div>
                             <div class="valid-feedback"></div>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <label for="data">Data de Nascimento</label>
-                            <input type="date" name="dataNascimento" class="form-control" readonly>
+                            <label for="data">Data de Nascimento *</label>
+                            <input type="date" name="dataNascimento" class="form-control" <%=cpf_cliente != null ? "" : "readonly" %> required>
                             <div class="valid-feedback">Inválido</div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-md-3">
-                            <label for="especie">Especie</label>
-                            <input class="form-control" type="text" name="especie" readonly>
+                            <label for="especie">Espécie *</label>
+                            <input class="form-control" type="text" name="especie" <%=cpf_cliente != null ? "" : "readonly" %> required>
                         </div>
                         <div class="col-md-3">
-                            <label for="raca">Raça</label>
-                            <input class="form-control" type="text" name="raca" readonly>
+                            <label for="raca">Raça *</label>
+                            <input class="form-control" type="text" name="raca" <%=cpf_cliente != null ? "" : "readonly" %> required>
                         </div>
                         <div class="col-md-2">
-                            <label for="porte">Porte</label>
-                            <input class="form-control" type="text" name="porte" readonly>
+                            <label for="porte">Porte *</label>
+                            <input class="form-control" type="text" name="porte" <%=cpf_cliente != null ? "" : "readonly" %> required>
                         </div>
                         <div class="col-md-2">
-                            <label for="pelagem">Pelagem</label>
-                            <input class="form-control" type="text" name="pelagem" readonly>
+                            <label for="pelagem">Pelagem *</label>
+                            <input class="form-control" type="text" name="pelagem" <%=cpf_cliente != null ? "" : "readonly" %> required>
                         </div>
                         <div class="col-md-2">
-                            <label for="temperamento">Temperamento</label>
-                            <input class="form-control" type="text" name="temperamento" readonly>
+                            <label for="temperamento">Temperamento *</label>
+                            <input class="form-control" type="text" name="temperamento" <%=cpf_cliente != null ? "" : "readonly" %> required>
                         </div>
                     </div>
                     <!-- Em seguida, os campos são os especiais de cada tipo de usuario do sistema -->      
 
                     <div class="form-row mt-2">
                         <div class="col-md-6">
-                            <label for="cpfcliente">CPF do Cliente</label>
-                            <input class="form-control" type="text" name="cpf" readonly>
+                            <label for="cpfcliente">CPF do Cliente *</label>
+                            <input class="form-control" type="text" name="cpf" value="<%=cpf_cliente != null ? cpf_cliente : "" %>"  readonly>
                         </div>
                         <div class="col-md-6">
                             <label for="idatendente">ID do Atendente</label>

@@ -13,7 +13,7 @@
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
 <script src="node_modules/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
 <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
+<script src="js/jquery.tablesorter.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/main.js" type="text/javascript" charset="utf-8"></script>
 <%
 if(request != null ){
@@ -36,6 +36,9 @@ if( pagina.equals("cliente.jsp")){ %>
 <% }
 if( pagina.equals("prontuario.jsp")){ %>
 <script src="js/prontuario.js" type="text/javascript" charset="utf-8"></script>
+<% }
+if( pagina.equals("servico.jsp")){ %>
+<script src="js/servico.js" type="text/javascript" charset="utf-8"></script>
 <% }
 if( pagina.equals("finalizar_atendimento.jsp")){ %>
 <script src="js/finalizar.js" type="text/javascript" charset="utf-8"></script>

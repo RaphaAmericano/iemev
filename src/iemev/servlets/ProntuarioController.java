@@ -82,11 +82,8 @@ public class ProntuarioController extends HttpServlet {
 			List<FichaDeAtendimento> fichas = FichaAtendimentoManager.fichasAbertasAnimal(id_animal);
 			List<JsonObject> fichas_j = new ArrayList<JsonObject>();
 			List<JsonObject> lista_prescricoes = new ArrayList<JsonObject>();
-			
-			
 			for(int i = 0; i < fichas.size(); i++ ) {
 				List<Prescricao> prescricoes = PrescricaoManager.buscarTodasPrescricoes(fichas.get(i).getNumeroFicha());
-				
 				for( int k = 0; k < prescricoes.size(); k++ ) {
 					JsonObject prescricao_j = PrescricaoManager.prescricaoJson(prescricoes.get(k));
 					Servico servico = ServicoManager.buscar(prescricoes.get(k).getIdServico());
@@ -109,8 +106,5 @@ public class ProntuarioController extends HttpServlet {
 		default:
 			break;
 		}
-		
-		
 	}
-
 }

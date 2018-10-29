@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 
 import iemev.dao.AnimalDAO;
 import iemev.models.Animal;
+import iemev.models.Pessoa;
 import iemev.utils.DataUtils;
 
 public class AnimalManager {
@@ -78,6 +79,17 @@ public class AnimalManager {
 		}
 		return retorno;
 	}
+	public static Pessoa buscarDono(int idanimal) {
+		AnimalDAO dao = new AnimalDAO();
+		Pessoa retorno = new Pessoa();
+		try {
+			retorno = dao.buscarDono(idanimal);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return retorno;
+	}
+	
 	public static JsonObject buscarDonoId(int idanimal) {
 		AnimalDAO dao = new AnimalDAO();
 		JsonObject retorno = new JsonObject();

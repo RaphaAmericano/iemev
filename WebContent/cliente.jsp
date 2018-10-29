@@ -61,54 +61,54 @@ if(session != null && session.getAttribute("empregado") != null ){
                     </div>
                     <div class="form-row mt-2">
                         <div class="col-md-12 mt-2">
-                            <label for="nome">Nome</label>
-                            <input type="text" name="nome" class="form-control" value="<%= cliente != null ? cliente.getNome() : ""  %>">
+                            <label for="nome">Nome *</label>
+                            <input type="text" name="nome" class="form-control" value="<%= cliente != null ? cliente.getNome() : ""  %>" required>
                             <div class="valid-feedback">Inválido</div>
                         </div>
                     </div>
                     <div class="form-row mt-2">
                         <div class="col-md-4 mb-3">
-                            <label for="cpf">CPF</label>
-                            <input type="text" name="cpf" class="form-control" placeholder="000.000.000-00" value="<%= cliente != null ? cliente.getCpf() : "" %>">
+                            <label for="cpf">CPF *</label>
+                            <input type="text" name="cpf" class="form-control" placeholder="000.000.000-00" value="<%= cliente != null ? cliente.getCpf() : "" %>" required>
                             <div class="valid-feedback">Inválido</div>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <label for="rg">RG</label>
-                            <input type="text" name="rg" class="form-control" placeholder="00.000.000-0" value="<%= cliente != null ? cliente.getRg() : "" %>">
+                            <label for="rg">RG *</label>
+                            <input type="text" name="rg" class="form-control" placeholder="00.000.000-0" value="<%= cliente != null ? cliente.getRg() : "" %>" required>
                             <div class="valid-feedback"></div>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <label for="data">Data de Nascimento</label>
-                            <input type="date" name="data" class="form-control" value="<%= cliente != null ? dataNascimento : ""  %>">
+                            <label for="data">Data de Nascimento *</label>
+                            <input type="date" name="data" class="form-control" value="<%= cliente != null ? dataNascimento : ""  %>" required>
                             <div class="valid-feedback">Inválido</div>
                         </div>
                     </div>
                     <div class="form-row mt-2">
                         <div class="col-md-12">
-                            <label for="endereco">Endereço</label>
-                            <input type="text" class="form-control" name="endereco" value="<%=  cliente != null ? cliente.getEndereco() : "" %>">
+                            <label for="endereco">Endereço *</label>
+                            <input type="text" class="form-control" name="endereco" value="<%=  cliente != null ? cliente.getEndereco() : "" %>" required>
                             <div class="valid-feedback">Inválido</div>
                         </div>
                     </div>
                     <div class="form-row mt-2">
                         <div class="col-md-6">
-                            <label for="telefone">Telefone Residencial</label>
-                            <input class="form-control" type="number" name="telefone" value="<%= cliente != null ? cliente.getTelefoneResidencial() : ""  %>">
+                            <label for="telefone">Telefone Residencial *</label>
+                            <input class="form-control" type="text" name="telefone" value="<%= cliente != null ? cliente.getTelefoneResidencial() : ""  %>" required>
                         </div>
                         <div class="col-md-6">
-                            <label for="celular">Telefone Celular</label>
-                            <input class="form-control" type="text" name="celular" value="<%= cliente != null ? cliente.getCelular() : "" %>">
+                            <label for="celular">Telefone Celular *</label>
+                            <input class="form-control" type="text" name="celular" value="<%= cliente != null ? cliente.getCelular() : "" %>" required>
                         </div>
                     </div>
                     <!-- Em seguida, os campos são os especiais de cada tipo de usuario do sistema -->
                     <div class="form-row mt-2">
                         <div class="col-md-6">
-                            <label for="email">Email</label>
+                            <label for="email">Email *</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">@</span>
                                 </div>
-                                <input class="form-control" type="email" name="email" value="<%= cliente != null ? cliente.getEmailCliente() : "" %>">
+                                <input class="form-control" type="email" name="email" value="<%= cliente != null ? cliente.getEmailCliente() : "" %>" required>
                             </div>
                         </div>
                         <div class="col-md-6">

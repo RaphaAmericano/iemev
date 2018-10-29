@@ -42,7 +42,7 @@ if(empregado != null ){
 <div class="container" id="containerPrescricoes">
     <div class="row justify-content-md-center">
         <div class="col col-xs col-md-8">
-            <table class="table table-hover">
+            <table id="tabelaPrescricoes" class="table table-hover tablesorter">
                 <thead>
                     <tr>
                     <th scope="col">Data de Prescrição</th>

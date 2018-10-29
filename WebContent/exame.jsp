@@ -46,10 +46,8 @@ if(empregado != null ){
                 <form action="animal.html">
                     <div class="form-group"><label for="animal">Exames</label>
                         <select name="animal[id]" class="form-control" multiple="multiple">
-                            <option value="0">2018-02-10 | 18:00 - Jorge Luiz - Rex</option>
-                            <option value="1">2018-02-10 | 18:15 - Humberto Jorge Silva - Tobby</option>
-                            <option value="2">2018-02-10 | 18:30 - Maria da Conceição - Billy</option>
-                            <option value="3">2018-02-10 | 18:45 - Maria Bonita Araújo - Judith</option>
+    					<!-- <option value="0">2018-02-10 | 18:00 - Jorge Luiz - Rex</option> -->
+    
                         </select>
                         <button class="btn btn-success mt-2" value="selecionar" name="agendamento" type="submit">Detalhar</button>
                     </div>
@@ -69,7 +67,7 @@ if(empregado != null ){
                             <button class="btn btn-danger">Excluir</button>
                         </div>
                         <div class="col-3 col-xs-12">
-                            <label for="pedido">Pedido de Exame Assinado</label>
+                            <label for="pedido">Pedido de Exame Assinado *</label>
                             <div class="custom-control custom-radio">
                                 <input type="radio" id="pedidoUm" name="pedido" class="custom-control-input">
                                 <label class="custom-control-label" for="pedidoUm">Sim</label>
@@ -82,11 +80,11 @@ if(empregado != null ){
                     </div>
                     <div class="form-row mt-4">
                         <div class="col-md-6 mb-3">
-                            <label for="cpfcliente">CPF do Cliente</label>
+                            <label for="cpfcliente">CPF do Cliente *</label>
                             <input class="form-control" type="number" name="cpfcliente">
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="nome_animal">Nome do Animal</label>
+                            <label for="nome_animal">Nome do Animal *</label>
                             <select type="text" name="nome_animal" class="form-control">
                                 <option value="0">Bill</option>
                                 <option value="1">Bob</option>
@@ -97,24 +95,24 @@ if(empregado != null ){
                     </div>
                     <div class="form-row mt-2">
                         <div class="col-md-6 mb-3">
-                            <label for="nome_cliente">Nome do Cliente</label>
+                            <label for="nome_cliente">Nome do Cliente *</label>
                             <input type="text" name="nome_cliente" class="form-control" readonly>
                             <div class="valid-feedback">Inválido</div>
                         </div>
                         <div class="col-md-2 mb-3">
-                            <label for="data">Data do Exame</label>
+                            <label for="data">Data do Exame *</label>
                             <!-- Exemplo: -->
                             <input type="date" name="data" value="2018-08-25" class="form-control" readonly>
                             <div class="valid-feedback">Inválido</div>
                         </div>
                         <div class="col-md-2 mb-3">
-                                <label for="horario">Horário do Exame</label>
+                                <label for="horario">Horário do Exame *</label>
                                 <!-- Exemplo: -->
                                 <input type="time" name="horario" value="18:30" class="form-control" readonly>
                                 <div class="valid-feedback">Inválido</div>
                             </div>
                         <div class="col-md-2 md-3">
-                            <label for="exame">Tipo do Exame</label>
+                            <label for="exame">Tipo do Exame *</label>
                             <select class="form-control" name="exame">
                                 <option>Sangue</option>
                                 <option>Urina</option>

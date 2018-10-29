@@ -47,7 +47,6 @@ public class ClienteManager {
 		ClienteDAO dao = new ClienteDAO();
 		try {
 			List<Cliente> retorno = dao.buscarCpf(cpf);
-			System.out.println(retorno);
 			return retorno;
 		} catch ( Exception e ) {
 			e.printStackTrace();

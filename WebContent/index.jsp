@@ -16,7 +16,7 @@ String mensagem_erro = (String)request.getAttribute("mensagem_erro");
                             <span class="input-group-text">
                                 <i class="fas fa-user"></i>
                             </span>
-                            <input class="form-control" type="text" name="cpf" placeholder="CPF">
+                            <input class="form-control" type="text" name="cpf" placeholder="CPF" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -25,7 +25,7 @@ String mensagem_erro = (String)request.getAttribute("mensagem_erro");
                             <span class="input-group-text">
                                 <i class="fas fa-key"></i>
                             </span>
-                            <input class="form-control" type="password" name="senha" placeholder="Senha" >
+                            <input class="form-control" type="password" name="senha" placeholder="Senha" required>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Entrar</button>

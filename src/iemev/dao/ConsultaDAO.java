@@ -16,8 +16,7 @@ import iemev.utils.bd.ConnectionFactory;
 public class ConsultaDAO {
 	public ArrayList<JsonObject> buscarPorData(String data){
 		Connection con = ConnectionFactory.getConnection();
-		String sql = "SELECT * FROM (((T_AGENDAMENTO A INNER JOIN T_ANIMAL AN ON A.idAnimal = AN.idAnimal) INNER JOIN T_CLIENTE C ON C.cpfUsuario = AN.cpfCliente) INNER JOIN T_PESSOA P ON C.cpfUsuario = P.cpf ) WHERE dataAgendamento LIKE ?;";
-		//String sql = "SELECT * FROM T_AGENDAMENTO WHERE dataAgendamento = ?;";
+		String sql = "SELECT * FROM (((T_AGENDAMENTO A INNER JOIN T_ANIMAL AN ON A.idAnimal = AN.idAnimal) INNER JOIN T_CLIENTE C ON C.cpfCliente = AN.cpfCliente) INNER JOIN T_PESSOA P ON C.cpfCliente = P.cpf ) WHERE dataAgendamento LIKE ? ORDER BY A.dataAgendamento ASC;";
 		try {
 			PreparedStatement stm = con.prepareStatement(sql);
 			stm.setString(1, "%"+data+"%");
@@ -51,7 +50,7 @@ public class ConsultaDAO {
 	public ArrayList<JsonObject> buscarPorNome(String nome){
 		Connection con = ConnectionFactory.getConnection();
 		
-		String sql = "SELECT * FROM (((T_AGENDAMENTO A INNER JOIN T_ANIMAL AN ON A.idAnimal = AN.idAnimal) INNER JOIN T_CLIENTE C ON C.cpfUsuario = AN.cpfCliente) INNER JOIN T_PESSOA P ON C.cpfUsuario = P.cpf ) WHERE P.nome LIKE ? ;";
+		String sql = "SELECT * FROM (((T_AGENDAMENTO A INNER JOIN T_ANIMAL AN ON A.idAnimal = AN.idAnimal) INNER JOIN T_CLIENTE C ON C.cpfCliente = AN.cpfCliente) INNER JOIN T_PESSOA P ON C.cpfCliente = P.cpf ) WHERE P.nome LIKE ? ORDER BY A.dataAgendamento ASC;";
 		try {
 			PreparedStatement stm = con.prepareStatement(sql);
 			stm.setString(1, "%"+nome+"%");
@@ -86,7 +85,7 @@ public class ConsultaDAO {
 	public JsonObject buscarPorId(int id){
 		Connection con = ConnectionFactory.getConnection();
 		
-		String sql = "SELECT * FROM (((T_AGENDAMENTO A INNER JOIN T_ANIMAL AN ON A.idAnimal = AN.idAnimal) INNER JOIN T_CLIENTE C ON C.cpfUsuario = AN.cpfCliente) INNER JOIN T_PESSOA P ON C.cpfUsuario = P.cpf ) WHERE A.idAgendamento =  ?;";
+		String sql = "SELECT * FROM (((T_AGENDAMENTO A INNER JOIN T_ANIMAL AN ON A.idAnimal = AN.idAnimal) INNER JOIN T_CLIENTE C ON C.cpfCliente = AN.cpfCliente) INNER JOIN T_PESSOA P ON C.cpfCliente = P.cpf ) WHERE A.idAgendamento =  ?;";
 		try {
 			PreparedStatement stm = con.prepareStatement(sql);
 			stm.setInt(1, id);

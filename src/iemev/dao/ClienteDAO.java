@@ -36,7 +36,7 @@ public class ClienteDAO extends CommonsDAO{
 
 	public int deletar(long cpf ) {
 		Connection con = ConnectionFactory.getConnection();
-		String sql = "DELETE FROM T_CLIENTE WHERE cpfUsuario = ?";
+		String sql = "DELETE FROM T_CLIENTE WHERE cpfCliente = ?";
 		ResultSet rs = null;
 		int retorno = 0;
 		try {
@@ -54,7 +54,7 @@ public class ClienteDAO extends CommonsDAO{
 	
 	public int inserir(Cliente cliente) {
 		Connection con = ConnectionFactory.getConnection();
-		String sql = "INSERT INTO T_CLIENTE (cpfUsuario, emailCliente, idAtendenteDeCadastramento) VALUES (?, ?, ? )";
+		String sql = "INSERT INTO T_CLIENTE (cpfCliente, emailCliente, idAtendenteDeCadastramento) VALUES (?, ?, ? )";
 		ResultSet rs = null;
 		int retorno = 0;
 		try {
@@ -77,7 +77,7 @@ public class ClienteDAO extends CommonsDAO{
 	public boolean apagar(int id) {
 		Connection con = ConnectionFactory.getConnection();
 		try {
-			String slqDelete = "DELETE FROM T_CLIENTE WHERE cpfUsuario = "+ id;
+			String slqDelete = "DELETE FROM T_CLIENTE WHERE cpfCliente = "+ id;
 			Statement stm = con.createStatement();
 			ResultSet rs = stm.executeQuery(slqDelete);
 			con.close();
@@ -106,7 +106,7 @@ public class ClienteDAO extends CommonsDAO{
 	}
 	public Cliente buscarId(long id) {
 		Connection con = ConnectionFactory.getConnection();
-		String slqSelect = "SELECT * FROM T_CLIENTE C INNER JOIN T_PESSOA P ON C.cpfUsuario = P.cpf WHERE cpfUsuario = ? ;";
+		String slqSelect = "SELECT * FROM T_CLIENTE C INNER JOIN T_PESSOA P ON C.cpfCliente = P.cpf WHERE cpfCliente = ? ;";
 		try {
 			
 			PreparedStatement stm = con.prepareStatement(slqSelect);
@@ -120,7 +120,7 @@ public class ClienteDAO extends CommonsDAO{
 				e.printStackTrace();
 			}
 			Cliente cliente = new Cliente(
-					rs.getLong("cpfUsuario"),
+					rs.getLong("cpfCliente"),
 					rs.getLong("rg"),
 					rs.getString("nome"),
 					rs.getString("endereco"),
@@ -142,7 +142,7 @@ public class ClienteDAO extends CommonsDAO{
 	public List<Cliente> buscarCpf(long cpf){
 		Connection con = ConnectionFactory.getConnection();
 		//mudar para cpf na tabela cliente
-		String sql = "SELECT * FROM T_CLIENTE WHERE cpfUsuario = ?";
+		String sql = "SELECT * FROM T_CLIENTE WHERE cpfCliente = ?";
 		ResultSet rs = null;
 		try {
 			PreparedStatement stm = con.prepareStatement(sql);

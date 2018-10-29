@@ -127,11 +127,11 @@ String mensagem = null;
                         <div class="col-md-3 mb-3">
                             <label for="sexo">Sexo</label>
                             <div class="form-check">
-                                <input type="radio" class="form-check-imput" name="sexo" value="0" readonly>
+                                <input type="radio" class="form-check-imput" name="sexo" value="0" disabled>
                                 <label for="sexo" class="form-check-label">Masculino</label>
                             </div>
                             <div class="form-check">
-                                <input type="radio" class="form-check-imput" name="sexo" value="1" readonly>
+                                <input type="radio" class="form-check-imput" name="sexo" value="1" disabled>
                                 <label for="sexo" class="form-check-label">Feminino</label>
                             </div>
                             
@@ -190,7 +190,7 @@ String mensagem = null;
                         <div class="col-md-2">
                             <label for="idatendente">Nome do Atendente</label>
                             <input class="form-control" type="text" name="nome_atendente" placeholder="" value="" readonly>
-                            <input class="form-control" type="hidden" name="idatendente" value="" readonly>
+                            <input class="form-control" type="hidden" name="idatendente" value="0" readonly>
                             <input type="hidden" name="cpf_veterinario" value="<%=empregado.getCpf() %>">
                             <input class="form-control" type="hidden" name="id_atendente_ativo" value="<%=empregado.getIdEmpregado() %>" readonly>
                         </div>

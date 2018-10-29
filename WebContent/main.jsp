@@ -15,7 +15,7 @@ if(session != null ){
                         <img class="card-img-top" src="img/cliente_geriatria.jpg" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">Cliente</h5>
-                            <a href="cliente.jsp"class="btn btn-primary btn-block">Cadastro Cliente</a>
+                            <a href="cliente.jsp"class="btn btn-primary btn-block">Cadastro de Cliente</a>
                         </div>
                     </div>
                     <div class="card">
@@ -29,7 +29,7 @@ if(session != null ){
                         <img class="card-img-top" src="img/cardiologia_iemev.jpg" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">Consulta</h5>
-                            <a href="consulta.jsp" class="btn btn-primary btn-block">Cadastro Consulta</a>
+                            <a href="consulta.jsp" class="btn btn-primary btn-block">Cadastro de Consulta</a>
                         </div>
                     </div>
                     <div class="card">
@@ -54,7 +54,7 @@ if(session != null ){
                   <img class="card-img-top" src="img/veterinaria_iemev.jpg" alt="Card image cap">
                   <div class="card-body">
                       <h5 class="card-title">Ficha de Atendimento</h5>
-                      <a href="ficha_atendimento.jsp" class="btn btn-primary btn-block">Cadastro de Ficha de Atendimento</a>
+                      <a href="ficha_atendimento.jsp" class="btn btn-primary btn-block">Ficha de Atendimento</a>
                   </div>
               </div>
               <div class="card">
@@ -88,21 +88,21 @@ if( perfil.equals("administrador") ){ %>
                     <img class="card-img-top" src="img/veterinaria_iemev.jpg" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">Usuário</h5>
-                        <a href="usuario.jsp" name="incluir" class="btn btn-primary btn-block">Incluir Usuário</a>
+                        <a href="usuario.jsp" name="incluir" class="btn btn-primary btn-block">Cadastro de Usuário</a>
                     </div>
                 </div>
                 <div class="card">
                     <img class="card-img-top" src="img/veterinaria_iemev.jpg" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">Serviços</h5>
-                        <a href="servico.jsp" name="incluir" class="btn btn-primary btn-block">Incluir Usuário</a>
+                        <a href="servico.jsp" name="incluir" class="btn btn-primary btn-block">Cadastro de Serviço</a>
                     </div>
                 </div>
                 <div class="card">
                     <img class="card-img-top" src="img/veterinaria_iemev.jpg" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">Relatórios</h5>
-                        <a href="relatorios.jsp" class="btn btn-primary btn-block">Incluir Relatório</a>
+                        <a href="relatorios.jsp" class="btn btn-primary btn-block">Gerar Relatório</a>
                     </div>
                 </div>
                 
@@ -120,7 +120,7 @@ if(perfil.equals("veterinario") ){ %>
                   <img class="card-img-top" src="img/veterinaria_iemev.jpg" alt="Card image cap">
                   <div class="card-body">
                       <h5 class="card-title">Boxes</h5>
-                      <a href="boxes.jsp" class="btn btn-primary btn-block">Incluir Box</a>
+                      <a href="boxes.jsp" class="btn btn-primary btn-block">Boxes de Internação</a>
                   </div>
              	</div>
                 <div class="card">

@@ -109,7 +109,6 @@
 			},
 			success: function(retorno){
 				var fichas = JSON.parse(retorno);
-				console.log(fichas);
 				var $tabelaFichas = $("#tabelaFichas");
 				if(fichas.length > 0 ){
 					if($("#tabela_prescricoes .alert")){
@@ -247,11 +246,11 @@
 			success:function(retorno){
 				var dadosFicha = JSON.parse(retorno);
 				console.log(dadosFicha);
-				var dataAbertura = dadosFicha[2].data_abertura.split(' ');
-				var dataNascimento = dadosFicha[0].data.split(' ');
+				var dataAbertura = dadosFicha[2].dataAbertura.split(' ');
+				var dataNascimento = dadosFicha[0].dataDeNascimentoAnimal.split(' ');
 				var $inputs = $("#ficha_atendimento input");
 				$inputs[2].value = dadosFicha[2].status;
-				$inputs[3].value = dadosFicha[2].numero_sequencial;
+				$inputs[3].value = dadosFicha[2].numeroFicha;
 				$inputs[4].value = dataAbertura[0];
 				$inputs[5].value = dataNascimento[0];			
 				$inputs[6].value = dadosFicha[0].especie;
@@ -266,11 +265,11 @@
 				$inputs[12].value = dadosFicha[0].temperamento;
 				$inputs[13].value = dadosFicha[1].nome;
 				$inputs[14].placeholder = placeholderCpf(dadosFicha[1].cpf);
-				$inputs[15].placeholder =  placeholderTelefone(dadosFicha[1].telefone);
+				$inputs[15].placeholder =  placeholderTelefone(dadosFicha[1].telefoneResidencial);
 				$inputs[16].placeholder = placeholderTelefone(dadosFicha[1].celular);
 				$inputs[17].value = dadosFicha[1].email;
 				$inputs[18].value = dadosFicha[3].nome;
-				$inputs[19].value = dadosFicha[2].id_atendente_abriu;
+				$inputs[19].value = dadosFicha[2].idAtendenteAbriuFicha;
 			}
 		})
 	}
@@ -283,6 +282,7 @@
 				valor: num
 			}, success: function(retorno){
 				var servicos = JSON.parse(retorno);
+				console.log(servicos);
 				var $tabelaServicos = $("#tabelaServicos");	
 				$("#tabelaServicos tr").remove(':not(:last-child)');
 				var numeroItem = $("#tabelaServicos tr").length;
@@ -292,7 +292,7 @@
 					var preco = servicos[i][1].preco.toFixed(2);
 					data = data.split(' ');
 					data = data[0].replace('-', '/').replace('-', '/');
-					var $linha = '<tr><th scope="row">'+(i + 1)+'</th><td>'+servicos[i][1].categoria+'</td><td>'+servicos[i][1].nome_servico+'</td><td>Jorge Teste</td><td><time>'+data+'</time></td><td>R$'+preco+'</td><td><button type="button" class="btn btn-danger" value='+servicos[i][0].id_prescricao+' disabled>Excluir</button></td></tr>';
+					var $linha = '<tr><th scope="row">'+(i + 1)+'</th><td>'+servicos[i][1].categoria+'</td><td>'+servicos[i][1].nome_servico+'</td><td>'+servicos[i][0].nome_veterinario+'</td><td><time>'+data+'</time></td><td>R$'+preco+'</td><td><button type="button" class="btn btn-danger" value='+servicos[i][0].id_prescricao+' disabled>Excluir</button></td></tr>';
 					$tabelaServicos.prepend($linha);
 				}
 				calcularTotal();
@@ -311,7 +311,6 @@
 			valor = valor.innerText;
 			valor = valor.replace('R$','');
 			valor = parseFloat(valor);
-			console.log(valor);
 			total += valor;
 		}
 		total = (Math.round(total * 100) / 100).toFixed(2);
@@ -362,6 +361,7 @@
 			},
 			success: function(retorno){
 				var dadosAnimal = JSON.parse(retorno);
+				console.log(dadosAnimal);
 				var dataNascimento = dadosAnimal[0].data.split(' ');
 				dataNascimento = "'"+dataNascimento[1]+" "+dataNascimento[2]+" "+dataNascimento[5]+"'";
 				dataNascimento = new Date(dataNascimento);

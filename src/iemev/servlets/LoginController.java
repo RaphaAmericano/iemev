@@ -34,6 +34,7 @@ public class LoginController extends HttpServlet {
 		Empregado empregado = EmpregadoManager.buscar(Long.parseLong(cpf));
 		String mensagem_erro;
 		long cpfLong = Long.parseLong(cpf);
+		
 		if(empregado == null ) {
 			mensagem_erro = "Usuário inexistente";
 			request.setAttribute("mensagem_erro", mensagem_erro);

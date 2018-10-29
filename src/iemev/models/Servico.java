@@ -49,5 +49,7 @@ public class Servico {
 	public void setIdAdministradorDeCadastramento(int idAdministradorDeCadastramento) {
 		this.idAdministradorDeCadastramento = idAdministradorDeCadastramento;
 	}
-	
+	public double somarPreco() {
+		return this.preco;
+	}
 }

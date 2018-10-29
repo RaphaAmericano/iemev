@@ -16,10 +16,12 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import iemev.manager.EmpregadoManager;
+import iemev.manager.FichaAtendimentoManager;
 import iemev.manager.PessoaManager;
 import iemev.manager.PrescricaoManager;
 import iemev.manager.ServicoManager;
 import iemev.models.Empregado;
+import iemev.models.FichaDeAtendimento;
 import iemev.models.Pessoa;
 import iemev.models.Prescricao;
 import iemev.models.Servico;
@@ -30,13 +32,9 @@ import iemev.models.Servico;
 @WebServlet("/prescricaoServlet.do")
 public class PrescricaoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+
     public PrescricaoController() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -66,14 +64,18 @@ public class PrescricaoController extends HttpServlet {
 			response.getWriter().write(retorno);
 			break;
 		case 1:
-			numeroficha = Integer.parseInt(request.getParameter("valor")); 
+			numeroficha = Integer.parseInt(request.getParameter("valor"));
+			FichaDeAtendimento ficha = FichaAtendimentoManager.buscarPorId(numeroficha);
 			List<Prescricao> listaprescricoes = PrescricaoManager.buscarTodasPrescricoes(numeroficha);
 			List<List> retorno_json = new ArrayList<List>();
 			for (int i = 0; i < listaprescricoes.size(); i++) {
 				servico = ServicoManager.buscar(listaprescricoes.get(i).getIdServico());
+				//ficha.adicionarServico(servico);
+				String veterinario_pres = PessoaManager.buscarId(listaprescricoes.get(i).getCpfVeterinario()).getNome();
 				JsonObject prescricao_json = PrescricaoManager.prescricaoJson(listaprescricoes.get(i));
 				JsonObject servico_json = ServicoManager.servicoJson(servico);
 				List<JsonObject> lista_json = new ArrayList<JsonObject>();
+				prescricao_json.addProperty("nome_veterinario", veterinario_pres);
 				lista_json.add(prescricao_json);
 				lista_json.add(servico_json);
 				retorno_json.add(lista_json);

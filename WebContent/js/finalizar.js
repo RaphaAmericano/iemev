@@ -30,15 +30,14 @@
 				var ficha = JSON.parse(retorno);
 				console.log(ficha);
 				var status = ficha[2].status.charAt(0).toUpperCase() + ficha[2].status.substr(1);
-				console.log(status);
-				var data = ficha[2].data_abertura;
+				var data = ficha[2].dataAbertura;
 				data = data.split(' ')[0];
 				
 				$inputFields[0].value = ficha[2].status.charAt(0).toUpperCase() + ficha[2].status.substr(1);
-				$inputFields[1].value = ficha[2].numero_sequencial;
+				$inputFields[1].value = ficha[2].numeroFicha;
 				$inputFields[2].value = data;
 				$inputFields[4].value = ficha[1].nome;
-				$inputFields[5].value = ficha[0].nome;
+				$inputFields[5].value = ficha[0].nomeAnimal;
 				$inputFields[6].value = ficha[1].cpf;
 				
 				if(ficha[2].status == "aberta"){
@@ -60,7 +59,7 @@
 				for(var i = 1; i < $linhasServico.length - 1; i++ ){
 					$linhasServico[i].remove();
 				}
-				listarServicos(ficha[2].numero_sequencial);
+				listarServicos(ficha[2].numeroFicha);
 			}
 		})
 		
@@ -85,6 +84,7 @@
 	
 	//Funções 
 	function listarServicos(id){
+		console.log("FICHA "+id);
 		$.ajax({
 			method: "POST",
 			url: "prescricaoServlet.do",

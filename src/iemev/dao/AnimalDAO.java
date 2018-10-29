@@ -15,6 +15,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 
 import iemev.models.Animal;
+import iemev.models.Pessoa;
 import iemev.utils.DataUtils;
 import iemev.utils.bd.ConnectionFactory;
 
@@ -53,10 +54,10 @@ public class AnimalDAO extends CommonsDAO {
 	public int inserir( Animal animal ) {
 		Connection con = ConnectionFactory.getConnection();
 		ResultSet rs = null;
-		String sqlAnimal = "INSERT INTO T_ANIMAL ( nomeAnimal, sexo, dataDeNascimentoAnimal, especie, porte, raca, pelagem, temperamento, cpfCliente, idAtendenteDeCadastramento) values (?,?,?,?,?,?,?,?,?,?)"; 
+		String sql = "INSERT INTO T_ANIMAL ( nomeAnimal, sexo, dataDeNascimentoAnimal, especie, porte, raca, pelagem, temperamento, cpfCliente, idAtendenteDeCadastramento) values (?,?,?,?,?,?,?,?,?,?)"; 
 		int retorno = 0;
 		try {
-			PreparedStatement stm = con.prepareStatement(sqlAnimal);
+			PreparedStatement stm = con.prepareStatement(sql);
 			stm.setString(1, animal.getNomeAnimal());
 			stm.setString(2, String.valueOf(animal.getSexo()));
 			stm.setString(3, DataUtils.formatarData(animal.getDataDeNascimentoAnimal()));
@@ -222,9 +223,9 @@ public class AnimalDAO extends CommonsDAO {
 		Connection con = ConnectionFactory.getConnection();
 		JsonObject dono = new JsonObject();
 		try {
-			String sqlDono = "SELECT * FROM ((T_PESSOA P INNER JOIN T_CLIENTE C ON P.cpf = c.cpfUsuario) INNER JOIN T_ANIMAL A ON P.cpf = A.cpfCliente) WHERE A.idAnimal = "+id+";";
+			String sql = "SELECT * FROM ((T_PESSOA P INNER JOIN T_CLIENTE C ON P.cpf = C.cpfCliente) INNER JOIN T_ANIMAL A ON P.cpf = A.cpfCliente) WHERE A.idAnimal = "+id+";";
 			Statement stm = con.createStatement();
-			ResultSet rs = stm.executeQuery(sqlDono);
+			ResultSet rs = stm.executeQuery(sql);
 			try {
 				dono.addProperty("nome", rs.getString("nome"));
 				dono.addProperty("cpf", rs.getString("cpf"));
@@ -240,6 +241,33 @@ public class AnimalDAO extends CommonsDAO {
 		}
 		return dono;
 	}
+	public Pessoa buscarDono( int id ) {
+		Connection con = ConnectionFactory.getConnection();
+		ResultSet rs = null;
+		Pessoa dono = null;
+		try {
+			String sql = "SELECT * FROM ((T_PESSOA P INNER JOIN T_CLIENTE C ON P.cpf = c.cpfCliente) INNER JOIN T_ANIMAL A ON P.cpf = A.cpfCliente) WHERE A.idAnimal = ?;";
+			PreparedStatement stm = con.prepareStatement(sql);
+			stm.setInt(1, id);
+			rs = stm.executeQuery();
+			dono = new Pessoa(
+					rs.getLong("cpf"),
+					rs.getLong("rg"),
+					rs.getString("nome"),
+					rs.getString("endereco"),
+					rs.getString("telefoneResidencial"),
+					rs.getString("celular"),
+					DataUtils.parseData(rs.getString("dataDeNascimento"))
+					);
+			rs.close();
+			stm.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dono;
+	}
+	
 	public List<Animal> buscarAnimaisDono(long cpf){
 		Connection con = ConnectionFactory.getConnection();
 		String sql = "SELECT * FROM T_ANIMAL WHERE cpfCliente = ?;";
